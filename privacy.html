@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>개인정보처리방침 — Creator Shield</title>
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #050D1A;
+    --blue: #1D6FE8;
+    --blue-l: #3B8BFF;
+    --white: #FFFFFF;
+    --gray1: #F0F4FF;
+    --gray2: #6B7A99;
+    --gray3: #E8EFF8;
+    --border: #DDE5F0;
+    --font: 'Pretendard', -apple-system, sans-serif;
+  }
+  body {
+    font-family: var(--font);
+    background: #F8FAFF;
+    color: #1A2340;
+    line-height: 1.8;
+    font-size: 15px;
+  }
+
+  /* NAV */
+  .nav {
+    background: var(--navy);
+    padding: 0 40px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+    font-weight: 700;
+  }
+  .nav-logo-icon {
+    width: 30px;
+    height: 30px;
+    background: linear-gradient(135deg, #1D6FE8, #00D4FF);
+    clip-path: polygon(50% 0%, 100% 18%, 100% 68%, 50% 100%, 0% 68%, 0% 18%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+  }
+  .nav-back {
+    color: #A0B0C8;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.15s;
+  }
+  .nav-back:hover { color: white; }
+
+  /* HERO */
+  .hero {
+    background: var(--navy);
+    padding: 48px 40px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .hero-tag {
+    display: inline-block;
+    background: rgba(29,111,232,0.2);
+    color: #3B8BFF;
+    border: 1px solid rgba(29,111,232,0.3);
+    padding: 5px 16px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .hero-title {
+    font-size: 32px;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 10px;
+    letter-spacing: -0.02em;
+  }
+  .hero-date {
+    color: #6B7A99;
+    font-size: 14px;
+  }
+
+  /* CONTENT */
+  .content-wrap {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+  }
+
+  /* TOC */
+  .toc {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px 28px;
+    margin-bottom: 40px;
+  }
+  .toc-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--gray2);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 14px;
+  }
+  .toc-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .toc-list a {
+    color: var(--blue);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .toc-list a:hover { color: var(--blue-l); }
+  .toc-list a::before {
+    content: '';
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--blue);
+    flex-shrink: 0;
+  }
+
+  /* SECTION */
+  .section {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    margin-bottom: 16px;
+  }
+  .section-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    background: rgba(29,111,232,0.1);
+    color: var(--blue);
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 800;
+    margin-right: 10px;
+    flex-shrink: 0;
+  }
+  .section-title {
+    font-size: 18px;
+    font-weight: 800;
+    color: #0D1F3C;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    letter-spacing: -0.01em;
+  }
+  .section p {
+    color: #3A4A5E;
+    margin-bottom: 12px;
+    line-height: 1.8;
+  }
+  .section p:last-child { margin-bottom: 0; }
+  .section ul, .section ol {
+    padding-left: 20px;
+    color: #3A4A5E;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .section ul { list-style: none; padding-left: 0; }
+  .section ul li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 12px;
+    background: var(--gray1);
+    border-radius: 8px;
+    font-size: 14px;
+  }
+  .section ul li::before {
+    content: '✓';
+    color: var(--blue);
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* HIGHLIGHT BOX */
+  .highlight-box {
+    background: rgba(29,111,232,0.06);
+    border: 1px solid rgba(29,111,232,0.2);
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin: 16px 0;
+    font-size: 14px;
+    color: #1A2F5E;
+  }
+  .highlight-box strong {
+    color: var(--blue);
+    display: block;
+    margin-bottom: 6px;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  /* TABLE */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    margin: 16px 0;
+  }
+  .data-table th {
+    background: #F0F4FF;
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 700;
+    color: #3A4A5E;
+    border: 1px solid var(--border);
+    font-size: 13px;
+  }
+  .data-table td {
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    color: #3A4A5E;
+    vertical-align: top;
+    line-height: 1.6;
+  }
+  .data-table tr:nth-child(even) td { background: #FAFCFF; }
+
+  /* BADGE */
+  .google-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 13px;
+    color: #3A4A5E;
+    margin-top: 10px;
+  }
+
+  /* CONTACT */
+  .contact-card {
+    background: linear-gradient(135deg, #050D1A, #0D1F3C);
+    border-radius: 16px;
+    padding: 28px 32px;
+    color: white;
+    margin-top: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .contact-title {
+    font-size: 18px;
+    font-weight: 800;
+    margin-bottom: 6px;
+  }
+  .contact-sub {
+    font-size: 14px;
+    color: #6B8AB0;
+  }
+  .contact-btn {
+    background: var(--blue);
+    color: white;
+    text-decoration: none;
+    padding: 12px 24px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 700;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+  .contact-btn:hover {
+    background: var(--blue-l);
+    transform: translateY(-1px);
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--navy);
+    padding: 24px 40px;
+    text-align: center;
+    font-size: 13px;
+    color: #4A5A72;
+  }
+  footer a { color: #6B8AB0; text-decoration: none; }
+  footer a:hover { color: white; }
+
+  @media(max-width: 600px) {
+    .nav { padding: 0 20px; }
+    .hero { padding: 36px 20px; }
+    .hero-title { font-size: 24px; }
+    .section { padding: 20px; }
+    .contact-card { flex-direction: column; }
+    .toc { padding: 18px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="/" class="nav-logo">
+    <div class="nav-logo-icon">🛡</div>
+    Creator Shield
+  </a>
+  <a href="/" class="nav-back">← 홈으로</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">Legal</div>
+  <h1 class="hero-title">개인정보처리방침</h1>
+  <p class="hero-date">최종 수정일: 2025년 1월 15일 · 시행일: 2025년 1월 15일</p>
+</div>
+
+<!-- CONTENT -->
+<div class="content-wrap">
+
+  <!-- TOC -->
+  <div class="toc">
+    <div class="toc-title">📋 목차</div>
+    <ul class="toc-list">
+      <li><a href="#s1">1. 수집하는 개인정보 항목</a></li>
+      <li><a href="#s2">2. 개인정보 수집 및 이용 목적</a></li>
+      <li><a href="#s3">3. Google API 데이터 사용 정책</a></li>
+      <li><a href="#s4">4. 개인정보 보관 기간 및 파기</a></li>
+      <li><a href="#s5">5. 개인정보의 제3자 제공</a></li>
+      <li><a href="#s6">6. 개인정보 보호 조치</a></li>
+      <li><a href="#s7">7. 이용자의 권리</a></li>
+      <li><a href="#s8">8. 쿠키 사용</a></li>
+      <li><a href="#s9">9. 개인정보 보호책임자</a></li>
+      <li><a href="#s10">10. 방침 변경 안내</a></li>
+    </ul>
+  </div>
+
+  <!-- SECTION 1 -->
+  <div class="section" id="s1">
+    <h2 class="section-title">
+      <span class="section-num">1</span>
+      수집하는 개인정보 항목
+    </h2>
+    <p>Creator Shield(이하 "서비스")는 YouTube 크리에이터의 채널을 악성댓글로부터 보호하기 위해 아래와 같은 정보를 수집합니다.</p>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>수집 항목</th>
+          <th>수집 방법</th>
+          <th>필수 여부</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>이메일 주소, 이름</td>
+          <td>회원가입 시 직접 입력 또는 Google 로그인</td>
+          <td>필수</td>
+        </tr>
+        <tr>
+          <td>YouTube 채널명, 채널 ID, 구독자 수, 썸네일</td>
+          <td>YouTube OAuth 인증 후 YouTube API 자동 수집</td>
+          <td>필수</td>
+        </tr>
+        <tr>
+          <td>YouTube 댓글 내용, 작성자 ID, 작성 시간, 영상 URL</td>
+          <td>YouTube API 자동 수집</td>
+          <td>필수</td>
+        </tr>
+        <tr>
+          <td>서비스 이용 기록, 접속 로그, IP 주소</td>
+          <td>서비스 이용 시 자동 수집</td>
+          <td>자동</td>
+        </tr>
+        <tr>
+          <td>결제 정보 (카드번호 제외)</td>
+          <td>유료 플랜 가입 시 토스페이먼츠를 통해 수집</td>
+          <td>선택</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="highlight-box">
+      <strong>⚠️ 수집하지 않는 정보</strong>
+      비밀번호, 카드 전체 번호, 주민등록번호 등 민감한 개인정보는 수집하지 않습니다. YouTube 계정 비밀번호는 절대 요구하지 않습니다.
+    </div>
+  </div>
+
+  <!-- SECTION 2 -->
+  <div class="section" id="s2">
+    <h2 class="section-title">
+      <span class="section-num">2</span>
+      개인정보 수집 및 이용 목적
+    </h2>
+    <p>수집한 정보는 오직 아래 목적으로만 사용되며, 목적이 변경될 경우 별도 동의를 받습니다.</p>
+    <ul>
+      <li>AI 기반 악성댓글 자동 감지 및 분류</li>
+      <li>채널 위험도 점수 및 클린 점수 산출</li>
+      <li>사용자 설정에 따른 댓글 자동 숨김 처리</li>
+      <li>법적 증거자료 보존 및 고소장 초안 생성 (Elite 플랜)</li>
+      <li>월간 채널 건강 리포트 제공</li>
+      <li>서비스 개선 및 오류 분석 (익명화 처리)</li>
+      <li>유료 플랜 결제 처리 및 청구</li>
+      <li>고객 문의 응대 및 공지 발송</li>
+    </ul>
+  </div>
+
+  <!-- SECTION 3 -->
+  <div class="section" id="s3">
+    <h2 class="section-title">
+      <span class="section-num">3</span>
+      Google API 데이터 사용 정책
+    </h2>
+    <p>Creator Shield의 Google API 사용 및 데이터 처리는 <strong>Google API Services User Data Policy</strong>를 완전히 준수합니다.</p>
+
+    <div class="highlight-box">
+      <strong>🔒 Limited Use 요건 준수</strong>
+      Google API를 통해 수집한 데이터는 서비스 제공에 필요한 용도로만 사용됩니다. 광고 목적, 제3자 판매, 크레딧 평가, 채용, 보험 등에 절대 사용하지 않습니다.
+    </div>
+
+    <p>사용하는 YouTube API 권한(Scope):</p>
+    <ul>
+      <li><strong>youtube.readonly</strong> — 채널 및 댓글 정보 읽기 전용 접근</li>
+      <li><strong>youtube.force-ssl</strong> — 크리에이터 요청 시 악성댓글 숨김 처리</li>
+    </ul>
+
+    <div class="google-badge">
+      🔗 <span>Google API Services User Data Policy: <a href="https://developers.google.com/terms/api-services-user-data-policy" target="_blank" style="color:#1D6FE8">developers.google.com</a></span>
+    </div>
+
+    <br>
+    <p>Google 계정 권한 관리 및 연결 해제는 언제든지 가능합니다:</p>
+    <div class="google-badge">
+      🔗 <span><a href="https://myaccount.google.com/permissions" target="_blank" style="color:#1D6FE8">myaccount.google.com/permissions</a></span>
+    </div>
+  </div>
+
+  <!-- SECTION 4 -->
+  <div class="section" id="s4">
+    <h2 class="section-title">
+      <span class="section-num">4</span>
+      개인정보 보관 기간 및 파기
+    </h2>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>데이터 종류</th>
+          <th>보관 기간</th>
+          <th>파기 방법</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>회원 정보</td>
+          <td>탈퇴 후 30일</td>
+          <td>DB에서 영구 삭제</td>
+        </tr>
+        <tr>
+          <td>YouTube 댓글 데이터</td>
+          <td>채널 연결 해제 후 30일</td>
+          <td>DB에서 영구 삭제</td>
+        </tr>
+        <tr>
+          <td>증거 보관 데이터</td>
+          <td>사용자가 직접 삭제 시까지</td>
+          <td>사용자 삭제 요청 즉시</td>
+        </tr>
+        <tr>
+          <td>결제 기록</td>
+          <td>전자상거래법에 따라 5년</td>
+          <td>법정 보관 후 파기</td>
+        </tr>
+        <tr>
+          <td>접속 로그</td>
+          <td>3개월</td>
+          <td>자동 삭제</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SECTION 5 -->
+  <div class="section" id="s5">
+    <h2 class="section-title">
+      <span class="section-num">5</span>
+      개인정보의 제3자 제공
+    </h2>
+    <p>Creator Shield는 원칙적으로 이용자의 개인정보를 외부에 제공하지 않습니다. 단, 아래의 경우는 예외입니다.</p>
+    <ul>
+      <li>이용자가 사전에 동의한 경우</li>
+      <li>법령의 규정에 따라 수사기관 등이 요구하는 경우</li>
+      <li>Elite 플랜 법무법인 연결 서비스 이용 시 (별도 동의 후 해당 법무법인에만 제공)</li>
+    </ul>
+    <div class="highlight-box">
+      <strong>🚫 절대 하지 않는 것</strong>
+      Google API를 통해 수집한 사용자 데이터는 광고에 활용하거나 제3자에게 판매하지 않습니다.
+    </div>
+  </div>
+
+  <!-- SECTION 6 -->
+  <div class="section" id="s6">
+    <h2 class="section-title">
+      <span class="section-num">6</span>
+      개인정보 보호 조치
+    </h2>
+    <ul>
+      <li>OAuth 토큰 AES-256 암호화 저장</li>
+      <li>HTTPS(SSL/TLS) 전송 구간 암호화</li>
+      <li>접근 권한 최소화 (필요한 직원에게만 접근 허용)</li>
+      <li>정기적 보안 취약점 점검</li>
+      <li>개인정보 취급자 교육 실시</li>
+    </ul>
+  </div>
+
+  <!-- SECTION 7 -->
+  <div class="section" id="s7">
+    <h2 class="section-title">
+      <span class="section-num">7</span>
+      이용자의 권리
+    </h2>
+    <p>이용자는 언제든지 아래 권리를 행사할 수 있습니다.</p>
+    <ul>
+      <li>개인정보 열람 요청 — 서비스 내 "설정 → 내 정보" 메뉴</li>
+      <li>개인정보 수정 요청 — 서비스 내 직접 수정 또는 이메일 요청</li>
+      <li>개인정보 삭제 요청 — 회원 탈퇴 또는 이메일 요청 (30일 내 처리)</li>
+      <li>YouTube 연결 해제 — 서비스 내 "설정 → 채널 연결 해제"</li>
+      <li>처리 정지 요청 — privacy@creatorshield.kr로 이메일 요청</li>
+    </ul>
+  </div>
+
+  <!-- SECTION 8 -->
+  <div class="section" id="s8">
+    <h2 class="section-title">
+      <span class="section-num">8</span>
+      쿠키 사용
+    </h2>
+    <p>서비스는 로그인 상태 유지 및 서비스 개선을 위해 쿠키를 사용합니다. 브라우저 설정에서 쿠키를 거부할 수 있으나, 일부 서비스 이용이 제한될 수 있습니다.</p>
+  </div>
+
+  <!-- SECTION 9 -->
+  <div class="section" id="s9">
+    <h2 class="section-title">
+      <span class="section-num">9</span>
+      개인정보 보호책임자
+    </h2>
+    <table class="data-table">
+      <tbody>
+        <tr>
+          <td style="font-weight:700;width:140px">성명</td>
+          <td>Creator Shield 개인정보 보호책임자</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700">이메일</td>
+          <td><a href="mailto:privacy@creatorshield.kr" style="color:#1D6FE8">privacy@creatorshield.kr</a></td>
+        </tr>
+        <tr>
+          <td style="font-weight:700">처리 기간</td>
+          <td>영업일 기준 3일 이내 답변</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="margin-top:12px;font-size:14px;color:#6B7A99">개인정보 침해에 대한 신고·상담은 개인정보보호위원회(privacy.go.kr) 또는 한국인터넷진흥원(118.go.kr)에 문의하실 수 있습니다.</p>
+  </div>
+
+  <!-- SECTION 10 -->
+  <div class="section" id="s10">
+    <h2 class="section-title">
+      <span class="section-num">10</span>
+      방침 변경 안내
+    </h2>
+    <p>이 개인정보처리방침은 법령이나 서비스 변경에 따라 수정될 수 있습니다. 변경 시 시행 7일 전에 서비스 내 공지사항을 통해 안내합니다.</p>
+    <p>중요한 변경의 경우 이메일을 통해 별도 안내합니다.</p>
+  </div>
+
+  <!-- CONTACT -->
+  <div class="contact-card">
+    <div>
+      <div class="contact-title">개인정보 관련 문의</div>
+      <div class="contact-sub">영업일 기준 3일 이내 답변 드립니다</div>
+    </div>
+    <a href="mailto:privacy@creatorshield.kr" class="contact-btn">
+      📧 privacy@creatorshield.kr
+    </a>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 Creator Shield Inc. &nbsp;·&nbsp; <a href="/terms">서비스 약관</a> &nbsp;·&nbsp; <a href="/privacy">개인정보처리방침</a> &nbsp;·&nbsp; <a href="mailto:hello@creatorshield.kr">문의하기</a></p>
+  <p style="margin-top:8px">This product uses the <a href="https://developers.google.com/youtube/terms/api-services-terms-of-service" target="_blank">YouTube API Services</a>. By using this service, you agree to be bound by the <a href="https://policies.google.com/privacy" target="_blank">Google Privacy Policy</a>.</p>
+</footer>
+
+</body>
+</html>
