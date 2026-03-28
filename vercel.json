@@ -1,7 +1,0 @@
-{
-  "cleanUrls": true,
-  "rewrites": [
-    { "source": "/", "destination": "/인덱스.html" },
-    { "source": "/privacy", "destination": "/privacy.html" }
-  ]
-}
