@@ -1,0 +1,1781 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>악플AI — 악성댓글로부터 채널을 보호하세요</title>
+<meta name="description" content="AI가 악성댓글을 자동으로 감지하고 차단합니다. 당신은 콘텐츠에만 집중하세요.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ───────── RESET & TOKENS ───────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --navy-950: #050D1A;
+  --navy-900: #091428;
+  --navy-800: #0D1F3C;
+  --navy-700: #112A52;
+  --navy-600: #163568;
+  --blue-500: #1D6FE8;
+  --blue-400: #3B8BFF;
+  --blue-300: #6BA8FF;
+  --blue-200: #A8CBFF;
+  --blue-100: #D6E8FF;
+  --cyan-400: #00D4FF;
+  --cyan-300: #5AEAFF;
+  --green-400: #00D084;
+  --yellow-400: #FFCC00;
+  --red-400: #FF4444;
+  --white: #FFFFFF;
+  --gray-100: #F0F4FF;
+  --gray-200: #C8D4E8;
+  --gray-400: #7A8BA8;
+  --gray-600: #3A4A5E;
+
+  --font: 'Pretendard', -apple-system, sans-serif;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  --shadow-glow: 0 0 60px rgba(29,111,232,0.25);
+  --shadow-card: 0 4px 24px rgba(0,0,0,0.4);
+}
+html { scroll-behavior: smooth; }
+body {
+  background: var(--navy-950);
+  color: var(--white);
+  font-family: var(--font);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+button { cursor: pointer; font-family: var(--font); }
+img { max-width: 100%; }
+
+/* ───────── UTILITY ───────── */
+.container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+.text-blue { color: var(--blue-400); }
+.text-cyan { color: var(--cyan-400); }
+.text-green { color: var(--green-400); }
+.text-yellow { color: var(--yellow-400); }
+.text-red { color: var(--red-400); }
+.text-muted { color: var(--gray-400); }
+.tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(29,111,232,0.15); border: 1px solid rgba(29,111,232,0.35);
+  color: var(--blue-300); padding: 6px 14px; border-radius: var(--radius-full);
+  font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+}
+.section-label { text-align: center; margin-bottom: 16px; }
+.section-title {
+  font-size: clamp(28px, 4.5vw, 52px);
+  font-weight: 800; line-height: 1.15;
+  text-align: center; margin-bottom: 16px;
+  letter-spacing: -0.02em;
+}
+.section-desc {
+  text-align: center; color: var(--gray-400);
+  font-size: 17px; line-height: 1.7;
+  max-width: 560px; margin: 0 auto 56px;
+}
+
+/* ───────── BUTTONS ───────── */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 14px 28px; border-radius: var(--radius-md);
+  font-size: 15px; font-weight: 700;
+  border: none; transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  white-space: nowrap;
+}
+.btn-primary {
+  background: linear-gradient(135deg, var(--blue-500), var(--blue-400));
+  color: #fff;
+  box-shadow: 0 0 32px rgba(29,111,232,0.5);
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 4px 40px rgba(29,111,232,0.7); }
+.btn-outline {
+  background: transparent; color: var(--white);
+  border: 1.5px solid rgba(255,255,255,0.2);
+}
+.btn-outline:hover { border-color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.05); }
+.btn-lg { padding: 18px 36px; font-size: 17px; border-radius: var(--radius-lg); }
+
+/* ───────── NAV ───────── */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  padding: 0 24px;
+  background: rgba(5,13,26,0.8);
+  backdrop-filter: blur(24px);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.nav-inner {
+  max-width: 1160px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 68px;
+}
+.nav-logo {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 20px; font-weight: 800; letter-spacing: -0.03em;
+}
+.shield-icon {
+  width: 36px; height: 36px;
+  background: linear-gradient(135deg, var(--blue-500), var(--cyan-400));
+  clip-path: polygon(50% 0%, 100% 18%, 100% 68%, 50% 100%, 0% 68%, 0% 18%);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+  box-shadow: 0 0 20px rgba(29,111,232,0.6);
+  flex-shrink: 0;
+}
+.nav-links {
+  display: flex; align-items: center; gap: 32px;
+  font-size: 14px; font-weight: 500;
+}
+.nav-links a { color: var(--gray-200); transition: color 0.15s; }
+.nav-links a:hover { color: #fff; }
+.nav-actions { display: flex; align-items: center; gap: 12px; }
+.btn-nav-login {
+  background: none; border: none; color: var(--gray-200);
+  font-size: 14px; font-weight: 500; padding: 8px 16px;
+  border-radius: var(--radius-sm); transition: all 0.15s;
+}
+.btn-nav-login:hover { color: #fff; background: rgba(255,255,255,0.06); }
+.btn-nav-cta {
+  background: var(--blue-500); color: #fff;
+  border: none; padding: 10px 22px; border-radius: var(--radius-md);
+  font-size: 14px; font-weight: 700;
+  box-shadow: 0 0 20px rgba(29,111,232,0.4);
+  transition: all 0.2s;
+}
+.btn-nav-cta:hover { background: var(--blue-400); transform: translateY(-1px); }
+.nav-hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; padding: 8px; }
+.nav-hamburger span { width: 22px; height: 2px; background: var(--white); border-radius: 2px; }
+
+/* ───────── HERO ───────── */
+.hero {
+  min-height: 100vh;
+  display: flex; align-items: center;
+  padding: 120px 24px 80px;
+  position: relative; overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0; pointer-events: none;
+}
+.hero-bg-glow {
+  position: absolute; top: -20%; left: 50%; transform: translateX(-50%);
+  width: 900px; height: 700px;
+  background: radial-gradient(ellipse at center, rgba(29,111,232,0.18) 0%, rgba(0,212,255,0.06) 40%, transparent 70%);
+}
+.hero-grid-lines {
+  position: absolute; inset: 0; opacity: 0.035;
+  background-image:
+    linear-gradient(rgba(100,160,255,1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(100,160,255,1) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+.hero-inner {
+  max-width: 1160px; margin: 0 auto; width: 100%;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center;
+}
+.hero-content { position: relative; z-index: 2; }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(29,111,232,0.12); border: 1px solid rgba(29,111,232,0.3);
+  color: var(--blue-300); padding: 7px 16px; border-radius: var(--radius-full);
+  font-size: 13px; font-weight: 600; margin-bottom: 24px;
+  animation: fadeUp 0.6s ease both;
+}
+.hero-badge .dot {
+  width: 6px; height: 6px; background: var(--cyan-400); border-radius: 50%;
+  box-shadow: 0 0 8px var(--cyan-400);
+  animation: pulse 2s infinite;
+}
+.hero-title {
+  font-size: clamp(36px, 5.5vw, 68px);
+  font-weight: 900; line-height: 1.1; letter-spacing: -0.03em;
+  margin-bottom: 20px;
+  animation: fadeUp 0.6s 0.1s ease both;
+}
+.hero-title .highlight {
+  background: linear-gradient(135deg, var(--blue-400), var(--cyan-400));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-sub {
+  font-size: 18px; color: var(--gray-200); line-height: 1.7;
+  margin-bottom: 36px; max-width: 480px;
+  animation: fadeUp 0.6s 0.2s ease both;
+}
+.hero-actions {
+  display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 40px;
+  animation: fadeUp 0.6s 0.3s ease both;
+}
+.hero-trust {
+  display: flex; align-items: center; gap: 16px;
+  animation: fadeUp 0.6s 0.4s ease both;
+}
+.trust-badge {
+  display: flex; align-items: center; gap: 8px;
+  background: rgba(0,208,132,0.1); border: 1px solid rgba(0,208,132,0.25);
+  padding: 8px 14px; border-radius: var(--radius-full);
+  font-size: 13px; font-weight: 600; color: var(--green-400);
+}
+.hero-stats {
+  display: flex; gap: 24px; flex-wrap: wrap;
+}
+.hero-stat span:first-child {
+  font-size: 22px; font-weight: 800; color: #fff; display: block;
+}
+.hero-stat span:last-child {
+  font-size: 12px; color: var(--gray-400);
+}
+
+/* HERO DASHBOARD VISUAL */
+.hero-visual {
+  position: relative; z-index: 2;
+  animation: fadeUp 0.7s 0.2s ease both;
+}
+.dashboard-card {
+  background: var(--navy-800);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-glow), var(--shadow-card);
+}
+.dash-header {
+  background: var(--navy-900); padding: 16px 20px;
+  display: flex; align-items: center; gap: 10px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.dash-dots { display: flex; gap: 6px; }
+.dash-dots span { width: 10px; height: 10px; border-radius: 50%; }
+.dash-title { font-size: 13px; color: var(--gray-400); margin-left: 4px; font-weight: 500; }
+.dash-body { padding: 20px; }
+
+/* Gauge */
+.gauge-section { display: flex; align-items: center; gap: 20px; margin-bottom: 20px; }
+.gauge-wrap { position: relative; flex-shrink: 0; }
+#heroGauge { display: block; }
+.gauge-center {
+  position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%);
+  text-align: center;
+}
+.gauge-num { font-size: 28px; font-weight: 900; color: var(--yellow-400); line-height: 1; }
+.gauge-label { font-size: 10px; color: var(--gray-400); margin-top: 2px; }
+.gauge-info { flex: 1; }
+.gauge-title { font-size: 15px; font-weight: 700; margin-bottom: 12px; }
+.metric-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.metric-label { font-size: 12px; color: var(--gray-400); }
+.metric-val { font-size: 13px; font-weight: 700; }
+.metric-bar { height: 4px; background: rgba(255,255,255,0.08); border-radius: 2px; margin-top: 4px; overflow: hidden; }
+.metric-fill { height: 100%; border-radius: 2px; }
+
+/* Trend mini chart */
+.trend-section { margin-bottom: 16px; }
+.trend-label { font-size: 11px; color: var(--gray-400); margin-bottom: 8px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; }
+#trendChart { width: 100%; height: 56px; display: block; }
+
+/* Comment feed */
+.comment-feed { display: flex; flex-direction: column; gap: 8px; }
+.comment-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 12px; border-radius: var(--radius-sm);
+  font-size: 12px;
+}
+.comment-item.toxic { background: rgba(255,68,68,0.1); border: 1px solid rgba(255,68,68,0.2); }
+.comment-item.clean { background: rgba(0,208,132,0.07); border: 1px solid rgba(0,208,132,0.15); }
+.comment-status { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: var(--radius-full); flex-shrink: 0; }
+.status-hidden { background: rgba(255,68,68,0.2); color: var(--red-400); }
+.status-safe { background: rgba(0,208,132,0.2); color: var(--green-400); }
+.comment-text { flex: 1; color: var(--gray-200); }
+.comment-score { font-size: 10px; font-weight: 700; flex-shrink: 0; }
+
+/* ───────── SECTION SPACING ───────── */
+section { padding: 100px 24px; }
+
+/* ───────── STORY SECTION ───────── */
+.story-section { background: var(--navy-900); position: relative; overflow: hidden; }
+.story-section::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--blue-500), transparent);
+}
+.story-inner { max-width: 900px; margin: 0 auto; }
+.story-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; margin-top: 48px; }
+.pain-list { display: flex; flex-direction: column; gap: 14px; }
+.pain-item {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 16px 18px;
+  background: rgba(255,68,68,0.06); border: 1px solid rgba(255,68,68,0.15);
+  border-radius: var(--radius-md);
+}
+.pain-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+.pain-text { font-size: 14px; line-height: 1.6; color: var(--gray-200); }
+.pain-text strong { color: #fff; display: block; margin-bottom: 2px; font-size: 15px; }
+.solution-card {
+  background: linear-gradient(135deg, rgba(29,111,232,0.15), rgba(0,212,255,0.08));
+  border: 1px solid rgba(29,111,232,0.3);
+  border-radius: var(--radius-xl); padding: 32px;
+}
+.solution-card h3 { font-size: 20px; font-weight: 800; margin-bottom: 20px; }
+.solution-items { display: flex; flex-direction: column; gap: 16px; }
+.sol-item { display: flex; align-items: center; gap: 12px; font-size: 14px; color: var(--gray-200); }
+.sol-icon { width: 32px; height: 32px; background: rgba(29,111,232,0.2); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+
+/* ───────── VIRAL ANALYZER ───────── */
+.analyzer-section { background: var(--navy-950); position: relative; }
+.analyzer-container {
+  max-width: 800px; margin: 0 auto;
+}
+.analyzer-box {
+  background: var(--navy-800);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: 0 0 80px rgba(29,111,232,0.15);
+}
+.analyzer-topbar {
+  background: var(--navy-900); padding: 14px 20px;
+  display: flex; align-items: center; gap: 8px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.topbar-dots { display: flex; gap: 6px; }
+.topbar-dots span { width: 10px; height: 10px; border-radius: 50%; }
+.topbar-title { font-size: 13px; color: var(--gray-400); margin-left: 6px; }
+.topbar-live {
+  margin-left: auto; display: flex; align-items: center; gap: 6px;
+  font-size: 11px; color: var(--green-400); font-weight: 600;
+}
+.live-dot { width: 6px; height: 6px; background: var(--green-400); border-radius: 50%; box-shadow: 0 0 6px var(--green-400); animation: pulse 1.5s infinite; }
+.analyzer-body { padding: 28px; }
+
+.input-group {
+  display: flex; gap: 12px; margin-bottom: 16px;
+}
+.url-input {
+  flex: 1; background: var(--navy-900);
+  border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius-md);
+  padding: 14px 18px; color: #fff; font-size: 15px; font-family: var(--font);
+  outline: none; transition: border 0.2s, box-shadow 0.2s;
+}
+.url-input:focus {
+  border-color: rgba(29,111,232,0.6);
+  box-shadow: 0 0 0 3px rgba(29,111,232,0.12);
+}
+.url-input::placeholder { color: var(--gray-600); }
+.btn-analyze {
+  background: linear-gradient(135deg, var(--blue-500), var(--blue-400));
+  color: #fff; border: none; border-radius: var(--radius-md);
+  padding: 14px 24px; font-size: 15px; font-weight: 700;
+  font-family: var(--font); white-space: nowrap;
+  box-shadow: 0 0 24px rgba(29,111,232,0.5);
+  transition: all 0.2s;
+}
+.btn-analyze:hover { transform: translateY(-1px); box-shadow: 0 4px 32px rgba(29,111,232,0.7); }
+.btn-analyze:disabled { opacity: 0.5; transform: none; box-shadow: none; cursor: not-allowed; }
+
+.sample-channels {
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-size: 12px; color: var(--gray-400); margin-bottom: 20px;
+}
+.sample-btn {
+  background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+  color: var(--gray-200); padding: 4px 12px; border-radius: var(--radius-full);
+  font-size: 12px; font-family: var(--font); transition: all 0.15s;
+}
+.sample-btn:hover { background: rgba(29,111,232,0.15); border-color: rgba(29,111,232,0.3); color: var(--blue-300); }
+
+/* SCAN AREA */
+#scanArea { display: none; }
+.scan-terminal {
+  background: #02060F; border-radius: var(--radius-md); padding: 16px;
+  min-height: 140px; font-family: 'Courier New', monospace; font-size: 12px;
+  position: relative; overflow: hidden; border: 1px solid rgba(29,111,232,0.2);
+  margin-bottom: 14px;
+}
+.scan-beam {
+  position: absolute; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--blue-400), var(--cyan-400), transparent);
+  box-shadow: 0 0 16px var(--blue-400);
+  animation: scanBeam 2s linear infinite;
+  opacity: 0;
+}
+.scan-beam.active { opacity: 1; }
+@keyframes scanBeam { 0%{top:-2px} 100%{top:100%} }
+
+.log-entry { margin: 3px 0; opacity: 0; animation: logIn 0.25s ease forwards; }
+.log-entry.c-dim { color: #334; }
+.log-entry.c-blue { color: var(--blue-300); }
+.log-entry.c-cyan { color: var(--cyan-400); }
+.log-entry.c-yellow { color: var(--yellow-400); }
+.log-entry.c-red { color: var(--red-400); }
+.log-entry.c-green { color: var(--green-400); }
+@keyframes logIn { from{opacity:0;transform:translateX(-6px)} to{opacity:1;transform:none} }
+
+/* WAVEFORM */
+.waveform-wrap {
+  background: #02060F; border-radius: var(--radius-md);
+  padding: 12px 16px; margin-bottom: 14px;
+  border: 1px solid rgba(255,255,255,0.06); display: none;
+}
+.wave-label { font-size: 10px; color: var(--gray-400); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px; }
+#waveCanvas { width: 100%; height: 60px; display: block; }
+
+/* RESULT */
+#resultArea { display: none; }
+
+.result-header {
+  display: grid; grid-template-columns: auto 1fr; gap: 24px;
+  align-items: center; margin-bottom: 24px;
+}
+.result-gauge-wrap { position: relative; }
+#resultGaugeCanvas { display: block; }
+.result-gauge-center {
+  position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%);
+  text-align: center; width: 100%;
+}
+.result-score-num { font-size: 38px; font-weight: 900; line-height: 1; }
+.result-score-label { font-size: 11px; color: var(--gray-400); }
+
+.result-summary { }
+.result-channel-name { font-size: 18px; font-weight: 800; margin-bottom: 4px; }
+.result-channel-sub { font-size: 13px; color: var(--gray-400); margin-bottom: 16px; }
+.result-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.result-metric {
+  background: var(--navy-900); border-radius: var(--radius-md);
+  padding: 12px 14px; border: 1px solid rgba(255,255,255,0.06);
+}
+.result-metric-label { font-size: 11px; color: var(--gray-400); margin-bottom: 4px; }
+.result-metric-value { font-size: 18px; font-weight: 800; }
+
+.risk-bars { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+.risk-bar-item {
+  background: var(--navy-900); border-radius: var(--radius-md); padding: 12px 14px;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+.rb-label { font-size: 11px; color: var(--gray-400); margin-bottom: 6px; display: flex; justify-content: space-between; }
+.rb-track { height: 5px; background: rgba(255,255,255,0.07); border-radius: 3px; overflow: hidden; }
+.rb-fill { height: 100%; border-radius: 3px; transition: width 1.5s cubic-bezier(0.22,1,0.36,1); }
+
+.verdict-box {
+  border-radius: var(--radius-md); padding: 16px 18px;
+  display: flex; align-items: flex-start; gap: 14px;
+  margin-bottom: 16px; border: 1px solid;
+}
+.verdict-icon { font-size: 28px; flex-shrink: 0; }
+.verdict-title { font-size: 16px; font-weight: 800; margin-bottom: 4px; }
+.verdict-desc { font-size: 13px; color: var(--gray-400); line-height: 1.6; }
+
+/* SHARE CARD */
+.share-card {
+  background: linear-gradient(135deg, var(--navy-900), rgba(29,111,232,0.15));
+  border: 1px solid rgba(29,111,232,0.25); border-radius: var(--radius-md);
+  padding: 16px 18px; margin-bottom: 16px;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+}
+.share-card-text { font-size: 13px; color: var(--gray-200); }
+.share-card-text strong { color: #fff; display: block; margin-bottom: 2px; }
+.share-btns { display: flex; gap: 8px; flex-shrink: 0; }
+.share-btn {
+  padding: 8px 14px; border-radius: var(--radius-sm);
+  font-size: 12px; font-weight: 700; font-family: var(--font); border: none;
+  transition: all 0.15s;
+}
+.share-kakao { background: #FEE500; color: #3A1D00; }
+.share-kakao:hover { background: #FFD000; transform: translateY(-1px); }
+.share-x { background: #000; color: #fff; border: 1px solid #333; }
+.share-x:hover { background: #111; transform: translateY(-1px); }
+.share-copy { background: rgba(255,255,255,0.08); color: var(--white); border: 1px solid rgba(255,255,255,0.12); }
+.share-copy:hover { background: rgba(255,255,255,0.14); transform: translateY(-1px); }
+
+.reset-btn {
+  width: 100%; background: none; border: 1px solid rgba(255,255,255,0.1);
+  color: var(--gray-400); padding: 10px; border-radius: var(--radius-md);
+  font-size: 13px; font-family: var(--font); transition: all 0.15s;
+}
+.reset-btn:hover { border-color: rgba(255,255,255,0.2); color: #fff; }
+
+/* ───────── RANKING ───────── */
+.ranking-section { background: var(--navy-900); }
+.rank-tabs {
+  display: flex; gap: 4px; justify-content: center; margin-bottom: 32px;
+  background: var(--navy-800); border-radius: var(--radius-full);
+  padding: 4px; max-width: fit-content; margin-left: auto; margin-right: auto;
+}
+.rank-tab {
+  padding: 10px 24px; border-radius: var(--radius-full);
+  font-size: 14px; font-weight: 600; background: none; border: none;
+  color: var(--gray-400); font-family: var(--font); transition: all 0.2s;
+}
+.rank-tab.active { background: var(--blue-500); color: #fff; box-shadow: 0 0 16px rgba(29,111,232,0.4); }
+.ranking-table { max-width: 680px; margin: 0 auto; }
+.rank-table-header {
+  display: grid; grid-template-columns: 48px 1fr 100px 100px;
+  padding: 10px 16px; font-size: 11px; font-weight: 700;
+  color: var(--gray-400); letter-spacing: 0.06em; text-transform: uppercase;
+}
+.rank-row {
+  display: grid; grid-template-columns: 48px 1fr 100px 100px;
+  align-items: center; padding: 14px 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  transition: background 0.15s;
+  background: var(--navy-800); border-radius: var(--radius-md); margin-bottom: 6px;
+}
+.rank-row:hover { background: rgba(29,111,232,0.08); }
+.rank-num-cell { font-size: 16px; font-weight: 900; text-align: center; }
+.rank-channel-cell { display: flex; align-items: center; gap: 10px; }
+.rank-avatar {
+  width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 800;
+}
+.rank-name { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
+.rank-sub { font-size: 11px; color: var(--gray-400); }
+.rank-score-cell { text-align: center; }
+.score-badge {
+  display: inline-block; padding: 4px 12px; border-radius: var(--radius-full);
+  font-size: 12px; font-weight: 800;
+}
+.rank-clean-cell { text-align: center; font-weight: 800; font-size: 15px; }
+
+/* ───────── FEATURES ───────── */
+.features-section { background: var(--navy-950); }
+.features-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px; max-width: 1100px; margin: 0 auto;
+}
+.feature-card {
+  background: var(--navy-800); border: 1px solid rgba(255,255,255,0.07);
+  border-radius: var(--radius-lg); padding: 28px;
+  transition: all 0.2s;
+  position: relative; overflow: hidden;
+}
+.feature-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--blue-500), transparent);
+  opacity: 0; transition: opacity 0.2s;
+}
+.feature-card:hover { border-color: rgba(29,111,232,0.3); transform: translateY(-3px); box-shadow: 0 8px 32px rgba(29,111,232,0.1); }
+.feature-card:hover::before { opacity: 1; }
+.feature-icon-wrap {
+  width: 52px; height: 52px; border-radius: var(--radius-md);
+  background: rgba(29,111,232,0.15); border: 1px solid rgba(29,111,232,0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px; margin-bottom: 18px;
+}
+.feature-name { font-size: 17px; font-weight: 800; margin-bottom: 8px; }
+.feature-desc { font-size: 14px; color: var(--gray-400); line-height: 1.65; }
+.feature-badge-new {
+  display: inline-block; font-size: 10px; font-weight: 800;
+  background: var(--blue-500); color: #fff; padding: 2px 8px;
+  border-radius: var(--radius-full); margin-left: 8px; vertical-align: middle;
+}
+
+/* ───────── PRICING ───────── */
+.pricing-section { background: var(--navy-900); }
+.pricing-toggle {
+  display: flex; align-items: center; gap: 12px; justify-content: center;
+  margin-bottom: 40px; font-size: 14px; font-weight: 600;
+}
+.toggle-switch {
+  width: 48px; height: 26px; background: var(--blue-500); border-radius: var(--radius-full);
+  position: relative; cursor: pointer; transition: background 0.2s;
+}
+.toggle-knob {
+  width: 20px; height: 20px; background: #fff; border-radius: 50%;
+  position: absolute; top: 3px; left: 3px; transition: left 0.2s;
+}
+.toggle-switch.annual .toggle-knob { left: 25px; }
+.discount-badge {
+  background: rgba(0,208,132,0.15); color: var(--green-400);
+  border: 1px solid rgba(0,208,132,0.3); padding: 3px 10px; border-radius: var(--radius-full);
+  font-size: 11px; font-weight: 700;
+}
+.pricing-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px; max-width: 1060px; margin: 0 auto;
+}
+.pricing-card {
+  background: var(--navy-800); border: 1px solid rgba(255,255,255,0.08);
+  border-radius: var(--radius-xl); padding: 28px;
+  display: flex; flex-direction: column;
+  transition: all 0.2s;
+}
+.pricing-card.popular {
+  border-color: var(--blue-500);
+  box-shadow: 0 0 40px rgba(29,111,232,0.2);
+  transform: scale(1.02);
+}
+.pricing-card:hover:not(.popular) { border-color: rgba(29,111,232,0.3); transform: translateY(-3px); }
+.popular-tag {
+  background: var(--blue-500); color: #fff;
+  font-size: 11px; font-weight: 800; padding: 4px 12px;
+  border-radius: var(--radius-full); text-align: center; margin-bottom: 16px;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  box-shadow: 0 0 16px rgba(29,111,232,0.5);
+}
+.plan-name { font-size: 13px; font-weight: 700; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+.plan-price-wrap { margin-bottom: 4px; }
+.plan-price { font-size: 40px; font-weight: 900; letter-spacing: -0.03em; }
+.plan-period { font-size: 14px; color: var(--gray-400); font-weight: 400; }
+.plan-annual-note { font-size: 12px; color: var(--green-400); margin-bottom: 16px; min-height: 18px; }
+.plan-desc { font-size: 13px; color: var(--gray-400); line-height: 1.6; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+.plan-features { flex: 1; display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
+.plan-feat { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; line-height: 1.5; }
+.plan-feat .check { color: var(--green-400); flex-shrink: 0; font-size: 14px; }
+.plan-feat .cross { color: var(--gray-600); flex-shrink: 0; font-size: 14px; }
+.plan-feat .feat-text { color: var(--gray-200); }
+.plan-feat .feat-text.dimmed { color: var(--gray-600); }
+.btn-plan {
+  width: 100%; padding: 14px; border-radius: var(--radius-md);
+  font-size: 15px; font-weight: 700; font-family: var(--font);
+  border: none; transition: all 0.2s;
+}
+.btn-plan-primary { background: var(--blue-500); color: #fff; box-shadow: 0 0 20px rgba(29,111,232,0.4); }
+.btn-plan-primary:hover { background: var(--blue-400); transform: translateY(-1px); }
+.btn-plan-outline { background: none; color: var(--white); border: 1.5px solid rgba(255,255,255,0.15); }
+.btn-plan-outline:hover { border-color: rgba(255,255,255,0.3); background: rgba(255,255,255,0.05); }
+
+/* ───────── HOW IT WORKS ───────── */
+.hiw-section { background: var(--navy-950); }
+.hiw-steps {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;
+  max-width: 900px; margin: 0 auto; position: relative;
+}
+.hiw-steps::before {
+  content: ''; position: absolute; top: 28px; left: calc(16.6% + 28px); right: calc(16.6% + 28px);
+  height: 1px; background: linear-gradient(90deg, var(--blue-500), var(--cyan-400), var(--blue-500));
+}
+.hiw-step { text-align: center; position: relative; }
+.hiw-num {
+  width: 56px; height: 56px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--blue-500), var(--cyan-400));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; font-weight: 900; margin: 0 auto 20px;
+  box-shadow: 0 0 24px rgba(29,111,232,0.5);
+  position: relative; z-index: 1;
+}
+.hiw-title { font-size: 16px; font-weight: 800; margin-bottom: 8px; }
+.hiw-desc { font-size: 13px; color: var(--gray-400); line-height: 1.6; }
+
+/* ───────── PROTECTION BADGE ───────── */
+.badge-section { background: var(--navy-900); text-align: center; }
+.badge-display {
+  display: inline-flex; align-items: center; gap: 16px;
+  background: linear-gradient(135deg, rgba(29,111,232,0.12), rgba(0,212,255,0.06));
+  border: 1.5px solid rgba(29,111,232,0.35); border-radius: 16px;
+  padding: 20px 32px; margin: 36px auto;
+  box-shadow: 0 0 40px rgba(29,111,232,0.15);
+}
+.badge-shield {
+  width: 56px; height: 56px;
+  background: linear-gradient(135deg, var(--blue-500), var(--cyan-400));
+  clip-path: polygon(50% 0%, 100% 18%, 100% 68%, 50% 100%, 0% 68%, 0% 18%);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 26px;
+  box-shadow: 0 0 24px rgba(29,111,232,0.6);
+}
+.badge-text-main { font-size: 17px; font-weight: 800; text-align: left; margin-bottom: 4px; }
+.badge-text-sub { font-size: 12px; color: var(--blue-300); text-align: left; font-weight: 600; letter-spacing: 0.04em; }
+
+.badge-effects { display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; margin-top: 24px; }
+.badge-effect { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--gray-200); }
+
+/* ───────── SECURITY ───────── */
+.security-section { background: var(--navy-950); }
+.security-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; max-width: 800px; margin: 0 auto; }
+.security-item {
+  background: var(--navy-800); border: 1px solid rgba(255,255,255,0.07);
+  border-radius: var(--radius-md); padding: 20px; text-align: center;
+}
+.sec-icon { font-size: 28px; margin-bottom: 10px; }
+.sec-title { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+.sec-desc { font-size: 12px; color: var(--gray-400); line-height: 1.6; }
+
+/* ───────── BETA ───────── */
+.beta-section {
+  background: linear-gradient(135deg, var(--navy-800), var(--navy-900));
+  border-top: 1px solid rgba(29,111,232,0.2);
+  border-bottom: 1px solid rgba(29,111,232,0.2);
+  text-align: center;
+}
+.beta-counter {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(255,204,0,0.1); border: 1px solid rgba(255,204,0,0.3);
+  color: var(--yellow-400); padding: 8px 20px; border-radius: var(--radius-full);
+  font-size: 13px; font-weight: 700; margin-bottom: 24px;
+}
+.beta-perks { display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; margin: 24px 0 40px; }
+.beta-perk { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--gray-200); }
+
+/* ───────── FINAL CTA ───────── */
+.final-cta { background: var(--navy-950); text-align: center; padding: 120px 24px; position: relative; overflow: hidden; }
+.final-cta::before {
+  content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+  width: 1000px; height: 500px;
+  background: radial-gradient(ellipse at 50% 0%, rgba(29,111,232,0.18) 0%, transparent 65%);
+  pointer-events: none;
+}
+.final-cta-title { font-size: clamp(36px, 6vw, 72px); font-weight: 900; letter-spacing: -0.03em; margin-bottom: 16px; line-height: 1.1; }
+.final-cta-sub { font-size: 18px; color: var(--gray-400); margin-bottom: 40px; line-height: 1.7; }
+
+/* ───────── FOOTER ───────── */
+footer {
+  background: var(--navy-900); border-top: 1px solid rgba(255,255,255,0.06);
+  padding: 48px 24px 32px;
+}
+.footer-inner { max-width: 1160px; margin: 0 auto; }
+.footer-top { display: flex; justify-content: space-between; gap: 48px; flex-wrap: wrap; margin-bottom: 40px; }
+.footer-brand .logo-text { font-size: 18px; font-weight: 800; display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+.footer-brand p { font-size: 13px; color: var(--gray-400); max-width: 240px; line-height: 1.6; }
+.footer-links h4 { font-size: 12px; font-weight: 700; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 14px; }
+.footer-links ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.footer-links a { font-size: 13px; color: var(--gray-400); transition: color 0.15s; }
+.footer-links a:hover { color: #fff; }
+.footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.06); font-size: 12px; color: var(--gray-600); flex-wrap: wrap; gap: 12px; }
+
+/* ───────── ANIMATIONS ───────── */
+@keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.6;transform:scale(0.9)} }
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+.float { animation: float 4s ease-in-out infinite; }
+
+/* ───────── RESPONSIVE ───────── */
+@media(max-width: 900px) {
+  .hero-inner { grid-template-columns: 1fr; }
+  .hero-visual { display: none; }
+  .story-grid { grid-template-columns: 1fr; }
+  .hiw-steps { grid-template-columns: 1fr; }
+  .hiw-steps::before { display: none; }
+  .pricing-card.popular { transform: none; }
+  .nav-links { display: none; }
+  .result-header { grid-template-columns: 1fr; text-align: center; }
+  .result-metrics { grid-template-columns: 1fr 1fr; }
+}
+@media(max-width: 600px) {
+  .nav-actions .btn-nav-login { display: none; }
+  section { padding: 72px 20px; }
+  .input-group { flex-direction: column; }
+  .rank-table-header, .rank-row { grid-template-columns: 40px 1fr 80px; }
+  .rank-row > *:last-child, .rank-table-header > *:last-child { display: none; }
+  .hero-stats { gap: 16px; }
+  .risk-bars { grid-template-columns: 1fr; }
+  .share-card { flex-direction: column; }
+  .share-btns { width: 100%; }
+  .share-btn { flex: 1; }
+  .badge-display { flex-direction: column; text-align: center; padding: 20px; }
+  .badge-text-main, .badge-text-sub { text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">
+      <div class="shield-icon">🛡</div>
+      악플AI
+    </a>
+    <div class="nav-links">
+      <a href="#analyzer">무료 분석</a>
+      <a href="#ranking">랭킹</a>
+      <a href="#features">기능</a>
+      <a href="#pricing">요금제</a>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLScJylXBJBp7udq3LENEi8dM_Fh6cMOSb5Br6jmWwl8xcSbM8A/viewform" target="_blank">베타 참여</a>
+    </div>
+    <div class="nav-actions">
+      <button class="btn-nav-login">로그인</button>
+      <button class="btn-nav-cta" onclick="document.getElementById('analyzer').scrollIntoView({behavior:'smooth'})">무료 분석 시작</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg">
+    <div class="hero-bg-glow"></div>
+    <div class="hero-grid-lines"></div>
+  </div>
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="dot"></span>
+        AI 기반 채널 보호 서비스 · 베타 운영 중
+      </div>
+      <h1 class="hero-title">
+        당신과 채널을<br>
+        <span class="highlight">악성댓글로부터</span><br>
+        보호합니다
+      </h1>
+      <p class="hero-sub">
+        AI가 실시간으로 모든 댓글을 분석합니다.<br>
+        단순 욕설부터 교묘한 조롱, 집단 공격까지.<br>
+        당신은 콘텐츠에만 집중하세요.
+      </p>
+      <div class="hero-actions">
+        <button class="btn btn-primary btn-lg" onclick="document.getElementById('analyzer').scrollIntoView({behavior:'smooth'})">
+          🔍 내 채널 무료 분석
+        </button>
+        <button class="btn btn-outline btn-lg"onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLScJylXBJBp7udq3LENEi8dM_Fh6cMOSb5Br6jmWwl8xcSbM8A/viewform','_blank')" >채널 보호 시작하기</button>
+      </div>
+      <div class="hero-trust">
+        <div class="trust-badge">
+          🛡 이 채널은 보호받고 있습니다
+        </div>
+      </div>
+      <div class="hero-stats" style="margin-top:32px;">
+        <div class="hero-stat">
+          <span>12,400+</span>
+          <span>보호 중인 채널</span>
+        </div>
+        <div class="hero-stat">
+          <span>98.2%</span>
+          <span>악플 차단율</span>
+        </div>
+        <div class="hero-stat">
+          <span>340건</span>
+          <span>법적 대응 성공</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-visual float">
+      <div class="dashboard-card">
+        <div class="dash-header">
+          <div class="dash-dots">
+            <span style="background:#FF5F57"></span>
+            <span style="background:#FEBC2E"></span>
+            <span style="background:#28C840"></span>
+          </div>
+          <span class="dash-title">악플AI Dashboard</span>
+        </div>
+        <div class="dash-body">
+          <!-- Gauge -->
+          <div class="gauge-section">
+            <div class="gauge-wrap">
+              <canvas id="heroGauge" width="140" height="80"></canvas>
+              <div class="gauge-center">
+                <div class="gauge-num">67</div>
+                <div class="gauge-label">위험도</div>
+              </div>
+            </div>
+            <div class="gauge-info">
+              <div class="gauge-title">@your_channel</div>
+              <div class="metric-row">
+                <span class="metric-label">클린 점수</span>
+                <span class="metric-val text-green">78 / 100</span>
+              </div>
+              <div class="metric-bar"><div class="metric-fill" style="width:78%;background:var(--green-400)"></div></div>
+              <div style="height:8px"></div>
+              <div class="metric-row">
+                <span class="metric-label">악플 비율</span>
+                <span class="metric-val text-red">18.4%</span>
+              </div>
+              <div class="metric-bar"><div class="metric-fill" style="width:18%;background:var(--red-400)"></div></div>
+            </div>
+          </div>
+          <!-- Trend -->
+          <div class="trend-section">
+            <div class="trend-label">⚡ 7일 악플 추이</div>
+            <canvas id="trendChart"></canvas>
+          </div>
+          <!-- Comments -->
+          <div class="comment-feed">
+            <div class="comment-item toxic">
+              <span class="comment-status status-hidden">숨김</span>
+              <span class="comment-text">이 ㅅㅂ 또 나왔네 진짜...</span>
+              <span class="comment-score text-red">94점</span>
+            </div>
+            <div class="comment-item toxic">
+              <span class="comment-status status-hidden">숨김</span>
+              <span class="comment-text">역시 퀄리티가 일정하네 ㅎ</span>
+              <span class="comment-score text-yellow">81점</span>
+            </div>
+            <div class="comment-item clean">
+              <span class="comment-status status-safe">정상</span>
+              <span class="comment-text">오늘도 좋은 영상 감사해요!</span>
+              <span class="comment-score text-green">3점</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STORY -->
+<section class="story-section" id="story">
+  <div class="story-inner">
+    <div class="section-label"><span class="tag">크리에이터의 현실</span></div>
+    <h2 class="section-title">크리에이터는 콘텐츠에 집중해야 합니다<br><span class="text-blue">악성댓글 관리 말고요</span></h2>
+    <div class="story-grid">
+      <div class="pain-list">
+        <div class="pain-item">
+          <div class="pain-icon">😩</div>
+          <div class="pain-text">
+            <strong>정신적 소진</strong>
+            매일 올라오는 악플에 지쳐 콘텐츠 의욕이 떨어집니다
+          </div>
+        </div>
+        <div class="pain-item">
+          <div class="pain-icon">⏱️</div>
+          <div class="pain-text">
+            <strong>시간 낭비</strong>
+            댓글 관리에 매일 1~2시간을 쏟아붓고 있습니다
+          </div>
+        </div>
+        <div class="pain-item">
+          <div class="pain-icon">💔</div>
+          <div class="pain-text">
+            <strong>커뮤니티 붕괴</strong>
+            악플이 늘면 선량한 구독자들이 떠납니다
+          </div>
+        </div>
+        <div class="pain-item">
+          <div class="pain-icon">⚖️</div>
+          <div class="pain-text">
+            <strong>법적 리스크</strong>
+            허위사실 유포, 명예훼손 — 혼자 대응하기 너무 어렵습니다
+          </div>
+        </div>
+      </div>
+      <div class="solution-card">
+        <h3>🛡 악플AI가<br>당신의 보호막이 됩니다</h3>
+        <div class="solution-items">
+          <div class="sol-item">
+            <div class="sol-icon">🤖</div>
+            AI가 24시간 댓글을 감시합니다
+          </div>
+          <div class="sol-item">
+            <div class="sol-icon">🚫</div>
+            단순 욕설부터 교묘한 조롱까지 감지합니다
+          </div>
+          <div class="sol-item">
+            <div class="sol-icon">💾</div>
+            증거를 자동으로 보존합니다
+          </div>
+          <div class="sol-item">
+            <div class="sol-icon">⚖️</div>
+            법적 대응까지 원스톱으로 지원합니다
+          </div>
+          <div class="sol-item">
+            <div class="sol-icon">✨</div>
+            당신은 콘텐츠에만 집중하면 됩니다
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VIRAL ANALYZER -->
+<section class="analyzer-section" id="analyzer">
+  <div class="container">
+    <div class="section-label"><span class="tag">🔥 무료 체험</span></div>
+    <h2 class="section-title">내 채널, 지금 얼마나 위험한가요?</h2>
+    <p class="section-desc">채널명만 입력하면 30초 안에 AI가 분석합니다.<br>완전 무료 · 회원가입 불필요</p>
+    <div class="analyzer-container">
+      <div class="analyzer-box">
+        <div class="analyzer-topbar">
+          <div class="topbar-dots">
+            <span style="background:#FF5F57"></span>
+            <span style="background:#FEBC2E"></span>
+            <span style="background:#28C840"></span>
+          </div>
+          <span class="topbar-title">악플AI Risk Analyzer</span>
+          <div class="topbar-live"><span class="live-dot"></span>LIVE</div>
+        </div>
+        <div class="analyzer-body">
+          <div id="inputSection">
+            <div class="input-group">
+              <input class="url-input" id="channelInput" type="text"
+                placeholder="유튜브 채널명 입력 (예: 침착맨, 쯔양, 감스트)">
+              <button class="btn-analyze" id="analyzeBtn" onclick="startAnalysis()">분석 시작 🔍</button>
+            </div>
+            <div class="sample-channels">
+              <span>예시 채널:</span>
+              <button class="sample-btn" onclick="setChannel('침착맨')">침착맨</button>
+              <button class="sample-btn" onclick="setChannel('쯔양')">쯔양</button>
+              <button class="sample-btn" onclick="setChannel('감스트')">감스트</button>
+              <button class="sample-btn" onclick="setChannel('주호민')">주호민</button>
+              <button class="sample-btn" onclick="setChannel('내 채널 입력')">내 채널</button>
+            </div>
+          </div>
+
+          <!-- SCAN -->
+          <div id="scanArea">
+            <div class="scan-terminal" id="scanTerminal">
+              <div class="scan-beam" id="scanBeam"></div>
+              <div id="logOutput"></div>
+            </div>
+            <div class="waveform-wrap" id="waveformWrap">
+              <div class="wave-label">📊 댓글 패턴 파형 분석</div>
+              <canvas id="waveCanvas"></canvas>
+            </div>
+          </div>
+
+          <!-- RESULT -->
+          <div id="resultArea">
+            <div class="result-header">
+              <div class="result-gauge-wrap">
+                <canvas id="resultGaugeCanvas" width="180" height="100"></canvas>
+                <div class="result-gauge-center">
+                  <div class="result-score-num" id="resultScoreNum">0</div>
+                  <div class="result-score-label">위험도</div>
+                </div>
+              </div>
+              <div class="result-summary">
+                <div class="result-channel-name" id="resultChannelName">@channel</div>
+                <div class="result-channel-sub" id="resultChannelSub">분석 완료 · <span id="resultTime"></span></div>
+                <div class="result-metrics">
+                  <div class="result-metric">
+                    <div class="result-metric-label">클린 점수</div>
+                    <div class="result-metric-value" id="cleanScoreVal">—</div>
+                  </div>
+                  <div class="result-metric">
+                    <div class="result-metric-label">악플 비율</div>
+                    <div class="result-metric-value" id="toxicRateVal">—</div>
+                  </div>
+                  <div class="result-metric">
+                    <div class="result-metric-label">분석 댓글</div>
+                    <div class="result-metric-value" id="commentCountVal">—</div>
+                  </div>
+                  <div class="result-metric">
+                    <div class="result-metric-label">위험 등급</div>
+                    <div class="result-metric-value" id="riskGradeVal">—</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="risk-bars" id="riskBarsContainer"></div>
+            <div id="verdictContainer"></div>
+
+            <div class="share-card">
+              <div class="share-card-text">
+                <strong>📤 결과를 공유하고 친구 채널과 비교해보세요</strong>
+                자랑할 수도 있고, 경각심을 줄 수도 있습니다
+              </div>
+              <div class="share-btns">
+                <button class="share-btn share-kakao" onclick="doShare('kakao')">💬 카카오</button>
+                <button class="share-btn share-x" onclick="doShare('x')">𝕏</button>
+                <button class="share-btn share-copy" onclick="doShare('copy')">🔗 복사</button>
+              </div>
+            </div>
+
+            <button class="reset-btn" onclick="resetAnalyzer()">↺ 다른 채널 분석하기</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RANKING -->
+<section class="ranking-section" id="ranking">
+  <div class="container">
+    <div class="section-label"><span class="tag">📊 실시간 랭킹</span></div>
+    <h2 class="section-title">전국 유튜버 채널 순위</h2>
+    <p class="section-desc">오늘 분석된 채널들의 실시간 위험도 · 클린 점수 순위</p>
+    <div class="rank-tabs">
+      <button class="rank-tab active" onclick="switchTab(this,'danger')">🔴 위험도 순위</button>
+      <button class="rank-tab" onclick="switchTab(this,'clean')">🟢 클린 채널 순위</button>
+    </div>
+    <div class="ranking-table">
+      <div class="rank-table-header">
+        <span></span><span>채널</span><span style="text-align:center">위험도</span><span style="text-align:center">클린점수</span>
+      </div>
+      <div id="rankList"></div>
+    </div>
+    <div style="text-align:center;margin-top:24px;font-size:13px;color:var(--gray-400)">
+      내 채널 순위 확인 → <a href="#analyzer" style="color:var(--blue-400)">무료 분석하기</a>
+      &nbsp;·&nbsp; 랭킹은 실시간 업데이트됩니다
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features-section" id="features">
+  <div class="container">
+    <div class="section-label"><span class="tag">🛡 서비스 기능</span></div>
+    <h2 class="section-title">완전한 채널 보호 시스템</h2>
+    <p class="section-desc">악성댓글 탐지부터 법적 대응까지, 하나의 플랫폼에서</p>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon-wrap">🔗</div>
+        <div class="feature-name">YouTube 원클릭 연동</div>
+        <div class="feature-desc">공식 OAuth로 안전하게 채널을 연결합니다. 비밀번호를 입력할 필요가 없습니다.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon-wrap">🧠</div>
+        <div class="feature-name">3단계 AI 악플 감지</div>
+        <div class="feature-desc">규칙 기반 필터 → 한국어 특화 NLP 모델 → GPT 정밀 재검사. 단순 욕설부터 교묘한 조롱까지 잡아냅니다.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon-wrap">🚫</div>
+        <div class="feature-name">자동 댓글 숨김</div>
+        <div class="feature-desc">악성댓글을 즉시 자동으로 숨김 처리합니다. 오탐 시 복원도 한 클릭.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon-wrap">💾</div>
+        <div class="feature-name">증거 자동 보존</div>
+        <div class="feature-desc">삭제 전 악성댓글의 스크린샷, 작성자 정보, URL, 타임스탬프를 법적 효력 있는 형태로 저장합니다.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon-wrap">📋</div>
+        <div class="feature-name">고소장 자동 생성 <span class="feature-badge-new">NEW</span></div>
+        <div class="feature-desc">수집된 증거를 바탕으로 법원에 제출 가능한 고소장 초안을 자동으로 작성합니다.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon-wrap">⚖️</div>
+        <div class="feature-name">제휴 법무법인 연결</div>
+        <div class="feature-desc">전국 20개 제휴 법무법인과 연결, 실제 법적 대응까지 원스톱으로 지원합니다.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon-wrap">📊</div>
+        <div class="feature-name">월간 채널 건강 리포트</div>
+        <div class="feature-desc">악플 트렌드, 위험 키워드, 채널 위험도 변화를 매월 리포트로 받아보세요.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon-wrap">🏅</div>
+        <div class="feature-name">인증 보호 배지 <span class="feature-badge-new">NEW</span></div>
+        <div class="feature-desc">캡스·세스코처럼 "악플AI 보호 채널" 공식 인증 배지를 채널에 표시하세요.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AUTO-REPLY SECTION -->
+<section style="padding:100px 40px; background:var(--navy-900); position:relative;" id="autoreply">
+  <div style="max-width:1100px;margin:0 auto;">
+    <div style="text-align:center;margin-bottom:56px;">
+      <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(29,111,232,0.15);border:1px solid rgba(29,111,232,0.35);color:#6BA8FF;padding:6px 16px;border-radius:100px;font-size:12px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:16px;">🤖 AI 자동 대댓글</div>
+      <h2 style="font-family:'Black Han Sans',sans-serif;font-size:clamp(28px,4.5vw,52px);text-align:center;margin-bottom:16px;letter-spacing:-0.02em;">AI가 대신 대댓글을 달아드립니다</h2>
+      <p style="text-align:center;color:#7A8BA8;font-size:17px;line-height:1.7;max-width:560px;margin:0 auto;">악플엔 경고를, 좋은 댓글엔 감사를. 크리에이터의 말투를 학습해서 자연스럽게 달아드려요.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:960px;margin:0 auto;">
+
+      <!-- 악플 경고 대댓글 -->
+      <div style="background:var(--navy-800);border:1px solid rgba(255,255,255,0.08);border-radius:16px;overflow:hidden;">
+        <div style="padding:16px 20px;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;gap:10px;background:rgba(255,68,68,0.08);">
+          <span style="font-size:18px;">🚨</span>
+          <div>
+            <div style="font-size:14px;font-weight:800;color:#FF7070;">악플 감지 → 자동 경고 대댓글</div>
+            <div style="font-size:11px;color:#7A8BA8;margin-top:2px;">Pro 플랜 이상 · 독성 점수 70점↑ 자동 발동</div>
+          </div>
+        </div>
+        <div style="padding:20px;display:flex;flex-direction:column;gap:12px;">
+          <div>
+            <div style="font-size:11px;color:#7A8BA8;margin-bottom:6px;font-weight:600;">😡 악플러 댓글 (독성 89점)</div>
+            <div style="background:rgba(255,68,68,0.08);border:1px solid rgba(255,68,68,0.2);border-radius:10px;padding:12px 14px;font-size:13px;color:#F0F0F8;line-height:1.6;">역시 퀄리티가 일정하네요 ㅎ... 예전이 훨씬 나았는데 요즘은 왜 이렇죠?</div>
+          </div>
+          <div style="text-align:center;font-size:20px;color:#3A4A5E;">↓ AI 자동 감지</div>
+          <div>
+            <div style="font-size:11px;color:#3B8BFF;margin-bottom:6px;font-weight:600;text-align:right;">🤖 악플AI 자동 경고 대댓글</div>
+            <div style="background:rgba(29,111,232,0.1);border:1px solid rgba(29,111,232,0.25);border-radius:10px;padding:12px 14px;font-size:13px;color:#6BA8FF;line-height:1.6;font-style:italic;">⚠️ 이 채널은 악플AI의 보호를 받고 있습니다. 건설적인 피드백은 환영하지만, 비하나 조롱은 자동으로 감지되어 기록됩니다. 건전한 댓글 문화에 함께해주세요.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 클린 감사 대댓글 -->
+      <div style="background:var(--navy-800);border:1px solid rgba(255,255,255,0.08);border-radius:16px;overflow:hidden;">
+        <div style="padding:16px 20px;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;gap:10px;background:rgba(0,208,132,0.07);">
+          <span style="font-size:18px;">💙</span>
+          <div>
+            <div style="font-size:14px;font-weight:800;color:#00D084;">클린 댓글 감지 → 자동 감사 대댓글</div>
+            <div style="font-size:11px;color:#7A8BA8;margin-top:2px;">Elite 플랜 · 클린 점수 90점↑ + 좋아요 10개↑</div>
+          </div>
+        </div>
+        <div style="padding:20px;display:flex;flex-direction:column;gap:12px;">
+          <div>
+            <div style="font-size:11px;color:#7A8BA8;margin-bottom:6px;font-weight:600;">💙 팬 댓글 (클린 96점, 좋아요 42개)</div>
+            <div style="background:rgba(0,208,132,0.07);border:1px solid rgba(0,208,132,0.15);border-radius:10px;padding:12px 14px;font-size:13px;color:#F0F0F8;line-height:1.6;">오늘 영상 보면서 많이 힘을 얻었어요. 항상 좋은 콘텐츠 감사합니다 🙏</div>
+          </div>
+          <div style="text-align:center;font-size:20px;color:#3A4A5E;">↓ AI 자동 감사</div>
+          <div>
+            <div style="font-size:11px;color:#3B8BFF;margin-bottom:6px;font-weight:600;text-align:right;">🤖 악플AI 자동 감사 대댓글 (말투 학습)</div>
+            <div style="background:rgba(29,111,232,0.1);border:1px solid rgba(29,111,232,0.25);border-radius:10px;padding:12px 14px;font-size:13px;color:#6BA8FF;line-height:1.6;font-style:italic;">💙 이런 댓글이 정말 큰 힘이 돼요! 더 좋은 콘텐츠로 보답할게요. 항상 응원해주셔서 진심으로 감사드립니다 🙏</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 대댓글 플랜 안내 -->
+    <div style="max-width:960px;margin:24px auto 0;background:rgba(29,111,232,0.06);border:1px solid rgba(29,111,232,0.2);border-radius:14px;padding:20px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+      <div style="flex:1;">
+        <div style="font-size:15px;font-weight:800;margin-bottom:4px;">🤖 크리에이터 말투 학습 기능 (Elite)</div>
+        <div style="font-size:13px;color:#7A8BA8;line-height:1.6;">채널의 기존 댓글 답변을 AI가 학습해서, 크리에이터가 직접 쓴 것처럼 자연스러운 대댓글을 생성합니다. 이모지 사용 패턴, 문장 길이, 말투까지 완벽하게 모사합니다.</div>
+      </div>
+      <button class="btn-primary" style="font-size:14px;padding:12px 24px;">Elite 플랜 보기</button>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="hiw-section" id="hiw">
+  <div class="container">
+    <div class="section-label"><span class="tag">사용 방법</span></div>
+    <h2 class="section-title">3단계로 완성되는 채널 보호</h2>
+    <p class="section-desc">복잡한 설정 없이 3분 만에 시작할 수 있습니다</p>
+    <div class="hiw-steps">
+      <div class="hiw-step">
+        <div class="hiw-num">1</div>
+        <div class="hiw-title">채널 연결</div>
+        <div class="hiw-desc">YouTube 계정으로 로그인하고 채널을 안전하게 연결합니다. OAuth 인증으로 비밀번호는 불필요.</div>
+      </div>
+      <div class="hiw-step">
+        <div class="hiw-num">2</div>
+        <div class="hiw-title">AI 분석 시작</div>
+        <div class="hiw-desc">AI가 모든 댓글을 실시간으로 분석합니다. 단순 욕설부터 교묘한 조롱, 집단 공격까지.</div>
+      </div>
+      <div class="hiw-step">
+        <div class="hiw-num">3</div>
+        <div class="hiw-title">자동 보호 완료</div>
+        <div class="hiw-desc">악성댓글은 자동으로 숨겨지고 증거가 보존됩니다. 당신은 콘텐츠에만 집중하세요.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing-section" id="pricing">
+  <div class="container">
+    <div class="section-label"><span class="tag">요금제</span></div>
+    <h2 class="section-title">채널 규모에 맞는 보호 플랜</h2>
+    <p class="section-desc">무료로 시작하고, 필요할 때 업그레이드하세요</p>
+    <div class="pricing-toggle">
+      <span style="color:var(--white)">월간 결제</span>
+      <div class="toggle-switch" id="billingToggle" onclick="toggleBilling()">
+        <div class="toggle-knob"></div>
+      </div>
+      <span style="color:var(--gray-400)">연간 결제</span>
+      <span class="discount-badge">20% 할인</span>
+    </div>
+    <div class="pricing-grid">
+      <!-- FREE -->
+      <div class="pricing-card">
+        <div class="plan-name">Free</div>
+        <div class="plan-price-wrap">
+          <span class="plan-price">₩0</span>
+          <span class="plan-period"></span>
+        </div>
+        <div class="plan-annual-note"></div>
+        <div class="plan-desc">채널 위험도를 확인하고 싶은 크리에이터를 위한 무료 플랜</div>
+        <div class="plan-features">
+          <div class="plan-feat"><span class="check">✓</span><span class="feat-text">채널 위험도 분석 (1회/주)</span></div>
+          <div class="plan-feat"><span class="check">✓</span><span class="feat-text">클린 점수 확인</span></div>
+          <div class="plan-feat"><span class="check">✓</span><span class="feat-text">기본 위험 키워드 리포트</span></div>
+          <div class="plan-feat"><span class="check">✓</span><span class="feat-text">공유 가능한 결과 카드</span></div>
+          <div class="plan-feat"><span class="check">✓</span><span class="feat-text">전국 랭킹 참여</span></div>
+          <div class="plan-feat"><span class="cross">✗</span><span class="feat-text dimmed">자동 숨김 처리</span></div>
+          <div class="plan-feat"><span class="cross">✗</span><span class="feat-text dimmed">대시보드</span></div>
+          <div class="plan-feat"><span class="cross">✗</span><span class="feat-text dimmed">증거 보존</span></div>
+        </div>
+        <button class="btn-plan btn-plan-outline" onclick="document.getElementById('analyzer').scrollIntoView({behavior:'smooth'})">무료로 시작하기</button>
+      </div>
+
+      <!-- STARTER -->
+      <div class="pricing-card">
+        <div class="plan-name">Starter</div>
+        <div class="plan-price-wrap">
+          <span class="plan-price text-blue" id="starterPrice">₩15,000</span>
+          <span class="plan-period">/월</span>
+        </div>
+        <div class="plan-annual-note" id="starterNote"></div>
+        <div class="plan-desc">막 시작한 크리에이터를 위한 기본 보호 플랜</div>
+        <div class="plan-features">
+          <div class="plan-feat"><span class="check">✓</span><span class="feat-text">AI 댓글 분석 (월 5,000개)</span></div>
+          <div class="plan-feat"><span class="check">✓</span><span class="feat-text">기본 대시보드</span></div>
+          <div class="plan-feat"><span class="check">✓</span><span class="feat-text">이메일 알림</span></div>
+          <div class="plan-feat"><span class="check">✓</span><span class="feat-text">보호 배지 (기본형)</span></div>
+          <div class="plan-feat"><span class="check">✓</span><span class="feat-text">무료 플랜 기능 전체</span></div>
+          <div class="plan-feat"><span class="cross">✗</span><span class="feat-text dimmed">자동 숨김 처리</span></div>
+          <div class="plan-feat"><span class="cross">✗</span><span class="feat-text dimmed">증거 보존</span></div>
+          <div class="plan-feat"><span class="cross">✗</span><span class="feat-text dimmed">법적 문서 생성</span></div>
+        </div>
+        <button class="btn-plan btn-plan-outline">시작하기</button>
+      </div>
+
+      <!-- PRO (POPULAR) -->
+      <div class="pricing-card popular">
+        <div class="popular-tag">⭐ 가장 인기</div>
+        <div class="plan-name">Pro Creator</div>
+        <div class="plan-price-wrap">
+          <span class="plan-price text-blue" id="proPrice">₩45,000</span>
+          <span class="plan-period">/월</span>
+        </div>
+        <div class="plan-annual-note" id="proNote"></div>
+        <div class="plan-desc">성장하는 채널을 위한 완전한 보호 시스템</div>
+        <div class="plan-features">
+          <div class="plan-feat"><span class="check">✓</span><span class="feat-text">AI 댓글 분석 (월 50,000개)</span></div>
+          <div class="plan-feat"><span class="check">✓</span><span class="feat-text"><strong>자동 댓글 숨김 처리</strong></span></div>
+          <div class="plan-feat"><span class="check">✓</span><span class="feat-text"><strong>증거 자동 보존</strong></span></div>
+          <div class="plan-feat"><span class="check">✓</span><span class="feat-text">월간 채널 건강 리포트</span></div>
+          <div class="plan-feat"><span class="check">✓</span><span class="feat-text">키워드 트렌드 분석</span></div>
+          <div class="plan-feat"><span class="check">✓</span><span class="feat-text">보호 배지 (고급형)</span></div>
+          <div class="plan-feat"><span class="check">✓</span><span class="feat-text">Starter 플랜 기능 전체</span></div>
+          <div class="plan-feat"><span class="cross">✗</span><span class="feat-text dimmed">법적 문서 생성</span></div>
+        </div>
+        <button class="btn-plan btn-plan-primary">지금 시작하기</button>
+      </div>
+
+      <!-- ELITE -->
+      <div class="pricing-card">
+        <div class="plan-name">Elite</div>
+        <div class="plan-price-wrap">
+          <span class="plan-price text-blue" id="elitePrice">₩120,000</span>
+          <span class="plan-period">/월</span>
+        </div>
+        <div class="plan-annual-note" id="eliteNote"></div>
+        <div class="plan-desc">대형 채널 및 법적 대응까지 필요한 크리에이터</div>
+        <div class="plan-features">
+          <div class="plan-feat"><span class="check">✓</span><span class="feat-text"><strong>무제한 AI 분석</strong></span></div>
+          <div class="plan-feat"><span class="check">✓</span><span class="feat-text"><strong>⚠️ 악플 경고 대댓글 자동화</strong></span></div>
+          <div class="plan-feat"><span class="check">✓</span><span class="feat-text"><strong>💙 클린 감사 대댓글 자동화 </strong><span style="background:#1D6FE8;color:#fff;font-size:10px;font-weight:800;padding:2px 6px;border-radius:4px;">NEW</span></span></div>
+          <div class="plan-feat"><span class="check">✓</span><span class="feat-text">크리에이터 말투 학습</span></div>
+          <div class="plan-feat"><span class="check">✓</span><span class="feat-text"><strong>고소장 초안 자동 생성</strong></span></div>
+          <div class="plan-feat"><span class="check">✓</span><span class="feat-text"><strong>제휴 법무법인 연결</strong></span></div>
+          <div class="plan-feat"><span class="check">✓</span><span class="feat-text">전담 매니저</span></div>
+          <div class="plan-feat"><span class="check">✓</span><span class="feat-text">커스텀 보호 배지</span></div>
+          <div class="plan-feat"><span class="check">✓</span><span class="feat-text">API 접근</span></div>
+          <div class="plan-feat"><span class="check">✓</span><span class="feat-text">Pro 플랜 기능 전체</span></div>
+        </div>
+        <button class="btn-plan btn-plan-outline">문의하기</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROTECTION BADGE -->
+<section class="badge-section" id="badge">
+  <div class="container">
+    <div class="section-label"><span class="tag">🏅 인증 배지</span></div>
+    <h2 class="section-title">채널에 신뢰의 증거를 달아보세요</h2>
+    <p class="section-desc">캡스, 세스코처럼 — AI 보호를 받고 있다는 공식 인증 배지로 구독자의 신뢰를 높이세요</p>
+    <div style="display:flex;justify-content:center;">
+      <div class="badge-display">
+        <div class="badge-shield">🛡</div>
+        <div>
+          <div class="badge-text-main">이 채널은 악플AI로부터<br>보호받고 있습니다</div>
+          <div class="badge-text-sub">AKPUL AI CERTIFIED · AI MODERATION PROTECTED</div>
+        </div>
+      </div>
+    </div>
+    <div class="badge-effects">
+      <div class="badge-effect">✅ 악성댓글 자동 차단</div>
+      <div class="badge-effect">✅ 구독자 신뢰도 향상</div>
+      <div class="badge-effect">✅ 채널 권위 강화</div>
+      <div class="badge-effect">✅ 커뮤니티 건강성 인증</div>
+    </div>
+    <p style="margin-top:24px;font-size:13px;color:var(--gray-400)">배지는 채널 소개란, 영상 섬네일, 배너에 사용 가능한 고해상도 파일로 제공됩니다</p>
+  </div>
+</section>
+
+<!-- SECURITY -->
+<section class="security-section">
+  <div class="container">
+    <div class="section-label"><span class="tag">🔒 보안</span></div>
+    <h2 class="section-title">안전하고 신뢰할 수 있습니다</h2>
+    <p class="section-desc">크리에이터의 채널과 데이터를 가장 안전하게 보호합니다</p>
+    <div class="security-grid">
+      <div class="security-item">
+        <div class="sec-icon">🔐</div>
+        <div class="sec-title">YouTube 공식 API</div>
+        <div class="sec-desc">Google이 승인한 공식 API만 사용합니다</div>
+      </div>
+      <div class="security-item">
+        <div class="sec-icon">🛡</div>
+        <div class="sec-title">OAuth 인증</div>
+        <div class="sec-desc">비밀번호를 저장하지 않습니다</div>
+      </div>
+      <div class="security-item">
+        <div class="sec-icon">🔒</div>
+        <div class="sec-title">최소 권한</div>
+        <div class="sec-desc">댓글 관리에 필요한 권한만 요청합니다</div>
+      </div>
+      <div class="security-item">
+        <div class="sec-icon">💿</div>
+        <div class="sec-title">암호화 저장</div>
+        <div class="sec-desc">모든 데이터는 AES-256으로 암호화됩니다</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BETA -->
+<section class="beta-section" id="beta">
+  <div class="container">
+    <div class="beta-counter">⚡ 베타 참여 가능 인원 · 잔여 <span id="betaCount">37</span>명</div>
+    <h2 class="section-title">베타 크리에이터 모집 중</h2>
+    <p class="section-desc">처음 100명의 크리에이터에게 특별 혜택을 드립니다</p>
+    <div class="beta-perks">
+      <div class="beta-perk">🎁 Pro 플랜 3개월 무료</div>
+      <div class="beta-perk">🏅 파운더 배지 영구 부여</div>
+      <div class="beta-perk">💎 평생 20% 할인</div>
+      <div class="beta-perk">🎙 제품 개발 직접 참여</div>
+    </div>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+      <button class="btn btn-primary btn-lg" onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLScJylXBJBp7udq3LENEi8dM_Fh6cMOSb5Br6jmWwl8xcSbM8A/viewform','_blank')">베타 참여 신청하기 →</button>
+      <button class="btn btn-outline btn-lg">채널 연결 시작하기</button>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta">
+  <h2 class="final-cta-title">
+    채널을 지금 바로<br>
+    <span class="text-blue">보호하세요</span>
+  </h2>
+  <p class="final-cta-sub">악성댓글이 채널을 망가뜨리기 전에.<br>악플AI가 먼저 막겠습니다.</p>
+  <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+    <button class="btn btn-primary btn-lg" onclick="document.getElementById('analyzer').scrollIntoView({behavior:'smooth'})">🔍 내 채널 무료 분석</button>
+    <button class="btn btn-outline btn-lg"onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLScJylXBJBp7udq3LENEi8dM_Fh6cMOSb5Br6jmWwl8xcSbM8A/viewform','_blank')" >채널 보호 시작하기</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="logo-text">
+          <div class="shield-icon" style="width:28px;height:28px;font-size:12px;">🛡</div>
+          악플AI
+        </div>
+        <p>AI 기반 유튜브 채널 악성댓글 보호 서비스. 당신의 채널을 지킵니다.</p>
+      </div>
+      <div class="footer-links">
+        <h4>서비스</h4>
+        <ul>
+          <li><a href="https://docs.google.com/forms/d/e/1FAIpQLScJylXBJBp7udq3LENEi8dM_Fh6cMOSb5Br6jmWwl8xcSbM8A/viewform" target="_blank">무료 분석</a></li>
+          <li><a href="https://docs.google.com/forms/d/e/1FAIpQLScJylXBJBp7udq3LENEi8dM_Fh6cMOSb5Br6jmWwl8xcSbM8A/viewform" target="_blank">요금제</a></li>
+          <li><a href="https://docs.google.com/forms/d/e/1FAIpQLScJylXBJBp7udq3LENEi8dM_Fh6cMOSb5Br6jmWwl8xcSbM8A/viewform" target="_blank">베타 참여</a></li>
+          <li><a href="https://docs.google.com/forms/d/e/1FAIpQLScJylXBJBp7udq3LENEi8dM_Fh6cMOSb5Br6jmWwl8xcSbM8A/viewform" target="_blank">법인 문의</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>회사</h4>
+        <ul>
+          <li><a href="https://docs.google.com/forms/d/e/1FAIpQLScJylXBJBp7udq3LENEi8dM_Fh6cMOSb5Br6jmWwl8xcSbM8A/viewform" target="_blank">소개</a></li>
+          <li><a href="https://docs.google.com/forms/d/e/1FAIpQLScJylXBJBp7udq3LENEi8dM_Fh6cMOSb5Br6jmWwl8xcSbM8A/viewform" target="_blank">블로그</a></li>
+          <li><a href="https://docs.google.com/forms/d/e/1FAIpQLScJylXBJBp7udq3LENEi8dM_Fh6cMOSb5Br6jmWwl8xcSbM8A/viewform" target="_blank">채용</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>법적 고지</h4>
+        <ul>
+          <li><a href="https://docs.google.com/forms/d/e/1FAIpQLScJylXBJBp7udq3LENEi8dM_Fh6cMOSb5Br6jmWwl8xcSbM8A/viewform" target="_blank">이용약관</a></li>
+          <li><a href="https://docs.google.com/forms/d/e/1FAIpQLScJylXBJBp7udq3LENEi8dM_Fh6cMOSb5Br6jmWwl8xcSbM8A/viewform" target="_blank">개인정보처리방침</a></li>
+          <li><a href="https://docs.google.com/forms/d/e/1FAIpQLScJylXBJBp7udq3LENEi8dM_Fh6cMOSb5Br6jmWwl8xcSbM8A/viewform" target="_blank">Google API 사용방침</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 악플AI Inc. · 사업자등록번호: 000-00-00000</span>
+      <span>This product uses the YouTube API Services</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+const BETA_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLScJylXBJBp7udq3LENEi8dM_Fh6cMOSb5Br6jmWwl8xcSbM8A/viewform";
+
+// ─── AUDIO ──────────────────────────────────────────────────
+let _ac = null;
+const ac = () => { if(!_ac) _ac = new (window.AudioContext||window.webkitAudioContext)(); return _ac; };
+function tone(f,d,type='sine',v=0.25){
+  try{const o=ac().createOscillator(),g=ac().createGain();o.connect(g);g.connect(ac().destination);
+  o.type=type;o.frequency.value=f;g.gain.setValueAtTime(v,ac().currentTime);
+  g.gain.exponentialRampToValueAtTime(0.001,ac().currentTime+d);o.start();o.stop(ac().currentTime+d);}catch(e){}
+}
+function tick(){tone(1000,0.03,'square',0.1);}
+function alertBeeps(n){for(let i=0;i<n;i++)setTimeout(()=>tone(700+i*60,0.08,'square',0.18),i*110);}
+function soundDanger(){tone(180,0.6,'sawtooth',0.22);setTimeout(()=>tone(160,0.5,'sawtooth',0.18),120);}
+function soundWarn(){tone(440,0.2,'triangle',0.25);setTimeout(()=>tone(380,0.3,'triangle',0.2),220);}
+function soundSafe(){[523,659,784].forEach((f,i)=>setTimeout(()=>tone(f,0.2,'sine',0.25),i*160));}
+
+// ─── HERO GAUGE ──────────────────────────────────────────────
+function drawArcGauge(canvas, score, W, H) {
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, W, H);
+  const cx = W/2, cy = H-8, r = Math.min(W*0.45, H-12);
+  ctx.beginPath(); ctx.arc(cx, cy, r, Math.PI, 0);
+  ctx.lineWidth = 12; ctx.lineCap = 'round';
+  ctx.strokeStyle = 'rgba(255,255,255,0.07)'; ctx.stroke();
+  const ang = Math.PI + (score/100)*Math.PI;
+  const g = ctx.createLinearGradient(cx-r, cy, cx+r, cy);
+  g.addColorStop(0,'#00D084'); g.addColorStop(0.45,'#FFCC00'); g.addColorStop(1,'#FF4444');
+  ctx.beginPath(); ctx.arc(cx, cy, r, Math.PI, ang);
+  ctx.lineWidth = 12; ctx.lineCap = 'round'; ctx.strokeStyle = g; ctx.stroke();
+  // needle
+  const nx = Math.PI + (score/100)*Math.PI;
+  ctx.save(); ctx.translate(cx,cy);
+  ctx.rotate(nx - Math.PI);
+  ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(r-6,0);
+  ctx.lineWidth = 2.5; ctx.strokeStyle = '#fff'; ctx.lineCap = 'round'; ctx.stroke();
+  ctx.restore();
+  ctx.beginPath(); ctx.arc(cx,cy,5,0,Math.PI*2);
+  ctx.fillStyle='#fff'; ctx.fill();
+}
+drawArcGauge(document.getElementById('heroGauge'), 67, 140, 80);
+
+// ─── HERO TREND CHART ────────────────────────────────────────
+(function(){
+  const c = document.getElementById('trendChart');
+  const W = c.offsetWidth || 280; const H = 56;
+  c.width = W*2; c.height = H*2;
+  const ctx = c.getContext('2d');
+  const data = [8,12,9,18,24,31,28];
+  const max = Math.max(...data);
+  const pts = data.map((v,i)=>({ x: (i/(data.length-1))*(W*2-20)+10, y: H*2 - (v/max)*(H*2-16)-8 }));
+  ctx.beginPath(); pts.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));
+  ctx.lineWidth = 2.5; ctx.strokeStyle = '#FF4444'; ctx.lineJoin = 'round'; ctx.stroke();
+  const gr = ctx.createLinearGradient(0,0,0,H*2);
+  gr.addColorStop(0,'rgba(255,68,68,0.25)'); gr.addColorStop(1,'rgba(255,68,68,0)');
+  ctx.lineTo(pts[pts.length-1].x, H*2); ctx.lineTo(pts[0].x, H*2);
+  ctx.closePath(); ctx.fillStyle = gr; ctx.fill();
+})();
+
+// ─── RANKING DATA ─────────────────────────────────────────────
+const rankData = {
+  danger: [
+    {rank:1,name:'채널 A',sub:'구독자 230만',score:92,clean:22,color:'#FF4444'},
+    {rank:2,name:'채널 B',sub:'구독자 88만',score:87,clean:35,color:'#FF4444'},
+    {rank:3,name:'채널 C',sub:'구독자 145만',score:74,clean:48,color:'#FFCC00'},
+    {rank:4,name:'채널 D',sub:'구독자 45만',score:61,clean:57,color:'#FFCC00'},
+    {rank:5,name:'채널 E',sub:'구독자 67만',score:52,clean:64,color:'#FFCC00'},
+  ],
+  clean: [
+    {rank:1,name:'채널 F',sub:'구독자 380만',score:8,clean:97,color:'#00D084'},
+    {rank:2,name:'채널 G',sub:'구독자 120만',score:11,clean:94,color:'#00D084'},
+    {rank:3,name:'채널 H',sub:'구독자 55만',score:14,clean:91,color:'#00D084'},
+    {rank:4,name:'채널 I',sub:'구독자 200만',score:18,clean:88,color:'#00D084'},
+    {rank:5,name:'채널 J',sub:'구독자 73만',score:22,clean:85,color:'#00D084'},
+  ]
+};
+const rankEmoji = ['🥇','🥈','🥉','4','5'];
+const avatarColors = ['#1D6FE8','#E84C1D','#1DE88B','#E8D01D','#9B1DE8'];
+let curTab = 'danger';
+
+function renderRanking(tab) {
+  const list = document.getElementById('rankList');
+  list.innerHTML = '';
+  rankData[tab].forEach((r,i) => {
+    const scoreColor = r.score >= 70 ? '#FF4444' : r.score >= 40 ? '#FFCC00' : '#00D084';
+    const scoreBg = r.score >= 70 ? 'rgba(255,68,68,0.1)' : r.score >= 40 ? 'rgba(255,204,0,0.1)' : 'rgba(0,208,132,0.1)';
+    const initials = r.name.slice(-1);
+    list.innerHTML += `
+      <div class="rank-row">
+        <div class="rank-num-cell">${rankEmoji[i]}</div>
+        <div class="rank-channel-cell">
+          <div class="rank-avatar" style="background:${avatarColors[i]}20;color:${avatarColors[i]}">${initials}</div>
+          <div>
+            <div class="rank-name">${r.name}</div>
+            <div class="rank-sub">${r.sub}</div>
+          </div>
+        </div>
+        <div class="rank-score-cell">
+          <span class="score-badge" style="background:${scoreBg};color:${scoreColor}">${r.score}점</span>
+        </div>
+        <div class="rank-clean-cell" style="color:${r.clean >= 80 ? '#00D084' : r.clean >= 50 ? '#FFCC00' : '#FF4444'}">${r.clean}</div>
+      </div>`;
+  });
+}
+renderRanking('danger');
+
+function switchTab(el, tab) {
+  curTab = tab;
+  document.querySelectorAll('.rank-tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  renderRanking(tab);
+}
+
+// ─── BILLING TOGGLE ──────────────────────────────────────────
+let isAnnual = false;
+const prices = { starter:[15000,12000], pro:[45000,36000], elite:[120000,96000] };
+function toggleBilling(){
+  isAnnual = !isAnnual;
+  document.getElementById('billingToggle').classList.toggle('annual', isAnnual);
+  const fmt = n => '₩' + n.toLocaleString();
+  document.getElementById('starterPrice').textContent = fmt(prices.starter[isAnnual?1:0]);
+  document.getElementById('proPrice').textContent = fmt(prices.pro[isAnnual?1:0]);
+  document.getElementById('elitePrice').textContent = fmt(prices.elite[isAnnual?1:0]);
+  document.getElementById('starterNote').textContent = isAnnual ? '연 ₩144,000 (₩36,000 절약)' : '';
+  document.getElementById('proNote').textContent = isAnnual ? '연 ₩432,000 (₩108,000 절약)' : '';
+  document.getElementById('eliteNote').textContent = isAnnual ? '연 ₩1,152,000 (₩288,000 절약)' : '';
+}
+
+// ─── ANALYZER ────────────────────────────────────────────────
+let analyzing = false;
+let waveTimer = null;
+
+function setChannel(name){ document.getElementById('channelInput').value = name; }
+
+const profiles = [
+  { range:[70,95], color:'#FF4444', grade:'🔴 위험', items:[{l:'욕설·혐오',r:[65,90]},{l:'집단공격 패턴',r:[55,85]},{l:'반복 악성계정',r:[50,80]},{l:'개인정보 노출위험',r:[60,88]}], verdictTitle:'🚨 즉각 대응이 필요합니다', verdictDesc:'채널이 심각한 악성댓글 위협에 노출되어 있습니다. 방치하면 커뮤니티가 붕괴될 수 있습니다. 지금 바로 악플AI로 채널을 보호하세요.', verdictBg:'rgba(255,68,68,0.1)', verdictBorder:'rgba(255,68,68,0.35)', verdictText:'#FF4444' },
+  { range:[40,69], color:'#FFCC00', grade:'🟡 주의', items:[{l:'욕설·혐오',r:[30,55]},{l:'집단공격 패턴',r:[20,45]},{l:'반복 악성계정',r:[25,50]},{l:'개인정보 노출위험',r:[15,40]}], verdictTitle:'⚠️ 주의 수준의 위험이 감지됩니다', verdictDesc:'일부 악성댓글이 지속적으로 발생하고 있습니다. 지금 조치를 취하지 않으면 점점 심해질 수 있습니다. 미리 보호막을 세우세요.', verdictBg:'rgba(255,204,0,0.08)', verdictBorder:'rgba(255,204,0,0.3)', verdictText:'#FFCC00' },
+  { range:[5,39], color:'#00D084', grade:'🟢 안전', items:[{l:'욕설·혐오',r:[2,20]},{l:'집단공격 패턴',r:[1,15]},{l:'반복 악성계정',r:[2,18]},{l:'개인정보 노출위험',r:[1,12]}], verdictTitle:'✅ 현재 채널 상태는 안전합니다', verdictDesc:'위험 수준이 낮습니다. 자랑할 만한 클린 채널입니다! 하지만 채널이 성장할수록 악플 위험도 높아집니다. 지금부터 보호막을 준비하세요.', verdictBg:'rgba(0,208,132,0.08)', verdictBorder:'rgba(0,208,132,0.25)', verdictText:'#00D084' }
+];
+const rnd = (a,b) => Math.floor(Math.random()*(b-a+1))+a;
+
+async function startAnalysis(){
+  if(analyzing) return;
+  const ch = document.getElementById('channelInput').value.trim();
+  if(!ch){ document.getElementById('channelInput').focus(); return; }
+  analyzing = true;
+  document.getElementById('analyzeBtn').disabled = true;
+  document.getElementById('resultArea').style.display = 'none';
+  document.getElementById('scanArea').style.display = 'block';
+  document.getElementById('waveformWrap').style.display = 'none';
+  document.getElementById('logOutput').innerHTML = '';
+  document.getElementById('scanBeam').classList.add('active');
+
+  const pidx = Math.random()<0.35 ? 0 : Math.random()<0.5 ? 1 : 2;
+  const prof = profiles[pidx];
+  const score = rnd(prof.range[0], prof.range[1]);
+  const commentCount = rnd(800, 12000);
+  const toxicRate = (prof.range[0] >= 70 ? rnd(18,40) : prof.range[0] >= 40 ? rnd(8,18) : rnd(1,8));
+  const cleanScore = 100 - score;
+
+  const logs = [
+    [200,'c-dim',`> 분석 대상: "${ch}" 초기화 중...`],
+    [500,'','> [INIT] 크롤러 연결 완료 ✓'],
+    [900,'c-blue',`> [FETCH] 최근 댓글 ${commentCount.toLocaleString()}개 수집 중...`],
+    [1400,'','> [NLP] 한국어 악플 탐지 모델 v3.2 로딩...'],
+    [1900,'c-blue','> [STAGE 1] 규칙 기반 욕설 필터 실행 중 █████████░ 90%'],
+    [2400,'c-blue','> [STAGE 2] KcELECTRA 문맥 분석 중 ████████░░'],
+    [2900,'c-yellow','> [DETECT] 교묘한 조롱 패턴 감지 알고리즘 실행...'],
+    [3300,'c-yellow','> [DETECT] 집단 공격 소셜 그래프 분석 중...'],
+    [3700,'c-blue','> [STAGE 3] 고위험 댓글 GPT 정밀 재검사 중...'],
+    [4200, score>=70?'c-red':'c-yellow', `> [ALERT] 위험 댓글 ${Math.floor(commentCount*toxicRate/100)}개 플래그 처리!`],
+    [4700,'','> [SCORE] 위험도 점수 산출 중...'],
+    [5200, score>=70?'c-red':score>=40?'c-yellow':'c-green', `> [RESULT] 위험도 ${score}점 · ${prof.grade}`],
+    [5600,'c-green','> 분석 완료. 결과를 생성합니다 ✓'],
+  ];
+
+  setTimeout(()=>{ document.getElementById('waveformWrap').style.display='block'; startWave(score); }, 1400);
+  setTimeout(()=>alertBeeps(3), 1100);
+  if(score>=70){ setTimeout(()=>soundDanger(),4200); setTimeout(()=>alertBeeps(5),5000); }
+
+  for(const [ms,cls,msg] of logs){
+    await wait(ms);
+    addLog(msg, cls);
+    if(cls!=='c-dim') tick();
+  }
+
+  await wait(700);
+  stopWave();
+  document.getElementById('scanBeam').classList.remove('active');
+  showResult(ch, score, cleanScore, toxicRate, commentCount, prof);
+  analyzing = false;
+  document.getElementById('analyzeBtn').disabled = false;
+}
+
+const wait = ms => new Promise(r=>setTimeout(r,ms));
+function addLog(msg,cls=''){
+  const d=document.createElement('div'); d.className='log-entry'+(cls?' '+cls:''); d.textContent=msg;
+  document.getElementById('logOutput').appendChild(d);
+  document.getElementById('scanTerminal').scrollTop=9999;
+}
+
+// WAVEFORM
+let wavePhase=0, waveIntensity=0;
+function startWave(intensity){
+  waveIntensity=intensity;
+  const c=document.getElementById('waveCanvas');
+  const W=c.offsetWidth||720, H=60;
+  c.width=W*2; c.height=H*2;
+  waveTimer=setInterval(()=>{
+    const ctx=c.getContext('2d'); ctx.clearRect(0,0,c.width,c.height);
+    const color=intensity>=70?'#FF4444':intensity>=40?'#FFCC00':'#00D084';
+    ctx.strokeStyle=color; ctx.lineWidth=2.5;
+    ctx.shadowColor=color; ctx.shadowBlur=10;
+    ctx.beginPath();
+    for(let x=0;x<c.width;x++){
+      const t=x/c.width*Math.PI*10+wavePhase;
+      const amp=(c.height/3)*(0.3+Math.sin(wavePhase*0.25)*0.15+Math.random()*0.55*(intensity/100));
+      const y=c.height/2+Math.sin(t)*amp+Math.sin(t*2.1+1)*amp*0.35+(Math.random()-0.5)*intensity*0.25;
+      x?ctx.lineTo(x,y):ctx.moveTo(x,y);
+    }
+    ctx.stroke();
+    wavePhase+=0.25+intensity*0.008;
+  },40);
+}
+function stopWave(){ clearInterval(waveTimer); }
+
+// SHOW RESULT
+function showResult(ch, score, clean, toxicRate, commentCount, prof){
+  document.getElementById('scanArea').style.display='none';
+  const ra=document.getElementById('resultArea'); ra.style.display='block';
+  if(score>=70)soundDanger(); else if(score>=40)soundWarn(); else soundSafe();
+
+  // animate score
+  const numEl=document.getElementById('resultScoreNum');
+  numEl.style.color=prof.color;
+  let cur=0; const step=score/55;
+  const t=setInterval(()=>{
+    cur=Math.min(cur+step,score);
+    numEl.textContent=Math.round(cur);
+    drawArcGauge(document.getElementById('resultGaugeCanvas'),Math.round(cur),180,100);
+    if(cur>=score)clearInterval(t);
+  },28);
+
+  document.getElementById('resultChannelName').textContent = '@'+ch;
+  document.getElementById('resultTime').textContent = new Date().toLocaleTimeString('ko-KR');
+  document.getElementById('cleanScoreVal').innerHTML = `<span style="color:${clean>=60?'#00D084':clean>=40?'#FFCC00':'#FF4444'}">${clean}</span>`;
+  document.getElementById('toxicRateVal').innerHTML = `<span style="color:${toxicRate>=18?'#FF4444':toxicRate>=8?'#FFCC00':'#00D084'}">${toxicRate}%</span>`;
+  document.getElementById('commentCountVal').textContent = commentCount.toLocaleString()+'개';
+  document.getElementById('riskGradeVal').innerHTML = `<span style="color:${prof.color}">${prof.grade}</span>`;
+
+  const bars=document.getElementById('riskBarsContainer'); bars.innerHTML='';
+  prof.items.forEach(item=>{
+    const v=rnd(item.r[0],item.r[1]);
+    const c=v>=70?'#FF4444':v>=40?'#FFCC00':'#00D084';
+    bars.innerHTML+=`<div class="risk-bar-item">
+      <div class="rb-label"><span>${item.l}</span><span style="color:${c};font-weight:800">${v}점</span></div>
+      <div class="rb-track"><div class="rb-fill" id="rb-${item.l.replace(/·/g,'')}" style="width:0%;background:${c}"></div></div>
+    </div>`;
+    setTimeout(()=>{ const el=document.getElementById('rb-'+item.l.replace(/·/g,'')); if(el) el.style.width=v+'%'; },300);
+  });
+
+  document.getElementById('verdictContainer').innerHTML=`
+    <div class="verdict-box" style="background:${prof.verdictBg};border-color:${prof.verdictBorder}">
+      <div class="verdict-icon">🛡</div>
+      <div>
+        <div class="verdict-title" style="color:${prof.verdictText}">${prof.verdictTitle}</div>
+        <div class="verdict-desc">${prof.verdictDesc}</div>
+      </div>
+    </div>`;
+}
+
+function doShare(type){
+  const ch = document.getElementById('channelInput').value || '내 채널';
+  const score = document.getElementById('resultScoreNum').textContent;
+  const text = `내 유튜브 채널 "${ch}" 악성댓글 위험도 분석 결과 → ${score}점!\n악플AI에서 무료로 확인해보세요 👉 akpul.kr`;
+  if(type==='copy'){ navigator.clipboard.writeText(text).then(()=>alert('복사되었습니다!')); }
+  else if(type==='x'){ window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(text)); }
+  else { alert('카카오 공유는 SDK 연동 후 사용 가능합니다.'); }
+  tone(880,0.1,'sine',0.2);
+}
+
+function resetAnalyzer(){
+  document.getElementById('resultArea').style.display='none';
+  document.getElementById('scanArea').style.display='none';
+  document.getElementById('channelInput').value='';
+  document.getElementById('channelInput').focus();
+}
+
+// ─── BETA COUNTER ─────────────────────────────────────────────
+(function(){
+  let n=37;
+  setInterval(()=>{
+    if(Math.random()<0.3){ n=Math.max(n-1,12); document.getElementById('betaCount').textContent=n; }
+  }, 8000);
+})();
+</script>
+</body>
+</html>
