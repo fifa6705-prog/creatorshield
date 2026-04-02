@@ -1,0 +1,480 @@
+<!DOCTYPE html><html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>악플AI 베타 | 초기 100명 크리에이터 모집</title>
+  <meta name="description" content="악플AI 베타 테스터 모집. Pro 3개월 무료, 평생 15% 할인. 초기 100명 한정." />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="악플AI 베타 | 초기 100명 크리에이터 모집" />
+  <meta property="og:description" content="댓글 관리, 이제 AI에게 맡기세요. 베타 참여하면 Pro 3개월 무료 + 평생 15% 할인." />
+  <meta property="og:url" content="https://akpulai.com/beta" />
+  <meta property="og:image" content="https://akpulai.com/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    :root{--bg:#06111f;--bg2:#0b1a2f;--panel:rgba(12,27,49,.88);--line:rgba(255,255,255,.08);--line-strong:rgba(79,140,255,.34);--blue:#2f7cff;--blue2:#74b3ff;--cyan:#00d5ff;--green:#18d88d;--yellow:#ffcb3d;--red:#ff647b;--muted:#94a7c6;--shadow:0 18px 70px rgba(0,0,0,.34);--shadow-blue:0 18px 70px rgba(47,124,255,.24);--font:'Noto Sans KR',sans-serif}
+    *{box-sizing:border-box;margin:0;padding:0} html{scroll-behavior:smooth}
+    body{font-family:var(--font);color:#fff;background:radial-gradient(circle at top,rgba(47,124,255,.16),transparent 30%),radial-gradient(circle at 80% 10%,rgba(0,213,255,.10),transparent 24%),linear-gradient(180deg,var(--bg2),var(--bg));min-height:100vh;overflow-x:hidden}
+    a{color:inherit;text-decoration:none} button{font:inherit}
+    .container{width:min(1100px,calc(100% - 40px));margin:0 auto}
+    /* NAV */
+    .nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(18px);background:rgba(6,17,31,.76);border-bottom:1px solid rgba(255,255,255,.06)}
+    .nav-inner{min-height:64px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .brand{display:flex;align-items:center;gap:10px;font-size:20px;font-weight:900;letter-spacing:-.03em}
+    .logo{width:34px;height:34px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,var(--blue),var(--cyan));box-shadow:0 0 20px rgba(47,124,255,.42);font-size:16px}
+    .nav-back{font-size:13px;color:var(--muted);display:flex;align-items:center;gap:6px}
+    .nav-back:hover{color:#fff}
+    /* BTN */
+    .btn{border:0;cursor:pointer;display:inline-flex;justify-content:center;align-items:center;gap:8px;padding:14px 24px;border-radius:14px;font-weight:800;transition:.2s ease;font-size:15px}
+    .btn:hover{transform:translateY(-2px)}
+    .btn-primary{color:#fff;background:linear-gradient(135deg,var(--blue),#5498ff);box-shadow:0 14px 34px rgba(47,124,255,.34)}
+    .btn-secondary{color:#fff;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1)}
+    .btn-lg{padding:18px 40px;font-size:17px;border-radius:16px}
+    .btn-block{width:100%}
+    /* HERO */
+    .hero{padding:80px 0 60px;text-align:center}
+    .eyebrow{display:inline-flex;gap:8px;align-items:center;padding:8px 16px;border-radius:999px;background:rgba(255,203,61,.10);border:1px solid rgba(255,203,61,.28);color:#ffcb3d;font-size:12px;font-weight:800;letter-spacing:.06em;margin-bottom:24px}
+    .counter-badge{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:999px;background:rgba(255,100,123,.10);border:1px solid rgba(255,100,123,.25);color:#ffbfca;font-size:13px;font-weight:800;margin-bottom:32px}
+    .counter-dot{width:8px;height:8px;border-radius:50%;background:var(--red);animation:blink 1.2s ease-in-out infinite}
+    @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+    .hero h1{font-size:clamp(32px,5vw,64px);line-height:1.08;letter-spacing:-.04em;margin-bottom:20px}
+    .hero h1 .accent{background:linear-gradient(135deg,var(--blue2),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    .hero-sub{font-size:18px;color:#d2dded;max-width:600px;margin:0 auto 36px;line-height:1.6}
+    .proofs{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:24px}
+    .proof{display:inline-flex;align-items:center;gap:7px;padding:9px 14px;border-radius:999px;background:rgba(24,216,141,.08);border:1px solid rgba(24,216,141,.18);color:#9df0ca;font-size:13px;font-weight:700}
+    /* PERKS */
+    .perks-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:48px;max-width:700px;margin-left:auto;margin-right:auto}
+    .perk{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:24px;display:flex;align-items:flex-start;gap:14px}
+    .perk-icon{font-size:28px;flex-shrink:0;margin-top:2px}
+    .perk-title{font-size:16px;font-weight:800;margin-bottom:4px}
+    .perk-desc{font-size:13px;color:var(--muted);line-height:1.5}
+    /* PROBLEM */
+    .section{padding:80px 0}
+    .surface{background:linear-gradient(180deg,rgba(10,22,40,.86),rgba(6,17,31,.98));border-top:1px solid rgba(255,255,255,.04);border-bottom:1px solid rgba(255,255,255,.04)}
+    .section-label{font-size:12px;font-weight:800;letter-spacing:.06em;color:#a9cdff;text-transform:uppercase;margin-bottom:12px}
+    .section-title{font-size:clamp(24px,3.5vw,42px);line-height:1.12;letter-spacing:-.03em;margin-bottom:16px}
+    .section-title strong{background:linear-gradient(135deg,var(--blue2),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    .section-desc{color:var(--muted);font-size:16px;max-width:640px;line-height:1.6}
+    .problem-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:40px}
+    .prob-card{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:22px;display:flex;gap:14px;align-items:flex-start}
+    .prob-icon{font-size:24px;flex-shrink:0}
+    .prob-title{font-weight:800;font-size:15px;margin-bottom:4px}
+    .prob-desc{font-size:13px;color:var(--muted);line-height:1.5}
+    /* COMPARE */
+    .compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:40px}
+    .compare-card{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:28px}
+    .compare-card.good{border-color:var(--line-strong);box-shadow:var(--shadow-blue)}
+    .compare-tag{font-size:11px;font-weight:800;padding:5px 12px;border-radius:999px;display:inline-block;margin-bottom:14px}
+    .tag-bad{background:rgba(255,100,123,.12);color:#ffbfca}
+    .tag-good{background:rgba(47,124,255,.15);color:#a9cdff}
+    .compare-list{list-style:none;display:grid;gap:10px;margin-top:14px}
+    .compare-list li{font-size:14px;color:#d7e3f3;display:flex;gap:8px}
+    /* SIMULATOR */
+    .sim-wrap{max-width:760px;margin:40px auto 0;background:var(--panel);border:1px solid var(--line);border-radius:24px;overflow:hidden;box-shadow:var(--shadow-blue)}
+    .sim-top{padding:14px 20px;border-bottom:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.03);display:flex;justify-content:space-between;align-items:center}
+    .sim-live{color:#9df0ca;font-size:12px;font-weight:800}
+    .sim-body{padding:24px}
+    .sim-input-row{display:flex;gap:10px}
+    .sim-input{flex:1;min-height:52px;border-radius:14px;border:1px solid rgba(255,255,255,.1);background:rgba(0,0,0,.14);color:#fff;padding:0 16px;font-size:15px;outline:none;font-family:inherit}
+    .sim-input:focus{border-color:rgba(116,179,255,.4);box-shadow:0 0 0 4px rgba(47,124,255,.12)}
+    .sim-chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+    .chip{border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);color:#d0dcee;padding:7px 12px;border-radius:999px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit}
+    .chip:hover{background:rgba(255,255,255,.08)}
+    .sim-result{display:none;margin-top:18px;border-radius:18px;padding:20px;border:1px solid}
+    .sim-result-head{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+    .sim-icon{font-size:28px}
+    .sim-label{font-size:17px;font-weight:800}
+    .sim-score{font-size:13px;margin-top:2px}
+    .sim-action{margin-left:auto;font-size:12px;font-weight:800;padding:5px 14px;border-radius:999px}
+    .sim-reply-wrap{border-top:1px solid rgba(255,255,255,.08);padding-top:14px}
+    .sim-reply-label{font-size:11px;color:var(--muted);font-weight:800;letter-spacing:.05em;margin-bottom:8px}
+    .sim-reply{padding:14px;border-radius:12px;font-size:14px;line-height:1.7;background:rgba(47,124,255,.08);border:1px solid rgba(116,179,255,.18);color:#c9ddff;position:relative;overflow:hidden}
+    .sim-reply.typing{animation:replyGlow 0.6s ease-out}
+    @keyframes replyGlow{0%{box-shadow:0 0 0 rgba(47,124,255,0);background:rgba(47,124,255,.04)}50%{box-shadow:0 0 30px rgba(47,124,255,.4),0 0 60px rgba(0,213,255,.2);background:rgba(47,124,255,.18)}100%{box-shadow:0 0 12px rgba(47,124,255,.15);background:rgba(47,124,255,.08)}}
+    .sim-reply.toxic{background:rgba(255,100,123,.08);border-color:rgba(255,100,123,.25);color:#ffbfca}
+    .sim-reply.toxic.typing{animation:replyGlowRed 0.6s ease-out}
+    @keyframes replyGlowRed{0%{box-shadow:0 0 0 rgba(255,100,123,0)}50%{box-shadow:0 0 30px rgba(255,100,123,.4),0 0 60px rgba(255,60,80,.2);background:rgba(255,100,123,.18)}100%{box-shadow:0 0 12px rgba(255,100,123,.15);background:rgba(255,100,123,.08)}}
+    .sim-reply.warn{background:rgba(255,203,61,.08);border-color:rgba(255,203,61,.25);color:#ffd98b}
+    .sim-reply.warn.typing{animation:replyGlowWarn 0.6s ease-out}
+    @keyframes replyGlowWarn{0%{box-shadow:0 0 0 rgba(255,203,61,0)}50%{box-shadow:0 0 30px rgba(255,203,61,.4);background:rgba(255,203,61,.18)}100%{box-shadow:0 0 12px rgba(255,203,61,.15);background:rgba(255,203,61,.08)}}
+    .cursor{display:inline-block;width:2px;height:1em;background:currentColor;margin-left:2px;animation:cursorBlink .7s ease-in-out infinite;vertical-align:text-bottom}
+    @keyframes cursorBlink{0%,100%{opacity:1}50%{opacity:0}}
+    .sim-result-head{display:flex;align-items:center;gap:12px;margin-bottom:14px;opacity:0;transform:translateY(8px);transition:all .3s ease}
+    .sim-result-head.show{opacity:1;transform:translateY(0)}
+    /* CONDITIONS */
+    .cond-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:40px;max-width:760px;margin-left:auto;margin-right:auto}
+    .cond-card{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:24px}
+    .cond-title{font-size:15px;font-weight:800;margin-bottom:14px;color:#a9cdff}
+    .cond-list{list-style:none;display:grid;gap:10px}
+    .cond-list li{font-size:14px;color:#d7e3f3;display:flex;gap:8px}
+    .cond-list li span{flex-shrink:0;font-weight:900}
+    .invite-box{margin-top:14px;padding:12px 16px;border-radius:14px;background:rgba(47,124,255,.08);border:1px solid rgba(116,179,255,.18);font-size:13px;color:#d7e3f3}
+    /* FINAL CTA */
+    .final{padding:100px 0;text-align:center;background:radial-gradient(circle at top,rgba(47,124,255,.18),transparent 32%),linear-gradient(180deg,rgba(10,22,40,.96),rgba(6,17,31,1));border-top:1px solid rgba(255,255,255,.05)}
+    .final-counter{display:inline-block;background:rgba(255,203,61,.10);border:1px solid rgba(255,203,61,.28);color:#ffcb3d;font-size:14px;font-weight:800;padding:10px 22px;border-radius:999px;margin-bottom:28px}
+    /* FOOTER */
+    .footer{padding:32px 0;color:var(--muted);font-size:13px;border-top:1px solid rgba(255,255,255,.06)}
+    .footer-inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+    /* RESPONSIVE */
+    @media(max-width:760px){
+      .perks-grid,.problem-grid,.compare-grid,.cond-grid{grid-template-columns:1fr}
+      .sim-input-row{flex-direction:column}
+      .btn-lg{width:100%}
+      .hero h1{font-size:clamp(28px,7vw,42px)}
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="container nav-inner">
+    <a class="brand" href="/"><span class="logo">🛡</span><span>악플AI</span></a>
+    <a class="nav-back" href="/">← 메인으로 돌아가기</a>
+  </div>
+</nav>
+
+<main>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="eyebrow">⚡ FOUNDER BETA · 초기 100명 한정</div>
+    <div class="counter-badge">
+      <span class="counter-dot"></span>
+      베타 참여 가능 인원 · 잔여 <strong id="betaCount">78</strong>명
+    </div>
+    <h1>댓글 관리, 아직도<br>직접 하고 계신가요?<br><span class="accent">악플은 자동으로 사라지고<br>좋은 댓글은 자동으로 쌓입니다</span></h1>
+    <p class="hero-sub">초기 100명의 크리에이터와 함께 제품을 만들어갑니다.<br>단순 할인 이벤트가 아니라 파운더 멤버십입니다.</p>
+    <button class="btn btn-primary btn-lg" onclick="applyBeta()">베타 참여 신청하기 →</button>
+    <div class="proofs">
+      <span class="proof">✅ Pro 3개월 무료</span>
+      <span class="proof">✅ 평생 15% 할인</span>
+      <span class="proof">✅ 파운더 배지 영구 부여</span>
+    </div>
+
+    <!-- 혜택 카드 -->
+    <div class="perks-grid">
+      <div class="perk"><div class="perk-icon">🎁</div><div><div class="perk-title">Pro 플랜 3개월 무료</div><div class="perk-desc">월 45,000원 플랜을 3개월간 무료로 사용하세요.</div></div></div>
+      <div class="perk"><div class="perk-icon">💎</div><div><div class="perk-title">평생 15% 할인</div><div class="perk-desc">베타 참여자만의 영구 할인 혜택입니다.</div></div></div>
+      <div class="perk"><div class="perk-icon">🏅</div><div><div class="perk-title">파운더 배지 영구 부여</div><div class="perk-desc">초기 멤버임을 증명하는 배지를 영구적으로 드립니다.</div></div></div>
+      <div class="perk"><div class="perk-icon">🎙</div><div><div class="perk-title">제품 개발 직접 참여</div><div class="perk-desc">기능 요청이 우선 반영되고 신기능을 먼저 씁니다.</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 문제 -->
+<section class="section surface">
+  <div class="container center" style="text-align:center">
+    <div class="section-label">악플이 만드는 실제 손실</div>
+    <h2 class="section-title">악플은 단순 댓글 문제가 아닙니다.<br><strong>창작 의욕과 채널 성장을 함께 갉아먹습니다</strong></h2>
+    <p class="section-desc" style="margin:0 auto">업로드 의욕을 꺾고, 좋은 구독자를 떠나게 만들고, 대응을 늦출수록 법적 리스크까지 커집니다.</p>
+    <div class="problem-grid">
+      <div class="prob-card"><div class="prob-icon">😫</div><div><div class="prob-title">정신적 소진</div><div class="prob-desc">매일 쌓이는 악플은 번아웃과 업로드 의욕 저하로 이어집니다.</div></div></div>
+      <div class="prob-card"><div class="prob-icon">⏱️</div><div><div class="prob-title">시간 손실</div><div class="prob-desc">하루 1~2시간씩 댓글 관리에 쓰면 제작 시간이 직접 줄어듭니다.</div></div></div>
+      <div class="prob-card"><div class="prob-icon">💔</div><div><div class="prob-title">커뮤니티 악화</div><div class="prob-desc">악플이 방치되면 정상 시청자가 먼저 조용히 떠납니다.</div></div></div>
+      <div class="prob-card"><div class="prob-icon">⚖️</div><div><div class="prob-title">대응 지연</div><div class="prob-desc">증거 확보 타이밍을 놓치면 실제 법적 대응이 훨씬 어려워집니다.</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 차이점 -->
+<section class="section">
+  <div class="container" style="text-align:center">
+    <div class="section-label">왜 악플AI인가</div>
+    <h2 class="section-title">유튜브 기본 필터로는<br><strong>비꼼과 조롱을 못 잡습니다</strong></h2>
+    <div class="compare-grid">
+      <div class="compare-card">
+        <span class="compare-tag tag-bad">기본 필터</span>
+        <div style="font-size:16px;font-weight:800;margin-bottom:8px;">욕설만 걸러냄</div>
+        <p style="color:var(--muted);font-size:14px;margin:0 0 14px;">비꼼과 조롱, 교묘한 선동은 종종 그대로 통과합니다.</p>
+        <ul class="compare-list">
+          <li><span style="color:var(--red)">✗</span> 욕설 중심</li>
+          <li><span style="color:var(--red)">✗</span> 수동 대응 의존</li>
+          <li><span style="color:var(--red)">✗</span> 증거 저장 없음</li>
+          <li><span style="color:var(--red)">✗</span> 법적 대응 불가</li>
+        </ul>
+      </div>
+      <div class="compare-card good">
+        <span class="compare-tag tag-good">악플AI</span>
+        <div style="font-size:16px;font-weight:800;margin-bottom:8px;">탐지 + 대응 + 법적 준비</div>
+        <p style="color:var(--muted);font-size:14px;margin:0 0 14px;">탐지에서 끝나지 않고 자동 대응·증거 보존까지 연결합니다.</p>
+        <ul class="compare-list">
+          <li><span style="color:var(--green)">✓</span> 문맥 기반 판단</li>
+          <li><span style="color:var(--green)">✓</span> 자동 경고/감사 대댓글</li>
+          <li><span style="color:var(--green)">✓</span> 증거 자동 구조화</li>
+          <li><span style="color:var(--green)">✓</span> 법무법인 연결</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 시뮬레이터 -->
+<section class="section surface" id="simulator">
+  <div class="container" style="text-align:center">
+    <div class="section-label">직접 체험</div>
+    <h2 class="section-title">내 댓글, AI가<br><strong>어떻게 처리할까요?</strong></h2>
+    <p class="section-desc" style="margin:0 auto 0">댓글을 직접 입력하면 악플 탐지 결과와 자동 대응을 즉시 확인할 수 있습니다.</p>
+    <div class="sim-wrap">
+      <div class="sim-top"><strong>AkpulAI Comment Simulator</strong><span class="sim-live">● 실시간 판단</span></div>
+      <div class="sim-body">
+        <div class="sim-input-row">
+          <input id="simInput" class="sim-input" placeholder="댓글을 직접 입력해보세요. 예: 고만좀 해라 참 특이해" />
+          <button class="btn btn-primary" onclick="runSimulator()">AI 판단 받기</button>
+        </div>
+        <div class="sim-chips">
+          <button class="chip" onclick="fillSim('ㅅㅂ 이게 뭐임 시간낭비')">💢 욕설</button>
+          <button class="chip" onclick="fillSim('고만좀 해라 참 특이해')">😒 우회 비하</button>
+          <button class="chip" onclick="fillSim('퀄리티가 많이 떨어졌네요 ㅎㅎ 예전이 훨씬 나았는데')">🙃 조롱</button>
+          <button class="chip" onclick="fillSim('왜이렇게 됐어요? 예전엔 안그랬는데')">🤔 비꼬기</button>
+          <button class="chip" onclick="fillSim('오늘 영상 진짜 위로됐어요 항상 잘 보고 있습니다 🙏')">💚 응원</button>
+          <button class="chip" onclick="fillSim('구독하고 갑니다! 다음 영상도 기대할게요 😊')">⭐ 구독</button>
+        </div>
+        <div id="simResult" class="sim-result">
+          <div class="sim-result-head">
+            <div id="simIcon" class="sim-icon"></div>
+            <div><div id="simLabel" class="sim-label"></div><div id="simScore" class="sim-score"></div></div>
+            <div id="simAction" class="sim-action"></div>
+          </div>
+          <div class="sim-reply-wrap">
+            <div class="sim-reply-label">AI 자동 대응 미리보기</div>
+            <div id="simReply" class="sim-reply"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 베타 조건 -->
+<section class="section">
+  <div class="container" style="text-align:center">
+    <div class="section-label">파운더 베타</div>
+    <h2 class="section-title">단순 할인이 아닌,<br><strong>초기 멤버십입니다</strong></h2>
+    <p class="section-desc" style="margin:0 auto">희소성과 선점감을 함께 드립니다. 아래 조건을 지키시면 혜택이 유지됩니다.</p>
+    <div class="cond-grid">
+      <div class="cond-card">
+        <div class="cond-title">✅ 베타 참여 혜택</div>
+        <ul class="cond-list">
+          <li><span style="color:#9df0ca">✓</span> Pro 플랜 3개월 무료</li>
+          <li><span style="color:#9df0ca">✓</span> 평생 15% 할인 (베타 한정)</li>
+          <li><span style="color:#9df0ca">✓</span> 신기능 우선 적용</li>
+          <li><span style="color:#9df0ca">✓</span> 파운더 전용 피드백 채널</li>
+          <li><span style="color:#9df0ca">✓</span> 기능 요청 우선 반영</li>
+        </ul>
+      </div>
+      <div class="cond-card">
+        <div class="cond-title">📋 혜택 유지 조건</div>
+        <ul class="cond-list">
+          <li><span style="color:#ffcb3d">✓</span> 7일 내 채널 연동</li>
+          <li><span style="color:#ffcb3d">✓</span> 최소 1회 피드백 제출</li>
+          <li><span style="color:#ffcb3d">✓</span> 설문 또는 인터뷰 참여</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final">
+  <div class="container">
+    <div class="final-counter">⚡ 잔여 <span id="betaCount2">78</span>명 · 선착순 마감</div>
+    <h2 class="section-title" style="margin-bottom:16px;">지금 참여하지 않으면<br><strong>기회는 사라집니다</strong></h2>
+    <p class="section-desc" style="margin:0 auto 32px;">베타 기간 종료 후에는 정가로만 이용 가능합니다.<br>평생 15% 할인은 베타 참여자에게만 드리는 혜택입니다.</p>
+    <button class="btn btn-primary btn-lg" onclick="applyBeta()">베타 참여 신청하기 →</button>
+    <div class="proofs" style="justify-content:center;margin-top:20px;">
+      <span class="proof">✅ Pro 3개월 무료</span>
+      <span class="proof">✅ 평생 15% 할인</span>
+      <span class="proof">✅ 파운더 배지</span>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <div><strong style="color:#fff;">악플AI</strong> · <a href="/" style="color:var(--muted);">메인으로</a> · <a href="/privacy" style="color:var(--muted);">개인정보처리방침</a> · <a href="/terms" style="color:var(--muted);">이용약관</a> · <a href="mailto:hello@akpulai.com" style="color:var(--muted);">hello@akpulai.com</a></div>
+    <div>© 2026 악플AI (AkpulAI). All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+  const FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLScJylXBJBp7udq3LENEi8dM_Fh6cMOSb5Br6jmWwl8xcSbM8A/viewform';
+
+  // 베타 카운트 희소성
+  (function(){
+    const stored = localStorage.getItem('akpul_beta_count');
+    const base = stored ? parseInt(stored) : 78;
+    const count = Math.max(42, base - Math.floor(Math.random()*2));
+    localStorage.setItem('akpul_beta_count', count);
+    document.querySelectorAll('#betaCount,#betaCount2').forEach(el=>el.textContent=count);
+  })();
+
+  function applyBeta(){ window.open(FORM_URL,'_blank'); }
+
+  function fillSim(text){ document.getElementById('simInput').value=text; runSimulator(); }
+
+  function runSimulator(){
+    const text = document.getElementById('simInput').value.trim();
+    if(!text){ document.getElementById('simInput').focus(); return; }
+
+    // 공백 제거 버전 + 어절 배열 모두 사용
+    const t = text.toLowerCase().replace(/\s/g,'');
+    const words = text.toLowerCase().split(/\s+/); // 어절 단위
+
+    // Stage 1: 명백한 욕설/초성체
+    const hardToxic = ['ㅅㅂ','씨발','개새끼','ㄱㅅㄲ','미친놈','병신','좆','보지','쉬발','지랄',
+      '꺼져','닥쳐','죽어','찐따','느금','빻은','ㄴㅁ','ㅂㅅ','ㅈㄹ','ㅁㅊ',
+      '개소리','쓰레기같','역겨워','토나와','구역질','꺼져라','뒤져','개같','존나','ㅗ'];
+
+    // Stage 2: 비꼬기/조롱/우회 — 공백 제거 매칭
+    const softToxicFull = ['고만좀','그만좀','좀그만','특이하네','참특이','어이없','황당하네','가관이네',
+      '퀄리티가','수준이','이게뭐야','저퀄','망했네','끝났네','실망이다','실망했',
+      '나았는데','하락세','떨어졌','왜이렇게','왜이래','이상하네','웃기고있',
+      '웃기네','ㄹㅇ별로','별로네','별로임','노잼','지루해','억지','어색해',
+      '거슬려','신경꺼','관심끄','고집','독선','혼자잘나','잘났다','관둬',
+      '때려쳐','그만해','접어','탈주','하차','언팔','구독취소','신고','캡처',
+      '박제','올렸다','어그로','관종','허세','쇼하네','연기하네','가식','위선',
+      '일정하네','일정하다','ㅋㅋㅋ','ㅎㅎㅎ'];
+
+    // Stage 2-B: 어절 단위로 잡아야 하는 패턴 (공백 있어도 감지)
+    const softToxicWords = [
+      '그만','보기싫','싫다','보고싶지않','안보고싶','지겨','지겹','귀찮',
+      '실망','별로','그냥','그만두','떨어져','하지마','하지말','안봄','재미없',
+      '노잼','식상','뻔해','뻔하네','억지스럽','억지로','기대이하','예전만못',
+      '예전이나았','옛날이나았','전보다못','갈수록','점점','하향','하락'
+    ];
+
+    // Stage 3: 존재 부정 / 회피 공격 패턴 (신규)
+    const existDeny = ['안봐도','안봄','왜나와','눈에띄지마','나타나지마','숨어','없어져',
+      '사라져','그냥없어','보기싫다','보기싫어','보기도싫','꼴보기싫'];
+
+    // Stage 4: 혐오
+    const hateToxic = ['한남','한녀','페미','꼴페미','일베','극우','빨갱이','틀딱',
+      '노인네','급식충','맘충','쪽바리','짱깨','동남아','흑형'];
+
+    // 클린
+    const cleanKW = ['감사합니다','감사해요','고마워요','고맙습니다','최고예요','최고입니다',
+      '사랑해요','응원해요','응원합니다','힘내세요','기대돼요','기대됩니다',
+      '좋아요','대박이에요','잘봤어요','잘봤습니다','구독했어요','알림설정',
+      '행복해요','위로됐어요','도움됐어요','덕분에','힘이나요','최고다',
+      '감동이에요','감동받았','눈물났','재밌어요','재미있어요','유익해요',
+      '유익했','배웠어요','팬이에요','응원할게','힘내세요','파이팅'];
+
+    // 매칭 계산
+    const hardHits  = hardToxic.filter(k => t.includes(k)).length;
+    const hateHits  = hateToxic.filter(k => t.includes(k)).length;
+    const existHits = existDeny.filter(k => t.includes(k.replace(/\s/g,''))).length;
+
+    // 어절 단위 매칭 (공백 포함 원문에서)
+    const softFullHits = softToxicFull.filter(k => t.includes(k)).length;
+    const softWordHits = softToxicWords.filter(k =>
+      words.some(w => w.includes(k)) || t.includes(k)
+    ).length;
+    const softHits = softFullHits + softWordHits;
+
+    const cleanHits = cleanKW.filter(k => t.includes(k.replace(/\s/g,''))).length;
+
+    // 초성체
+    const chosungCount = (text.match(/[ㄱ-ㅎ]{2,}/g)||[]).length;
+    // 부정 패턴
+    const negPattern = /왜이렇|왜이래|왜이런|왜그렇|왜그래|뭐이런|뭐하는|이게뭐|그만보|보기싫|안보고|지겨워/.test(t);
+    // 조롱 + 부정 조합
+    const mockPattern = /[ㅎㅋ]{2,}/.test(text) && (softHits>0 || negPattern);
+    // "~고 싶다" 앞에 부정어 (그만 보고 싶다 등)
+    const negWishPattern = /그만.{0,5}(보고|하고|싶).{0,5}(싶다|싶어)/.test(text.toLowerCase());
+
+    // 점수 계산
+    let base = 0;
+    base += hardHits * 35;
+    base += hateHits * 30;
+    base += existHits * 28;
+    base += softHits * 15;
+    base += chosungCount * 12;
+    base += negPattern ? 18 : 0;
+    base += mockPattern ? 20 : 0;
+    base += negWishPattern ? 25 : 0;
+    base = Math.min(98, base);
+
+    let score, icon, label, scoreText, action, actionColor, replyClass, reply, type;
+
+    if(base >= 65 || hardHits >= 1 || hateHits >= 1){
+      score = Math.max(65, base); type='toxic';
+      icon='🚨'; label='악성 댓글 감지';
+      scoreText=`독성 점수 ${score}점 · 자동 숨김 처리`;
+      action='자동 숨김'; actionColor='#ffbfca'; replyClass='toxic';
+      reply='⚠️ 이 채널은 악플AI의 보호를 받고 있습니다. 건설적인 피드백은 환영하지만, 비하나 조롱은 자동으로 감지되어 기록됩니다. 건전한 댓글 문화를 함께 만들어 주세요.';
+    } else if(base >= 25 || softHits >= 1 || existHits >= 1 || mockPattern || negPattern || negWishPattern){
+      score = Math.max(25, base); type='warn';
+      icon='🔍'; label='조롱·비꼬기 의심 — 모니터링';
+      scoreText=`독성 점수 ${score}점 · 반복 시 자동 조치`;
+      action='모니터링'; actionColor='#ffd98b'; replyClass='warn';
+      reply='⚠️ 해당 댓글은 조롱·비꼬기 패턴으로 분류되어 모니터링 중입니다. 반복 작성 시 자동 숨김 처리됩니다.';
+    } else if(cleanHits >= 1){
+      score = Math.floor(2+Math.random()*8); type='clean';
+      icon='💚'; label='클린 댓글 — 감사 대댓글 발송';
+      scoreText=`클린 점수 ${100-score}점 · 감사 대댓글 자동 발송`;
+      action='감사 대댓글'; actionColor='#9df0ca'; replyClass='';
+      reply='따뜻하게 봐주셔서 정말 감사해요 🙏 이런 댓글 덕분에 더 좋은 콘텐츠 만들 힘이 납니다. 다음 영상도 기대해 주세요!';
+    } else {
+      score = Math.floor(5+Math.random()*15); type='normal';
+      icon='✅'; label='일반 댓글 — 정상 통과';
+      scoreText=`독성 점수 ${score}점 · 정상 처리`;
+      action='통과'; actionColor='#a9cdff'; replyClass='';
+      reply='댓글 감사합니다! 앞으로도 좋은 콘텐츠로 찾아올게요 😊';
+    }
+
+    // 결과 표시
+    const res = document.getElementById('simResult');
+    const head = res.querySelector('.sim-result-head');
+    const replyEl = document.getElementById('simReply');
+
+    // 색상 설정
+    const colors = {
+      toxic: {bg:'rgba(255,100,123,.08)', border:'rgba(255,100,123,.25)'},
+      warn:  {bg:'rgba(255,203,61,.08)',  border:'rgba(255,203,61,.25)'},
+      clean: {bg:'rgba(24,216,141,.08)',  border:'rgba(24,216,141,.25)'},
+      normal:{bg:'rgba(47,124,255,.06)',  border:'rgba(116,179,255,.2)'}
+    };
+    const c = colors[type] || colors.normal;
+    res.style.background = c.bg;
+    res.style.borderColor = c.border;
+    res.style.display = 'block';
+
+    // 헤더 페이드인
+    head.classList.remove('show');
+    document.getElementById('simIcon').textContent = icon;
+    document.getElementById('simLabel').textContent = label;
+    document.getElementById('simScore').style.color = actionColor;
+    document.getElementById('simScore').textContent = scoreText;
+    document.getElementById('simAction').textContent = action;
+    document.getElementById('simAction').style.cssText = `background:${c.bg};border:1px solid ${c.border};color:${actionColor};font-size:12px;font-weight:800;padding:5px 14px;border-radius:999px;margin-left:auto`;
+    setTimeout(() => head.classList.add('show'), 50);
+
+    // 타이핑 효과
+    replyEl.className = 'sim-reply' + (replyClass ? ' '+replyClass : '');
+    replyEl.innerHTML = '';
+    replyEl.classList.add('typing');
+    setTimeout(() => replyEl.classList.remove('typing'), 700);
+
+    let i = 0;
+    const cursor = document.createElement('span');
+    cursor.className = 'cursor';
+    replyEl.appendChild(cursor);
+
+    const typeInterval = setInterval(() => {
+      if(i < reply.length){
+        replyEl.insertBefore(document.createTextNode(reply[i]), cursor);
+        i++;
+      } else {
+        clearInterval(typeInterval);
+        cursor.remove();
+      }
+    }, 18);
+  }
+</script>
+</body>
+</html>
