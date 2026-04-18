@@ -3,6 +3,7 @@
   "rewrites": [
     { "source": "/", "destination": "/index.html" },
     { "source": "/beta", "destination": "/beta.html" },
+    { "source": "/connect", "destination": "/connect.html" },
     { "source": "/privacy", "destination": "/privacy.html" },
     { "source": "/terms", "destination": "/terms.html" },
     { "source": "/dashboard", "destination": "/dashboard.html" }
@@ -21,4 +22,3 @@
     }
   ]
 }
-{ "source": "/connect", "destination": "/connect.html" }
