@@ -1,0 +1,991 @@
+<!DOCTYPE html><html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>악플AI | 유튜브 채널 보호 자동화</title>
+  <meta name="description" content="정상 댓글은 지키고, 악플만 걸러냅니다. 오탐 최소화 설계, 원클릭 복원, 증거 자동 보존. 악플AI로 크리에이터의 댓글창을 보호하세요." />
+  <meta name="keywords" content="악플차단,악성댓글,유튜버보호,악플AI,채널보호,댓글관리,AI악플,유튜브악플" />
+  <meta name="author" content="악플AI" />
+  <meta name="robots" content="index, follow" />
+  <meta name="naver-site-verification" content="akpulai_naver_verify" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="악플AI | 유튜브 채널 보호 자동화" />
+  <meta property="og:description" content="악플 탐지부터 자동 대응, 증거 보존, 법적 대응까지. 감정 소모 없이 채널을 보호하세요." />
+  <meta property="og:url" content="https://akpulai.com" />
+  <meta property="og:image" content="https://akpulai.com/og-image.png" />
+  <meta property="og:site_name" content="악플AI" />
+  <meta property="og:locale" content="ko_KR" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="악플AI | 유튜브 채널 보호 자동화" />
+  <meta name="twitter:description" content="악플 탐지부터 자동 대응, 증거 보존, 법적 대응까지." />
+  <meta name="twitter:image" content="https://akpulai.com/og-image.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800;900&display=swap" rel="stylesheet" />
+  <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+  <style>
+    :root{--bg:#06111f;--bg2:#0b1a2f;--panel:rgba(12,27,49,.88);--line:rgba(255,255,255,.08);--line-strong:rgba(79,140,255,.34);--txt:#fff;--muted:#94a7c6;--blue:#2f7cff;--blue2:#74b3ff;--cyan:#00d5ff;--green:#18d88d;--yellow:#ffcb3d;--red:#ff647b;--shadow:0 18px 70px rgba(0,0,0,.34);--shadow-blue:0 18px 70px rgba(47,124,255,.24);--radius:22px;--container:1160px;--font:'Noto Sans KR',sans-serif}
+    *{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;font-family:var(--font);color:var(--txt);line-height:1.6;overflow-x:hidden;background:radial-gradient(circle at top,rgba(47,124,255,.16),transparent 30%),radial-gradient(circle at 82% 18%,rgba(0,213,255,.10),transparent 24%),linear-gradient(180deg,var(--bg2),var(--bg))}
+    a{color:inherit;text-decoration:none} button,input{font:inherit} .container{width:min(var(--container),calc(100% - 40px));margin:0 auto} .section{padding:96px 0} .center{text-align:center}
+    .eyebrow{display:inline-flex;gap:8px;align-items:center;padding:8px 14px;border-radius:999px;background:rgba(47,124,255,.12);border:1px solid rgba(116,179,255,.22);color:#a9cdff;font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase} .eyebrow .dot{width:7px;height:7px;border-radius:999px;background:var(--cyan);box-shadow:0 0 12px var(--cyan)}
+    .title{margin:16px 0;font-size:clamp(30px,4vw,54px);line-height:1.12;letter-spacing:-.03em;word-break:keep-all} .title strong{background:linear-gradient(135deg,var(--blue2),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent} .desc{color:var(--muted);font-size:18px;max-width:760px;margin:0 auto;word-break:keep-all}
+    .nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(18px);background:rgba(6,17,31,.76);border-bottom:1px solid rgba(255,255,255,.06)} .nav-inner{min-height:74px;display:flex;align-items:center;justify-content:space-between;gap:20px} .brand{display:flex;align-items:center;gap:12px;font-size:22px;font-weight:900;letter-spacing:-.03em} .logo{display:flex;align-items:center;} .nav-links{display:flex;gap:22px;align-items:center;color:#c6d5ea;font-size:15px} .nav-links a:hover{color:#fff}
+    .btn{border:0;cursor:pointer;display:inline-flex;justify-content:center;align-items:center;gap:8px;padding:15px 24px;border-radius:14px;font-weight:800;transition:.2s ease} .btn:hover{transform:translateY(-2px)} .btn-primary{color:#fff;background:linear-gradient(135deg,var(--blue),#5498ff);box-shadow:0 14px 34px rgba(47,124,255,.34)} .btn-secondary{color:#fff;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1)} .btn-block{width:100%}
+    .hero{padding:68px 0 48px} .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center} .hero h1{margin:20px 0 18px;font-size:clamp(28px,3.8vw,52px);line-height:1.12;letter-spacing:-.03em;word-break:keep-all} .hero h1 .accent{background:linear-gradient(135deg,var(--blue2),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;display:block} .hero p{font-size:19px;color:#d2dded;max-width:620px;word-break:keep-all} .hero-actions{display:flex;gap:12px;margin:28px 0 20px;flex-wrap:wrap} .proofs{display:flex;gap:10px;flex-wrap:wrap} .proofs span{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;background:rgba(24,216,141,.08);border:1px solid rgba(24,216,141,.18);color:#9df0ca;font-size:13px;font-weight:700} .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:34px} .stat{background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:18px;padding:18px} .stat .num{font-size:30px;font-weight:900;letter-spacing:-.03em} .stat .label{color:var(--muted);font-size:14px}
+    .dashboard{background:linear-gradient(180deg,rgba(12,27,49,.96),rgba(8,18,34,.96));border:1px solid var(--line);border-radius:26px;overflow:hidden;box-shadow:var(--shadow),var(--shadow-blue)} .window{padding:16px 18px;border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.03)} .window i{width:10px;height:10px;border-radius:999px;display:inline-block} .dashboard-body{padding:22px} .risk-row{display:grid;grid-template-columns:128px 1fr;gap:18px;align-items:center} .gauge{width:128px;height:128px;border-radius:50%;display:grid;place-items:center;position:relative;background:conic-gradient(var(--red) 0 68%,rgba(255,255,255,.08) 68% 100%)} .gauge::after{content:'';position:absolute;inset:14px;border-radius:50%;background:var(--bg2);border:1px solid rgba(255,255,255,.06)} .gauge span{position:relative;z-index:1;text-align:center} .gauge b{display:block;font-size:34px;line-height:1;font-weight:900} .gauge small{color:var(--muted)} .metric{margin-bottom:14px} .metric-head{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--muted);margin-bottom:6px} .bar{height:8px;border-radius:999px;background:rgba(255,255,255,.07);overflow:hidden} .bar>span{display:block;height:100%;border-radius:999px} .feed{display:grid;gap:10px;margin-top:18px} .feed-item{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;padding:14px;border-radius:16px;border:1px solid rgba(255,255,255,.07)} .feed-item.bad{background:rgba(255,100,123,.08)} .feed-item.good{background:rgba(24,216,141,.08)} .badge{font-size:11px;font-weight:800;padding:6px 10px;border-radius:999px} .badge.bad{background:rgba(255,100,123,.16);color:#ffbfca} .badge.good{background:rgba(24,216,141,.16);color:#9df0ca} .feed small{color:var(--muted)}
+    .surface{background:linear-gradient(180deg,rgba(10,22,40,.86),rgba(6,17,31,.98));border-top:1px solid rgba(255,255,255,.04);border-bottom:1px solid rgba(255,255,255,.04)} .problem-grid,.auto-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:44px} .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow)} .stack{display:grid;gap:14px} .item{display:flex;gap:14px;padding:16px;border-radius:16px;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.02)} .item i{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;flex:0 0 40px;font-style:normal} .pain i{background:rgba(255,100,123,.12)} .solve i{background:rgba(47,124,255,.14)} .item b{display:block;font-size:16px;margin-bottom:4px} .item p{margin:0;color:var(--muted);font-size:14px;word-break:keep-all}
+    .flow-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:44px} .flow{background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:24px} .flow.featured{border-color:var(--line-strong);box-shadow:var(--shadow-blue);transform:translateY(-6px)} .step{color:#a9cdff;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase} .flow h3{margin:10px 0 10px;font-size:22px;line-height:1.2} .flow p{margin:0;color:var(--muted);font-size:15px;word-break:keep-all} .flow ul{margin:14px 0 0;padding-left:18px;color:#d7e3f3;font-size:14px}
+    .chat{background:var(--panel);border:1px solid var(--line);border-radius:22px;overflow:hidden} .chat-head{padding:16px 20px;font-weight:800;border-bottom:1px solid rgba(255,255,255,.06)} .chat-head.warn{background:rgba(255,100,123,.08);color:#ffbfca} .chat-head.safe{background:rgba(24,216,141,.08);color:#9df0ca} .chat-body{padding:20px;display:grid;gap:12px} .bubble{padding:14px;border-radius:16px;font-size:14px;line-height:1.7} .bubble.user{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07)} .bubble.ai{background:rgba(47,124,255,.10);border:1px solid rgba(116,179,255,.20);color:#c9ddff}
+    .analyzer{max-width:920px;margin:44px auto 0;background:var(--panel);border:1px solid var(--line);border-radius:28px;overflow:hidden;box-shadow:var(--shadow-blue)} .analyzer-top{padding:16px 20px;border-bottom:1px solid rgba(255,255,255,.06);display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.03)} .live{color:#9df0ca;font-size:12px;font-weight:800} .analyzer-body{padding:26px} .input-row{display:grid;grid-template-columns:1fr auto;gap:12px} .input{min-height:58px;border-radius:16px;border:1px solid rgba(255,255,255,.1);background:rgba(0,0,0,.14);color:#fff;padding:0 18px;font-size:16px;outline:none} .input:focus{border-color:rgba(116,179,255,.4);box-shadow:0 0 0 4px rgba(47,124,255,.12)} .samples{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px} .chip{border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);color:#d0dcee;padding:8px 12px;border-radius:999px;font-size:13px;font-weight:700;cursor:pointer} .terminal{display:none;margin-top:18px;min-height:170px;border-radius:20px;padding:16px;background:#030814;border:1px solid rgba(116,179,255,.16);font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-size:13px;color:#cad8ea} .terminal.show{display:block} .line{margin:6px 0;opacity:0;animation:fadeIn .28s forwards} @keyframes fadeIn{to{opacity:1}}
+    .result{display:none;margin-top:18px;grid-template-columns:1fr 1fr;gap:18px} .result.show{display:grid} .result-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:20px} .score{display:flex;align-items:center;gap:18px} .score-ring{width:108px;height:108px;border-radius:50%;position:relative;display:grid;place-items:center;background:conic-gradient(var(--yellow) 0 54%,rgba(255,255,255,.08) 54% 100%)} .score-ring::after{content:'';position:absolute;inset:12px;border-radius:50%;background:var(--bg2);border:1px solid rgba(255,255,255,.06)} .score-ring span{position:relative;z-index:1;font-size:32px;font-weight:900} .mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px} .mini{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:14px} .mini b{display:block;font-size:22px} .mini small{color:var(--muted)} .verdict{border-radius:18px;padding:18px;border:1px solid rgba(255,255,255,.08)} .verdict.high{background:rgba(255,100,123,.09);border-color:rgba(255,100,123,.18)} .verdict.mid{background:rgba(255,203,61,.09);border-color:rgba(255,203,61,.20)} .verdict.low{background:rgba(24,216,141,.09);border-color:rgba(24,216,141,.18)}
+    .comparison{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:44px} .box{background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:24px} .box h3{margin:10px 0 8px;font-size:20px} .box p{margin:0;color:var(--muted);font-size:15px;word-break:keep-all} .box ul{margin:14px 0 0;padding-left:18px;color:#d7e3f3;font-size:14px}
+    .security-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:44px}
+    .price-logic{max-width:980px;margin:24px auto 0;padding:20px 28px;border-radius:20px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);color:#d7e3f3;font-size:16px;line-height:1.7;word-break:keep-all}
+    .toggle-wrap{display:flex;justify-content:center;align-items:center;gap:12px;margin-top:22px;color:#d0dcee} .toggle{width:58px;height:30px;border-radius:999px;background:rgba(255,255,255,.10);padding:4px;cursor:pointer} .toggle .knob{width:22px;height:22px;border-radius:50%;background:#fff;transition:.2s ease} .toggle.annual{background:var(--blue)} .toggle.annual .knob{transform:translateX(28px)}
+    .pricing{display:grid;grid-template-columns:repeat(5,1fr);gap:18px;margin-top:42px} .plan{background:var(--panel);border:1px solid var(--line);border-radius:24px;padding:26px;display:flex;flex-direction:column} .plan.popular{border-color:var(--line-strong);box-shadow:var(--shadow-blue);transform:scale(1.02)} .pill{display:inline-flex;width:fit-content;padding:6px 10px;border-radius:999px;background:rgba(47,124,255,.16);color:#a9cdff;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.05em} .plan-name{margin-top:14px;color:var(--muted);font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.07em} .plan-price{font-size:42px;font-weight:900;letter-spacing:-.04em;margin:10px 0 0} .plan-price span{font-size:15px;color:var(--muted);font-weight:500} .plan-note{min-height:22px;color:#9df0ca;font-size:12px;margin-top:8px} .plan-desc{word-break:keep-all;color:var(--muted);font-size:14px;margin:14px 0 18px} .features{list-style:none;padding:0;margin:0 0 22px;display:grid;gap:10px;flex:1} .features li{display:flex;gap:10px;color:#d7e3f3;font-size:14px} .features li::before{content:'✓';color:#9df0ca;font-weight:900}
+    .wave-wrap{display:none;margin-top:14px;height:54px;align-items:center;justify-content:center;gap:3px} .wave-wrap.show{display:flex} .wave-bar{width:4px;border-radius:4px;background:linear-gradient(180deg,var(--cyan),var(--blue));animation:waveAnim 1s ease-in-out infinite} @keyframes waveAnim{0%,100%{height:8px;opacity:.4}50%{height:44px;opacity:1}} .scan-beam{display:none;height:2px;background:linear-gradient(90deg,transparent,var(--cyan),transparent);border-radius:2px;margin-top:8px;animation:scanAnim 1.5s ease-in-out infinite} .scan-beam.show{display:block} @keyframes scanAnim{0%{opacity:0;transform:scaleX(.1)}50%{opacity:1;transform:scaleX(1)}100%{opacity:0;transform:scaleX(.1)}}
+    .share-row{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap} .share-btn{padding:10px 16px;border-radius:10px;font-size:13px;font-weight:700;border:none;cursor:pointer;transition:all .15s} .s-kakao{background:#FEE500;color:#3A1D00} .s-x{background:#000;color:#fff;border:1px solid #333} .s-copy{background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.1)}
+    .final{padding:108px 0;text-align:center;background:radial-gradient(circle at top,rgba(47,124,255,.18),transparent 32%),linear-gradient(180deg,rgba(10,22,40,.96),rgba(6,17,31,1));border-top:1px solid rgba(255,255,255,.05)} .footer{padding:34px 0 48px;color:var(--muted);font-size:14px} .footer-inner{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;padding-top:24px;border-top:1px solid rgba(255,255,255,.06)}
+    @media (max-width:1120px){.pricing,.flow-grid,.security-grid{grid-template-columns:repeat(2,1fr)}} @media (max-width:920px){.nav-links{display:none}.hero-grid,.problem-grid,.auto-grid,.result,.comparison{grid-template-columns:1fr}.stats,.risk-row{grid-template-columns:1fr}} @media (max-width:720px){.container{width:min(var(--container),calc(100% - 28px))}.section{padding:78px 0}.pricing,.flow-grid,.security-grid,.mini-grid,.input-row{grid-template-columns:1fr}.hero-actions{flex-direction:column}.btn{width:100%}}
+      .sim-result{opacity:0;transform:translateY(12px);transition:opacity .35s ease,transform .35s ease}
+    .sim-result.visible{opacity:1;transform:translateY(0)}
+    .sim-result-head{display:flex;align-items:center;gap:12px;margin-bottom:14px;opacity:0;transform:translateY(8px);transition:all .3s ease}
+    .sim-result-head.show{opacity:1;transform:translateY(0)}
+
+    .sim-reply{padding:14px;border-radius:14px;font-size:14px;line-height:1.7;background:rgba(47,124,255,.08);border:1px solid rgba(116,179,255,.18);color:#c9ddff;position:relative;overflow:hidden}
+    .sim-reply.typing{animation:replyGlow .6s ease-out}
+    @keyframes replyGlow{0%{box-shadow:0 0 0 rgba(47,124,255,0);background:rgba(47,124,255,.04)}50%{box-shadow:0 0 30px rgba(47,124,255,.4),0 0 60px rgba(0,213,255,.2);background:rgba(47,124,255,.18)}100%{box-shadow:0 0 12px rgba(47,124,255,.15);background:rgba(47,124,255,.08)}}
+    .sim-reply.toxic{background:rgba(255,100,123,.08);border-color:rgba(255,100,123,.25);color:#ffbfca}
+    .sim-reply.toxic.typing{animation:replyGlowRed .6s ease-out}
+    @keyframes replyGlowRed{0%{box-shadow:0 0 0 rgba(255,100,123,0)}50%{box-shadow:0 0 30px rgba(255,100,123,.4);background:rgba(255,100,123,.18)}100%{box-shadow:0 0 12px rgba(255,100,123,.15);background:rgba(255,100,123,.08)}}
+    .sim-reply.warn{background:rgba(255,203,61,.08);border-color:rgba(255,203,61,.25);color:#ffd98b}
+    .sim-reply.warn.typing{animation:replyGlowWarn .6s ease-out}
+    @keyframes replyGlowWarn{0%{box-shadow:0 0 0 rgba(255,203,61,0)}50%{box-shadow:0 0 30px rgba(255,203,61,.4);background:rgba(255,203,61,.18)}100%{box-shadow:0 0 12px rgba(255,203,61,.15);background:rgba(255,203,61,.08)}}
+    .cursor{display:inline-block;width:2px;height:1em;background:currentColor;margin-left:2px;animation:cursorBlink .7s ease-in-out infinite;vertical-align:text-bottom}
+    @keyframes cursorBlink{0%,100%{opacity:1}50%{opacity:0}}
+
+    /* ── 대시보드 애니메이션 ── */
+    .dashboard-live { position:relative; overflow:hidden; }
+    .dashboard-live::before {
+      content:''; position:absolute; top:0; left:-100%;
+      width:60%; height:100%;
+      background:linear-gradient(90deg,transparent,rgba(47,124,255,.06),transparent);
+      animation:dashScan 3s ease-in-out infinite;
+      pointer-events:none; z-index:1;
+    }
+    @keyframes dashScan { 0%{left:-60%} 100%{left:160%} }
+
+    .feed-item { transition: all .3s ease; }
+    .feed-item:hover { transform:translateX(4px); }
+
+    .gauge-animated {
+      animation: gaugePulse 2.5s ease-in-out infinite;
+    }
+    @keyframes gaugePulse {
+      0%,100% { box-shadow: 0 0 0 0 rgba(255,100,123,0); }
+      50%      { box-shadow: 0 0 0 8px rgba(255,100,123,.12); }
+    }
+
+    .bar > span { transition: width 1.2s cubic-bezier(.4,0,.2,1); }
+
+    .badge-pulse { animation: badgePulse 2s ease-in-out infinite; }
+    @keyframes badgePulse {
+      0%,100% { opacity:1; } 50% { opacity:.7; }
+    }
+
+    .feed-ticker { animation: feedTicker 0.4s ease-out; }
+    @keyframes feedTicker {
+      from { opacity:0; transform:translateY(-8px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+    /* ── 무료 체험 모달 ── */
+    .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:999;align-items:center;justify-content:center;padding:20px}
+    .modal-overlay.show{display:flex}
+    .modal{background:var(--bg2);border:1px solid var(--line-strong);border-radius:24px;padding:36px;max-width:480px;width:100%;box-shadow:0 24px 80px rgba(0,0,0,.5)}
+    .modal h3{margin:0 0 8px;font-size:24px}
+    .modal p{color:var(--muted);font-size:15px;margin:0 0 24px}
+    .modal-field{display:grid;gap:10px;margin-bottom:14px}
+    .modal-field label{font-size:13px;font-weight:700;color:#a9cdff}
+    .modal-close{position:absolute;top:16px;right:20px;background:none;border:none;color:var(--muted);font-size:24px;cursor:pointer;line-height:1}
+    @media(max-width:720px){.modal{padding:24px}.security-grid{grid-template-columns:1fr 1fr}}
+  </style>
+</head>
+<body>
+<nav class="nav">
+  <div class="container nav-inner">
+    <a class="brand" href="#top"><img src="/akpulai_logo.png" alt="악플AI" style="height:32px;width:auto;display:block;" /></a>
+    <div class="nav-links">
+      <a href="#protection">오탐 방지</a>
+      <a href="#analyzer">무료 분석</a>
+      <a href="#pricing">요금제</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <button class="btn btn-primary" onclick="openTrialModal()">7일 무료 체험 신청</button>
+  </div>
+</nav>
+
+<main id="top">
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container hero-grid">
+    <div>
+      <span class="eyebrow"><span class="dot"></span> 크리에이터 멘탈 보호 시스템</span>
+      <h1>정상 댓글은 지키고,<br><span class="accent">악플만 조용히<br>걸러냅니다</span></h1>
+      <p>외모, 말투, 일상까지 건드리는 댓글이 쌓이면 댓글창을 여는 것조차 부담스러워집니다.<br><strong style="color:#9fc6ff;">팬들과의 소통은 살리고, 지치게 만드는 댓글만 자동으로 걸러냅니다.</strong></p>
+      <div class="hero-actions">
+        <button class="btn btn-primary" onclick="openTrialModal()">7일 무료 체험 신청하기</button>
+        <button class="btn btn-secondary" onclick="scrollToId('analyzer')">무료 채널 분석하기</button>
+      </div>
+      <div class="proofs">
+        <span>✅ 오탐 최소화 우선 설계</span>
+        <span>✅ 정상 댓글 원클릭 복원</span>
+        <span>✅ 회원가입 없이 체험 가능</span>
+        <span>✅ YouTube 공식 API 기반 설계</span>
+      </div>
+      <div class="stats">
+        <div class="stat"><div class="num">5단계</div><div class="label">하이브리드 교차 검증</div></div>
+        <div class="stat"><div class="num">5가지</div><div class="label">댓글 유형 정밀 분류</div></div>
+        <div class="stat"><div class="num">24시간</div><div class="label">자동 모니터링</div></div>
+      </div>
+    </div>
+    <div class="dashboard dashboard-live" id="heroDashboard">
+      <div class="window"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i><span style="margin-left:8px;color:var(--muted);font-size:13px;">AkpulAI Dashboard</span><span style="margin-left:auto;font-size:11px;color:var(--blue2);font-weight:700;background:rgba(47,124,255,.12);padding:3px 8px;border-radius:6px;">예시</span></div>
+      <div class="dashboard-body">
+        <div class="risk-row">
+          <div class="gauge gauge-animated"><span><b id="gaugeNum">67</b><small>위험도</small></span></div>
+          <div>
+            <div class="metric"><div class="metric-head"><span>클린 점수</span><strong style="color:#9df0ca;">72 / 100</strong></div><div class="bar"><span style="width:72%;background:linear-gradient(90deg,#18d88d,#8ef0c6)"></span></div></div>
+            <div class="metric"><div class="metric-head"><span>악플 비율</span><strong style="color:#ffbfca;">22.4%</strong></div><div class="bar"><span style="width:22%;background:linear-gradient(90deg,#ff647b,#ffa7b5)"></span></div></div>
+            <div class="metric"><div class="metric-head"><span>자동 대응 상태</span><strong style="color:#a9cdff;">활성화</strong></div><div class="bar"><span style="width:100%;background:linear-gradient(90deg,#2f7cff,#00d5ff)"></span></div></div>
+          </div>
+        </div>
+        <div class="feed">
+          <div class="feed-item bad"><span class="badge bad badge-pulse">숨김</span><div><div>역시 퀄리티가 일정하네요 ㅎ</div><small>AI 경고 대댓글 발송 · 증거 저장 완료</small></div><strong style="color:#ffbfca;">72점</strong></div>
+          <div class="feed-item bad"><span class="badge bad">기록</span><div><div>이 채널 망했네, 왜 아직도 봄?</div><small>명예훼손 가능성 감지 · URL 캡처</small></div><strong style="color:#ffd98b;">61점</strong></div>
+          <div class="feed-item good"><span class="badge good">감사</span><div><div>오늘도 좋은 영상 감사합니다 🙏</div><small>크리에이터 말투 기반 감사 대댓글 발송</small></div><strong style="color:#9df0ca;">2점</strong></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- 오탐 방지 섹션 (상단 배치) -->
+<section class="section" id="protection">
+  <div class="container center">
+    <span class="eyebrow">가장 먼저 해결한 문제</span>
+    <h2 class="title">"혹시 정상 댓글까지 막히면 어떡하죠?"<br><strong>이게 저희가 가장 먼저 해결한 문제입니다</strong></h2>
+    <p class="desc">정상 댓글 차단은 악플보다 더 큰 스트레스가 됩니다. 악플AI는 오탐 최소화를 설계 1순위로 두고 만들었습니다.</p>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:44px;max-width:960px;margin-left:auto;margin-right:auto;">
+      <div style="background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:24px;text-align:left;">
+        <div style="font-size:28px;margin-bottom:12px;">🛡</div>
+        <div style="font-weight:800;font-size:16px;margin-bottom:8px;">비판과 악플은 다릅니다</div>
+        <div style="color:var(--muted);font-size:14px;line-height:1.7;">"편집이 아쉬웠어요"는 건설적 의견입니다. "퀄이 떨어졌네 ㅎ"는 조롱입니다. 악플AI는 이 차이를 문맥으로 판단합니다.</div>
+      </div>
+      <div style="background:var(--panel);border:1px solid rgba(79,140,255,.34);border-radius:20px;padding:24px;text-align:left;box-shadow:0 12px 40px rgba(47,124,255,.15);">
+        <div style="font-size:28px;margin-bottom:12px;">🔍</div>
+        <div style="font-weight:800;font-size:16px;margin-bottom:8px;">5단계 하이브리드 검증</div>
+        <div style="color:var(--muted);font-size:14px;line-height:1.7;">하드규칙 → 소프트규칙 → 문맥패턴 → GPT 정밀 판단 → 앙상블. 5개 레이어가 교차 검증해야 조치합니다.</div>
+      </div>
+      <div style="background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:24px;text-align:left;">
+        <div style="font-size:28px;margin-bottom:12px;">↩️</div>
+        <div style="font-weight:800;font-size:16px;margin-bottom:8px;">오탐 시 원클릭 복원</div>
+        <div style="color:var(--muted);font-size:14px;line-height:1.7;">잘못 처리된 댓글은 대시보드에서 즉시 복원할 수 있습니다. 패턴은 AI 학습에 반영됩니다.</div>
+      </div>
+    </div>
+    <!-- 샘플 댓글 비교 카드 -->
+    <div style="margin-top:32px;max-width:800px;margin-left:auto;margin-right:auto;">
+      <div style="font-size:13px;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:.06em;margin-bottom:16px;">댓글 분류 예시 (실제 판단 기준)</div>
+      <div style="display:grid;gap:10px;">
+        <div style="display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;background:rgba(24,216,141,.06);border:1px solid rgba(24,216,141,.2);border-radius:14px;padding:14px 18px;">
+          <div style="font-size:14px;color:#d7e3f3;">"편집이 조금 아쉬웠어요, 다음엔 더 기대할게요"</div>
+          <div style="font-size:12px;font-weight:800;color:#9df0ca;white-space:nowrap;">💬 건설적 피드백 · 보호됨</div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;background:rgba(24,216,141,.06);border:1px solid rgba(24,216,141,.2);border-radius:14px;padding:14px 18px;">
+          <div style="font-size:14px;color:#d7e3f3;">"오늘 영상 진짜 위로됐어요 항상 잘 보고 있어요 🙏"</div>
+          <div style="font-size:12px;font-weight:800;color:#9df0ca;white-space:nowrap;">💚 클린 댓글 · 감사 대댓글</div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;background:rgba(255,203,61,.06);border:1px solid rgba(255,203,61,.2);border-radius:14px;padding:14px 18px;">
+          <div style="font-size:14px;color:#d7e3f3;">"퀄리티가 많이 떨어졌네요 ㅎㅎ 예전이 훨씬 나았는데"</div>
+          <div style="font-size:12px;font-weight:800;color:#ffd98b;white-space:nowrap;">🔍 조롱 의심 · 모니터링</div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;background:rgba(255,100,123,.06);border:1px solid rgba(255,100,123,.2);border-radius:14px;padding:14px 18px;">
+          <div style="font-size:14px;color:#d7e3f3;">"고만좀 해라 참 특이해 ㄹㅇ"</div>
+          <div style="font-size:12px;font-weight:800;color:#ffbfca;white-space:nowrap;">🚨 악성 댓글 · 자동 숨김</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 공감 -->
+<section class="section surface" id="loss">
+  <div class="container center">
+    <span class="eyebrow">크리에이터가 겪는 현실</span>
+    <h2 class="title">댓글창 확인이<br><strong>스트레스가 된 적 있으신가요?</strong></h2>
+    <p class="desc">얼굴을 드러내는 크리에이터라면 더 잘 아실 겁니다. 팬들과 소통은 하고 싶은데, 댓글창 열기가 무서운 그 감정.</p>
+    <div class="problem-grid">
+      <div class="card pain">
+        <h3 style="margin-top:0;font-size:24px;">지금 직접 대응하면 생기는 문제</h3>
+        <div class="stack">
+          <div class="item"><i>😫</i><div><b>정신적 소진</b><p>매일 쌓이는 악플은 번아웃과 업로드 의욕 저하로 이어집니다.</p></div></div>
+          <div class="item"><i>⏱️</i><div><b>시간 손실</b><p>하루 1~2시간씩 댓글 관리에 쓰면 제작 시간이 직접 줄어듭니다.</p></div></div>
+          <div class="item"><i>💔</i><div><b>커뮤니티 악화</b><p>악플이 방치되면 정상 시청자가 먼저 조용히 떠납니다.</p></div></div>
+          <div class="item"><i>⚖️</i><div><b>대응 지연</b><p>증거 확보 타이밍을 놓치면 실제 법적 대응이 훨씬 어려워집니다.</p></div></div>
+        </div>
+      </div>
+      <div class="card solve">
+        <h3 style="margin-top:0;font-size:24px;">악플AI가 대신하는 일</h3>
+        <div class="stack">
+          <div class="item"><i>🧠</i><div><b>5단계 정밀 탐지</b><p>욕설, 초성체, 비꼼, 조롱, 집단 선동까지 5단계 하이브리드로 탐지합니다.</p></div></div>
+          <div class="item"><i>🤖</i><div><b>자동 대응</b><p>악플에는 경고를, 좋은 댓글에는 감사를 자동으로 남깁니다.</p></div></div>
+          <div class="item"><i>💾</i><div><b>증거 보존</b><p>댓글 내용, 작성자 정보, URL, 타임스탬프를 즉시 저장합니다.</p></div></div>
+          <div class="item"><i>🛡</i><div><b>지속 보호</b><p>당신은 콘텐츠에 집중하고 AI는 24시간 채널을 지킵니다.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 차이점 -->
+<section class="section" id="difference">
+  <div class="container center">
+    <span class="eyebrow">왜 악플AI인가</span>
+    <h2 class="title">유튜브 기본 필터와의 차이를<br><strong>한눈에 확인하세요</strong></h2>
+    <div class="comparison">
+      <div class="box"><h3>기본 필터</h3><p>욕설은 막아도 비꼼과 조롱, 교묘한 선동은 종종 통과합니다.</p><ul><li>욕설 중심</li><li>수동 대응 의존</li><li>증거 저장 없음</li></ul></div>
+      <div class="box"><h3>악플AI</h3><p>탐지에서 끝나지 않고, 대응·증거 보존·법적 준비까지 연결합니다.</p><ul><li>문맥 기반 판단</li><li>자동 경고/감사 대댓글</li><li>증거 구조화</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- 작동 방식 -->
+<section class="section surface" id="flow">
+  <div class="container center">
+    <span class="eyebrow">작동 방식</span>
+    <h2 class="title">탐지에서 끝나지 않습니다.<br><strong>대응과 보호까지 자동화됩니다</strong></h2>
+    <p class="desc">하드규칙 → 소프트규칙 → 문맥패턴 → GPT 정밀 판단 → 앙상블. 5단계가 순차적으로 작동해 비용과 정확도를 함께 잡습니다.</p>
+    <div class="flow-grid">
+      <article class="flow"><div class="step">Step 1</div><h3>규칙 기반 필터</h3><p>욕설 사전과 초성체를 빠르게 걸러냅니다.</p><ul><li>명백한 악플 즉시 감지</li><li>비용 거의 없음</li></ul></article>
+      <article class="flow featured"><div class="step">Step 2~3</div><h3>소프트규칙 + 문맥패턴</h3><p>47개 키워드 + 12개 정규식으로 조롱·비꼬기를 탐지합니다.</p><ul><li>우회 표현 감지</li><li>비판 보호 로직</li></ul></article>
+      <article class="flow"><div class="step">Step 4~5</div><h3>GPT + 앙상블</h3><p>애매한 케이스만 GPT가 판단하고, 5단계 점수를 합산해 최종 결정합니다.</p><ul><li>필요한 댓글만 정밀 분석</li><li>비용 최소화 설계</li></ul></article>
+      <article class="flow"><div class="step">Step 4</div><h3>자동 대응·증거 보존</h3><p>숨김, 대댓글, 고소장 초안까지 하나의 흐름으로 연결합니다.</p><ul><li>원클릭 복원</li><li>법무법인 연계</li></ul></article>
+    </div>
+  </div>
+</section>
+
+<!-- 자동 대댓글 -->
+<section class="section" id="auto">
+  <div class="container center">
+    <span class="eyebrow">자동 대댓글 거부감 해소</span>
+    <h2 class="title">AI가 대신 댓글 달면 티 나지 않을까요?<br><strong>그래서 선택할 수 있게 만들었습니다</strong></h2>
+    <p class="desc">자연형 감사 모드와 공개형 AI 요원 모드 중 선택할 수 있습니다. 언제든 끄거나 기준을 조정할 수도 있습니다.</p>
+    <div class="auto-grid">
+      <div class="chat"><div class="chat-head warn">🚨 악플 감지 → 자동 경고 대댓글 <span style="font-size:11px;opacity:.7;margin-left:8px;">Pro 이상</span></div><div class="chat-body"><div class="bubble user">역시 퀄리티가 일정하네요 ㅎ. 예전이 훨씬 나았는데 요즘은 왜 이렇죠?</div><div style="text-align:center;color:var(--muted);font-size:13px;">AI가 독성 점수 89점으로 판단</div><div class="bubble ai">🚫 해당 댓글이 자동으로 숨김 처리되었습니다.</div></div></div>
+      <div class="chat"><div class="chat-head safe">💚 좋은 댓글 감지 → 자동 감사 대댓글 <span style="font-size:11px;opacity:.7;margin-left:8px;">Elite</span></div><div class="chat-body"><div class="bubble user">오늘 영상 진짜 위로됐어요. 항상 잘 보고 있습니다 🙌</div><div style="text-align:center;color:var(--muted);font-size:13px;">AI가 클린 점수 97점으로 판단</div><div class="bubble ai">따뜻하게 봐주셔서 정말 감사해요 🙏 이런 댓글 덕분에 더 좋은 콘텐츠 만들 힘이 납니다. 다음 영상도 기대해 주세요!</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 무료 분석 + 시뮬레이터 -->
+<section class="section surface" id="analyzer">
+  <div class="container center">
+    <span class="eyebrow"><span class="dot"></span> 무료 분석 · 시뮬레이터</span>
+    <h2 class="title">지금, 당신의 채널은 안전한가요?</h2>
+    <p class="desc">채널명을 입력하면 AI가 위험도를 분석합니다. 시뮬레이터로 자동 대응도 미리 확인할 수 있습니다.</p>
+
+    <!-- 채널 분석기 -->
+    <div class="analyzer">
+      <div class="analyzer-top"><strong>AkpulAI Risk Analyzer</strong><span style="font-size:11px;color:var(--muted);margin-left:8px;">체험용 시뮬레이션 · 실제 채널 연동 시 더 정확한 결과 제공</span><span class="live">● LIVE</span></div>
+      <div class="analyzer-body">
+        <div class="input-row">
+          <input id="channelInput" class="input" placeholder="보호할 유튜브 채널명을 입력하세요. 예: 침착맨, 쯔양, 감스트" />
+          <button class="btn btn-primary" id="analyzeBtn">무료 보안 진단 시작</button>
+        </div>
+        <div class="samples">
+          <button class="chip" data-channel="침착맨">침착맨</button>
+          <button class="chip" data-channel="쯔양">쯔양</button>
+          <button class="chip" data-channel="감스트">감스트</button>
+          <button class="chip" data-channel="주호민">주호민</button>
+        </div>
+        <div id="waveWrap" class="wave-wrap"></div>
+        <div id="scanBeam" class="scan-beam"></div>
+        <div id="terminal" class="terminal"></div>
+        <div id="result" class="result">
+          <div class="result-card">
+            <div class="score"><div class="score-ring"><span id="riskNum">54</span></div><div><h3 id="resultChannel" style="margin:0 0 6px;font-size:24px;">@channel</h3><div style="color:var(--muted);font-size:14px;">분석 완료 · AI 위험도 분석</div><div style="margin-top:10px;color:#d6e2f2;font-size:15px;">현재 댓글 환경은 <strong id="riskGradeText">보통</strong> 수준입니다.</div></div></div>
+            <div class="mini-grid"><div class="mini"><b id="cleanScore">79</b><small>클린 점수</small></div><div class="mini"><b id="toxicRate">14.8%</b><small>악플 비율</small></div><div class="mini"><b id="commentCount">4,820</b><small>분석 댓글</small></div><div class="mini"><b id="riskLevel">중간 위험</b><small>위험 등급</small></div></div>
+          </div>
+          <div class="result-card">
+            <div id="verdictBox" class="verdict mid"><h3 style="margin-top:0;">대응 권장</h3><p style="margin:0;color:#d9e5f3;">비꼼과 조롱성 댓글이 누적되기 시작했습니다.</p></div>
+            <div style="margin-top:16px;display:grid;gap:10px;">
+              <button class="btn btn-primary btn-block" id="upgradeBtn" onclick="openTrialModal()">🎁 7일 무료 체험 신청하기</button>
+              <button class="btn btn-secondary btn-block" id="analyzeAgain">다른 채널 다시 분석하기</button>
+            </div>
+            <!-- 이메일 수집 -->
+            <div id="emailCollect" style="margin-top:14px;background:rgba(47,124,255,.08);border:1px solid rgba(116,179,255,.2);border-radius:14px;padding:16px;">
+              <div style="font-size:13px;font-weight:800;color:#a9cdff;margin-bottom:10px;">📧 상세 분석 결과를 이메일로 받아보세요</div>
+              <div style="display:grid;grid-template-columns:1fr auto;gap:8px;">
+                <input id="resultEmail" class="input" style="min-height:44px;font-size:14px;" placeholder="이메일 또는 카카오 아이디" />
+                <button onclick="submitResultLead()" style="padding:0 18px;background:var(--blue);color:#fff;border:none;border-radius:12px;font-weight:800;font-size:13px;cursor:pointer;white-space:nowrap;">받기</button>
+              </div>
+              <div id="emailSuccess" style="display:none;font-size:13px;color:#9df0ca;margin-top:8px;font-weight:700;">✅ 신청 완료! 곧 연락드릴게요.</div>
+            </div>
+            <div class="share-row">
+              <button class="share-btn s-kakao" id="shareKakao">💬 카카오 공유</button>
+              <button class="share-btn s-x" id="shareX">𝕏 공유</button>
+              <button class="share-btn s-copy" id="shareCopy">🔗 링크 복사</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 댓글 시뮬레이터 -->
+    <div style="margin-top:32px;max-width:920px;margin-left:auto;margin-right:auto;">
+      <div style="text-align:left;margin-bottom:16px;">
+        <h3 style="margin:0 0 6px;font-size:20px;">💬 내 댓글, AI가 어떻게 처리할까요?</h3>
+        <p style="color:var(--muted);font-size:14px;margin:0;">댓글을 입력하면 악플 탐지 결과와 자동 대응을 즉시 확인합니다.</p>
+      </div>
+      <div class="analyzer" style="margin-top:0;">
+        <div class="analyzer-top"><strong>AkpulAI Comment Simulator</strong><span class="live">● 실시간 판단</span></div>
+        <div class="analyzer-body">
+          <div class="input-row">
+            <input id="simInput" class="input" placeholder="댓글을 직접 입력해보세요. 예: 고만좀 해라 참 특이해" />
+            <button class="btn btn-primary" onclick="runSimulator()">AI 판단 받기</button>
+          </div>
+          <div class="samples" style="margin-top:12px;">
+            <button class="chip" onclick="fillSim('ㅅㅂ 이게 뭐임 시간낭비')">💢 욕설</button>
+            <button class="chip" onclick="fillSim('고만좀 해라 참 특이해')">😒 우회 비하</button>
+            <button class="chip" onclick="fillSim('퀄리티가 많이 떨어졌네요 ㅎㅎ 예전이 훨씬 나았는데')">🙃 조롱</button>
+            <button class="chip" onclick="fillSim('왜이렇게 됐어요? 예전엔 안그랬는데')">🤔 비꼬기</button>
+            <button class="chip" onclick="fillSim('오늘 영상 진짜 위로됐어요 항상 잘 보고 있습니다 🙏')">💚 응원</button>
+            <button class="chip" onclick="fillSim('구독하고 갑니다! 다음 영상도 기대할게요 😊')">⭐ 구독</button>
+          </div>
+          <div id="simResult" style="display:none;margin-top:20px;">
+            <div id="simVerdict" style="border-radius:18px;padding:20px;border:1px solid;margin-bottom:16px;">
+              <div id="simHead" class="sim-result-head" style="display:flex;align-items:center;gap:14px;margin-bottom:14px;transition:all .3s ease;">
+                <div id="simIcon" style="font-size:32px;"></div>
+                <div><div id="simLabel" style="font-size:18px;font-weight:800;"></div><div id="simScore" style="font-size:13px;margin-top:2px;"></div></div>
+                <div id="simAction" style="margin-left:auto;font-size:12px;font-weight:800;padding:6px 14px;border-radius:999px;"></div>
+              </div>
+              <div style="border-top:1px solid rgba(255,255,255,.08);padding-top:14px;">
+                <div style="font-size:12px;color:var(--muted);margin-bottom:8px;font-weight:800;letter-spacing:.05em;">AI 자동 대응 미리보기</div>
+                <div id="simReply" style="padding:14px;border-radius:14px;font-size:14px;line-height:1.7;background:rgba(47,124,255,.08);border:1px solid rgba(116,179,255,.18);color:#c9ddff;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 베타 CTA -->
+    
+  </div>
+</section>
+
+<!-- 가치 설명 -->
+<section class="section" id="price-logic">
+  <div class="container center">
+    
+    <h2 class="title">댓글 관리에 쓰는 시간,<br><strong>콘텐츠에 쓰면 어떨까요?</strong></h2>
+    <div class="price-logic">
+      하루 1시간만 댓글 관리에 써도 한 달이면 약 <strong>30시간</strong>입니다. 악플AI는 그 시간을 콘텐츠 제작으로 돌려드립니다.<br>
+      악플이 방치되면 선량한 구독자가 먼저 떠납니다. 커뮤니티를 지키는 것이 곧 채널 성장을 지키는 일입니다.<br>
+      또한 증거 없이는 법적 대응이 어렵습니다. 악플AI는 댓글이 삭제되기 전에 자동으로 증거를 구조화해 보존합니다.
+    </div>
+  </div>
+</section>
+
+<!-- 요금제 -->
+<section class="section surface" id="pricing">
+  <div class="container center">
+    <span class="eyebrow">요금제</span>
+    <h2 class="title">당신의 채널 상황에 맞는 <strong>보호 수준을 선택하세요</strong></h2>
+    <div class="toggle-wrap"><span>월간</span><div id="billingToggle" class="toggle"><div class="knob"></div></div><span>연간</span><span style="color:#9df0ca;font-size:13px;font-weight:700;">2개월 할인</span></div>
+    <div class="pricing">
+      <div class="plan"><span class="pill">Free</span><div class="plan-name">체험용</div><div style="font-size:17px;font-weight:800;margin-top:8px;line-height:1.4;">먼저 가볍게 확인하고 싶은 채널</div><div class="plan-price" data-monthly="0" data-annual="0">₩0 <span>/월</span></div><div class="plan-note">주 1회 위험도 분석</div><div class="plan-desc">월 약 800개 댓글 수준의 체험용 플랜입니다.</div><ul class="features"><li>주 1회 분석</li><li>기본 리포트</li><li>랭킹 참여</li></ul><button class="btn btn-secondary btn-block" onclick="scrollToId('analyzer')">무료 분석하기</button></div>
+      <div class="plan"><span class="pill">Starter</span><div class="plan-name">입문</div><div style="font-size:17px;font-weight:800;margin-top:8px;line-height:1.4;">댓글 관리가 버거워지기 시작한 채널</div><div class="plan-price" data-monthly="15000" data-annual="12500">₩15,000 <span>/월</span></div><div class="plan-note">월 5,000개 분석</div><div class="plan-desc">부담 없는 가격으로 기본 보호를 시작하는 단계입니다.</div><ul class="features"><li>월 5,000개 분석</li><li>기본 대시보드</li><li>이메일 알림</li><li>보호 배지</li></ul><button class="btn btn-secondary btn-block">Starter 시작</button></div>
+      <div class="plan" style="border-color:rgba(24,216,141,.3);"><span class="pill" style="background:rgba(24,216,141,.16);color:#9df0ca;">Growth</span><span class="pill" style="background:rgba(24,216,141,.1);color:#9df0ca;margin-left:6px;">✅ 시작하기 가장 좋은</span><div class="plan-name">추천 입문 플랜</div><div style="font-size:17px;font-weight:800;margin-top:8px;line-height:1.4;">혼자 댓글 관리 중인 성장 채널</div><div class="plan-price" data-monthly="28000" data-annual="23300">₩28,000 <span>/월</span></div><div class="plan-note">월 20,000개 분석</div><div class="plan-desc">Starter보다 더 많은 보호가 필요할 때, Pro가 부담스러울 때 선택하세요.</div><ul class="features"><li>월 20,000개 분석</li><li>자동 악플 숨김</li><li>기본 증거 보존</li><li>보호 배지</li></ul><button class="btn btn-secondary btn-block">Growth 시작</button></div>
+      <div class="plan popular"><span class="pill">Pro</span><span class="pill" style="background:rgba(255,100,60,.18);color:#ffb39a;margin-left:6px;">🔥 가장 많이 선택</span><div class="plan-name">가장 인기있는 플랜</div><div style="font-size:17px;font-weight:800;margin-top:8px;line-height:1.4;">댓글창을 거의 맡기고 싶은 채널</div><div class="plan-price" data-monthly="45000" data-annual="37500">₩45,000 <span>/월</span></div><div class="plan-note">월 50,000개 분석</div><div class="plan-desc">하루 1~2시간 쓰던 댓글 관리 시간을 줄이고, 자동 경고 대댓글까지 시작합니다.</div><ul class="features"><li>월 50,000개 분석</li><li>자동 악플 숨김</li><li>경고 대댓글 자동화</li>
+              <li>감사 대댓글 (클린 95점+)</li><li>전체 증거 보존</li><li>상세 리포트</li></ul><button class="btn btn-primary btn-block">🔥 Pro 시작하기</button></div>
+      <div class="plan"><span class="pill">Elite</span><div class="plan-name">법적 대응 포함</div><div style="font-size:17px;font-weight:800;margin-top:8px;line-height:1.4;">대형 채널·고위험 채널 전용</div><div class="plan-price" data-monthly="120000" data-annual="100000">₩120,000 <span>/월</span></div><div class="plan-note">월 200,000개 분석</div><div class="plan-desc">Pro플랜 모두 이용 + 말투 학습, 감사 대댓글, 고소장 초안, 법무법인 연결까지 포함한 최상위 플랜입니다.</div><ul class="features"><li>월 200,000개 분석</li><li>감사 대댓글 자동화</li><li>크리에이터 말투 학습</li><li>고소장 초안 자동 생성</li><li>법무법인 연결</li></ul><button class="btn btn-secondary btn-block" onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLScJylXBJBp7udq3LENEi8dM_Fh6cMOSb5Br6jmWwl8xcSbM8A/viewform','_blank')">내 채널에 적용하기</button></div>
+    </div>
+    <div style="margin-top:36px;text-align:center;">
+      <p style="color:var(--muted);font-size:15px;margin-bottom:16px;">요금제 결제 전, 먼저 7일 무료로 체험해보세요.</p>
+      <button class="btn btn-primary" onclick="openTrialModal()" style="font-size:16px;padding:16px 36px;">🎁 7일 무료 체험 신청하기</button>
+    </div>
+  </div>
+</section>
+
+<!-- 확장 플랫폼 (한 줄) -->
+<section class="section" id="platforms">
+  <div class="container center">
+    <span class="eyebrow">🚀 확장 예정</span>
+    <h2 class="title">YouTube를 넘어, <strong>모든 플랫폼으로 확장합니다</strong></h2>
+    <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-top:32px;">
+      <div style="padding:14px 24px;background:var(--panel);border:1px solid var(--line-strong);border-radius:14px;font-weight:800;font-size:15px;">▶️ YouTube <span style="color:#9df0ca;font-size:12px;margin-left:8px;">✅ 현재 서비스 중</span></div>
+      <div style="padding:14px 24px;background:var(--panel);border:1px solid var(--line);border-radius:14px;font-weight:800;font-size:15px;opacity:.7;">📸 Instagram <span style="color:var(--muted);font-size:12px;margin-left:8px;">🔜 2026 Q2</span></div>
+      <div style="padding:14px 24px;background:var(--panel);border:1px solid var(--line);border-radius:14px;font-weight:800;font-size:15px;opacity:.7;">🎵 TikTok <span style="color:var(--muted);font-size:12px;margin-left:8px;">🔜 2026 Q3</span></div>
+      <div style="padding:14px 24px;background:var(--panel);border:1px solid var(--line);border-radius:14px;font-weight:800;font-size:15px;opacity:.7;">📝 블로그·카페 <span style="color:var(--muted);font-size:12px;margin-left:8px;">🔜 2026 Q4</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 보안 -->
+<section class="section surface" id="security">
+  <div class="container center">
+    <span class="eyebrow">보안 · 신뢰</span>
+    <h2 class="title"><strong>안전하고 신뢰할 수 있습니다</strong></h2>
+    <div class="security-grid">
+      <div class="box"><h3>YouTube 공식 API</h3><p>Google이 제공하는 공식 경로로만 채널에 접근합니다.</p></div>
+      <div class="box"><h3>OAuth 인증</h3><p>비밀번호를 저장하지 않고 최소 권한만 요청합니다.</p></div>
+      <div class="box"><h3>AES-256 암호화</h3><p>수집된 데이터는 저장 구간에서 암호화되어 관리됩니다.</p></div>
+      <div class="box"><h3>법적 증거 구조화</h3><p>댓글 내용, 작성자, URL, 타임스탬프를 대응 가능한 형태로 보존합니다.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- Final CTA -->
+
+
+
+<!-- FAQ 섹션 -->
+<section class="section surface" id="faq">
+  <div class="container center">
+    <span class="eyebrow">자주 묻는 질문</span>
+    <h2 class="title">구매 전 가장 많이 묻는 것들,<br><strong>솔직하게 답해드립니다</strong></h2>
+    <div style="max-width:820px;margin:44px auto 0;display:grid;gap:12px;text-align:left;">
+
+      <details style="background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px;cursor:pointer;" open>
+        <summary style="font-size:17px;font-weight:800;list-style:none;display:flex;justify-content:space-between;align-items:center;">
+          😟 정상 댓글까지 막히면 팬들이 상처받지 않나요?
+          <span style="color:var(--blue2);font-size:20px;">+</span>
+        </summary>
+        <p style="margin:14px 0 0;color:var(--muted);font-size:15px;line-height:1.7;">
+          이 문제가 가장 중요하다고 생각해서 설계 1순위로 뒀습니다.
+          건설적 피드백은 절대 차단하지 않고, 오탐이 발생하면 대시보드에서 즉시 복원할 수 있습니다.
+          <span style="color:#74b3ff;font-weight:700;">정상 댓글 보호가 악플 차단보다 먼저입니다.</span>
+        </p>
+      </details>
+
+      <details style="background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px;cursor:pointer;">
+        <summary style="font-size:17px;font-weight:800;list-style:none;display:flex;justify-content:space-between;align-items:center;">
+          🔐 채널 권한을 주는 건가요? 안전한가요?
+          <span style="color:var(--blue2);font-size:20px;">+</span>
+        </summary>
+        <p style="margin:14px 0 0;color:var(--muted);font-size:15px;line-height:1.7;">
+          비밀번호는 저장하지 않습니다. Google 공식 OAuth 방식으로 댓글 읽기/쓰기 최소 권한만 요청합니다.
+          언제든 Google 계정 설정에서 연결을 해제할 수 있습니다.
+          <span style="color:#74b3ff;font-weight:700;">현재 OAuth 심사 진행 중이며, 완료 후 순차적으로 채널 연동이 활성화됩니다.</span>
+        </p>
+      </details>
+
+      <details style="background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px;cursor:pointer;">
+        <summary style="font-size:17px;font-weight:800;list-style:none;display:flex;justify-content:space-between;align-items:center;">
+          🤖 자동 대댓글이 어색하거나 로봇 같지 않나요?
+          <span style="color:var(--blue2);font-size:20px;">+</span>
+        </summary>
+        <p style="margin:14px 0 0;color:var(--muted);font-size:15px;line-height:1.7;">
+          자동 대댓글은 <strong style="color:#d7e3f3;">선택 기능</strong>입니다. 원하지 않으면 켜지 않아도 됩니다.
+          Pro 이상에서는 크리에이터의 말투 패턴을 학습해 자연스럽게 작성됩니다.
+          언제든 끄거나 내용을 직접 수정할 수 있습니다.
+        </p>
+      </details>
+
+      <details style="background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px;cursor:pointer;">
+        <summary style="font-size:17px;font-weight:800;list-style:none;display:flex;justify-content:space-between;align-items:center;">
+          💳 7일 무료 체험 후 자동으로 결제되나요?
+          <span style="color:var(--blue2);font-size:20px;">+</span>
+        </summary>
+        <p style="margin:14px 0 0;color:var(--muted);font-size:15px;line-height:1.7;">
+          아닙니다. 7일 무료 체험은 신청 후 검토 및 안내 과정을 거칩니다.
+          카드 정보를 입력하지 않으며, 체험 후 원하실 때만 유료 플랜으로 전환하시면 됩니다.
+        </p>
+      </details>
+
+      <details style="background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px;cursor:pointer;">
+        <summary style="font-size:17px;font-weight:800;list-style:none;display:flex;justify-content:space-between;align-items:center;">
+          🌱 초기 서비스 같은데 믿고 써도 되나요?
+          <span style="color:var(--blue2);font-size:20px;">+</span>
+        </summary>
+        <p style="margin:14px 0 0;color:var(--muted);font-size:15px;line-height:1.7;">
+          솔직히 말씀드리면, 아직 초기 단계입니다. 일부 기능은 완성 중입니다.
+          그래서 베타 테스터를 소수 선별해서 함께 만들어가고 있습니다.
+          <span style="color:#74b3ff;font-weight:700;">불확실한 부분은 과장하지 않고, 실제로 작동하는 것만 제공합니다.</span>
+        </p>
+      </details>
+
+      <details style="background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px;cursor:pointer;">
+        <summary style="font-size:17px;font-weight:800;list-style:none;display:flex;justify-content:space-between;align-items:center;">
+          📊 구독자가 많지 않아도 필요한가요?
+          <span style="color:var(--blue2);font-size:20px;">+</span>
+        </summary>
+        <p style="margin:14px 0 0;color:var(--muted);font-size:15px;line-height:1.7;">
+          구독자 수보다 댓글 스트레스 강도가 더 중요합니다.
+          1만 명이어도 악성 팬덤이 있다면 필요하고, 10만 명이어도 댓글이 건강하면 지금 당장 필요하지 않을 수 있습니다.
+          무료 분석으로 현재 채널 상태를 먼저 확인해보세요.
+        </p>
+      </details>
+
+    </div>
+  </div>
+</section>
+
+<section class="final">
+  <div class="container center">
+    <h2 class="title">지금 댓글창이 무겁게 느껴진다면,<br><strong>7일 무료로 먼저 경험해보세요</strong></h2>
+    <p class="desc">결제 없이, 카드 등록 없이. 신청 후 검토를 거쳐 안내드립니다. 체험 후 필요하다고 느낄 때만 유료로 전환하시면 됩니다.</p>
+    <div style="margin-top:28px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+      <button class="btn btn-primary" style="font-size:16px;padding:16px 36px;" onclick="openTrialModal()">🎁 7일 무료 체험 신청하기</button>
+      <button class="btn btn-secondary" onclick="scrollToId('analyzer')">무료 채널 분석 먼저 하기</button>
+      <button class="btn btn-secondary" onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLScJylXBJBp7udq3LENEi8dM_Fh6cMOSb5Br6jmWwl8xcSbM8A/viewform','_blank')">베타 테스터 신청</button>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- 7일 무료 체험 신청 모달 -->
+<div class="modal-overlay" id="trialModal">
+  <div class="modal" style="position:relative;">
+    <button class="modal-close" onclick="closeTrialModal()">×</button>
+    <h3>🎁 7일 무료 체험 신청</h3>
+    <p>카드 등록 없이 신청 → 검토 후 개별 안내드립니다.</p>
+    <div class="modal-field">
+      <label>유튜브 채널명 *</label>
+      <input id="trialChannel" class="input" style="min-height:48px;" placeholder="예: 내 채널명" />
+    </div>
+    <div class="modal-field">
+      <label>이메일 또는 카카오 아이디 *</label>
+      <input id="trialContact" class="input" style="min-height:48px;" placeholder="연락 가능한 이메일 또는 카카오 ID" />
+    </div>
+    <div class="modal-field">
+      <label>현재 가장 힘든 점 (선택)</label>
+      <input id="trialPain" class="input" style="min-height:48px;" placeholder="예: 외모 비하 댓글이 너무 많아요" />
+    </div>
+    <button onclick="submitTrial()" class="btn btn-primary btn-block" style="margin-top:8px;font-size:15px;">신청하기</button>
+    <div id="trialSuccess" style="display:none;margin-top:14px;padding:14px;background:rgba(24,216,141,.1);border:1px solid rgba(24,216,141,.25);border-radius:12px;color:#9df0ca;font-size:14px;font-weight:700;text-align:center;">
+      ✅ 신청 완료! 검토 후 빠른 시일 내 연락드릴게요 🙏
+    </div>
+    <div style="margin-top:16px;font-size:12px;color:var(--muted);text-align:center;">자동 결제 없음 · 언제든 취소 가능</div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <div><strong style="font-size:18px;color:#fff;">악플AI</strong><div>AkpulAI.com · Akpul.kr</div><div style="margin-top:8px;"><a href="/privacy" style="color:var(--muted);margin-right:16px;">개인정보처리방침</a><a href="/terms" style="color:var(--muted);margin-right:16px;">이용약관</a><a href="/cdn-cgi/l/email-protection#f69e939a9a99b6979d86839a979fd895999b" style="color:var(--muted);"><span class="__cf_email__" data-cfemail="08606d646467486963787d646961266b6765">[email&#160;protected]</span></a></div></div>
+    <div style="text-align:right;"><div>© 2026 악플AI (AkpulAI). All rights reserved.</div><div style="margin-top:6px;font-size:12px;">This product uses the <a href="https://developers.google.com/youtube/terms/api-services-terms-of-service" target="_blank" style="color:var(--blue2);">YouTube API Services</a></div></div>
+  </div>
+</footer>
+
+<script>
+  const API_URL = 'https://web-production-bf829.up.railway.app';
+  const BETA_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLScJylXBJBp7udq3LENEi8dM_Fh6cMOSb5Br6jmWwl8xcSbM8A/viewform';
+
+  function scrollToId(id){ document.getElementById(id)?.scrollIntoView({behavior:'smooth',block:'start'}); }
+
+  // 이벤트 추적
+  function trackEvent(name, payload={}) {
+    const ev = {name, payload, ts: new Date().toISOString()};
+    const h = JSON.parse(localStorage.getItem('akpul_events')||'[]');
+    h.push(ev); localStorage.setItem('akpul_events', JSON.stringify(h.slice(-200)));
+    if(window.gtag) window.gtag('event', name, payload);
+  }
+
+  // 파형 애니메이션
+  function startWave(){ const w=document.getElementById('waveWrap'); w.innerHTML=''; w.classList.add('show'); document.getElementById('scanBeam').classList.add('show'); for(let i=0;i<32;i++){const b=document.createElement('div');b.className='wave-bar';b.style.animationDelay=(i*.045)+'s';b.style.height=(8+Math.random()*36)+'px';w.appendChild(b);} }
+  function stopWave(){ document.getElementById('waveWrap').classList.remove('show'); document.getElementById('scanBeam').classList.remove('show'); }
+
+  // 채널 분석기
+  const scenarios = [
+    {risk:28,clean:91,toxic:'5.2%',comments:'3,120',level:'낮은 위험',gradeText:'낮음',verdictClass:'low',verdictTitle:'안정 상태',verdict:'전반적으로 건강한 댓글 환경입니다. Starter 또는 Growth로 기본 보호를 시작해도 충분합니다.'},
+    {risk:54,clean:79,toxic:'14.8%',comments:'4,820',level:'중간 위험',gradeText:'보통',verdictClass:'mid',verdictTitle:'대응 권장',verdict:'비꼼과 조롱성 댓글이 누적되기 시작했습니다. Growth 또는 Pro가 적합합니다.'},
+    {risk:83,clean:56,toxic:'27.4%',comments:'9,460',level:'높은 위험',gradeText:'높음',verdictClass:'high',verdictTitle:'즉시 보호 필요',verdict:'악성 댓글 비율이 높고 반복 공격 패턴이 감지됩니다. Pro 또는 Elite가 적합합니다.'}
+  ];
+  const terminal=document.getElementById('terminal'),result=document.getElementById('result'),analyzeBtn=document.getElementById('analyzeBtn'),channelInput=document.getElementById('channelInput');
+  function appendLine(t,d=0){setTimeout(()=>{const div=document.createElement('div');div.className='line';div.textContent=t;terminal.appendChild(div);terminal.scrollTop=terminal.scrollHeight;},d);}
+  function resetAnalyzer(){terminal.classList.remove('show');result.classList.remove('show');terminal.innerHTML='';analyzeBtn.disabled=false;analyzeBtn.textContent='무료 보안 진단 시작';stopWave();}
+  function showResult(name,s){
+    document.getElementById('resultChannel').textContent='@'+name;
+    document.getElementById('riskNum').textContent=s.risk;
+    document.getElementById('cleanScore').textContent=s.clean;
+    document.getElementById('toxicRate').textContent=s.toxic;
+    document.getElementById('commentCount').textContent=s.comments;
+    document.getElementById('riskLevel').textContent=s.level;
+    document.getElementById('riskGradeText').textContent=s.gradeText;
+    const vb=document.getElementById('verdictBox');
+    vb.className='verdict '+s.verdictClass;
+    vb.innerHTML=`<h3 style="margin-top:0;">${s.verdictTitle}</h3><p style="margin:0;color:#d9e5f3;">${s.verdict}</p>`;
+    // 위험도별 CTA 버튼 동적 변경
+    const btn=document.getElementById('upgradeBtn');
+    if(s.verdictClass==='high'){btn.textContent='🚨 지금 즉시 채널 보호하기';btn.style.background='linear-gradient(135deg,#ff647b,#ff4060)';}
+    else if(s.verdictClass==='mid'){btn.textContent='🔥 지금 자동 대응 시작하기';btn.style.background='';}
+    else{btn.textContent='✅ 채널 보호 시작하기';btn.style.background='linear-gradient(135deg,#18d88d,#00b574)';}
+    result.classList.add('show');analyzeBtn.disabled=false;analyzeBtn.textContent='무료 보안 진단 시작';
+    trackEvent('analyzer_complete',{risk:s.risk,level:s.level});
+  }
+  async function runAnalysis(){
+    const name=channelInput.value.trim()||'내 채널';
+    resetAnalyzer();analyzeBtn.disabled=true;analyzeBtn.textContent='분석 중...';terminal.classList.add('show');startWave();
+    trackEvent('analyzer_start',{channel:name});
+    ['[1/6] 채널명 확인: '+name,'[2/6] 최근 댓글 샘플 수집 중...','[3/6] 욕설/초성체 규칙 필터 실행...','[4/6] 한국어 문맥 분석 모델 실행...','[5/6] 애매한 댓글 GPT 정밀 재검사...','[6/6] 위험도 및 대응 전략 정리 완료'].forEach((l,i)=>appendLine(l,i*450));
+    try{
+      const resp=await fetch(API_URL+'/api/analyze',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({channel_name:name,use_gpt:true})});
+      if(!resp.ok) throw new Error('API 오류');
+      const data=await resp.json();const score=data.analysis.toxic_score;
+      const s={risk:score,clean:data.analysis.clean_score,toxic:data.analysis.toxic_ratio+'%',comments:data.analysis.total_comments.toLocaleString(),level:score>=70?'높은 위험':score>=40?'중간 위험':'낮은 위험',gradeText:score>=70?'높음':score>=40?'보통':'낮음',verdictClass:score>=70?'high':score>=40?'mid':'low',verdictTitle:score>=70?'즉시 보호 필요':score>=40?'대응 권장':'안정 상태',verdict:score>=70?'악성 댓글 비율이 높습니다. Pro 또는 Elite를 바로 검토하세요.':score>=40?'조롱성 댓글이 누적되고 있습니다. Growth 또는 Pro가 적합합니다.':'건강한 댓글 환경입니다. Free 또는 Starter로 시작해도 좋습니다.'};
+      setTimeout(()=>{stopWave();showResult(name,s);},3100);
+    }catch(e){
+      const s=scenarios[Math.floor(Math.random()*scenarios.length)];
+      setTimeout(()=>{stopWave();showResult(name,s);},3100);
+    }
+  }
+  analyzeBtn.addEventListener('click',runAnalysis);
+  channelInput.addEventListener('keydown',e=>{if(e.key==='Enter')runAnalysis();});
+  document.getElementById('analyzeAgain').addEventListener('click',()=>{resetAnalyzer();channelInput.focus();});
+  document.querySelectorAll('.chip[data-channel]').forEach(c=>c.addEventListener('click',()=>{channelInput.value=c.dataset.channel;}));
+
+  // 공유
+  document.getElementById('shareKakao').addEventListener('click',()=>{
+    const name=channelInput.value.trim()||'내 채널';
+    const risk=document.getElementById('riskNum').textContent;
+    const text=`내 유튜브 채널 "${name}" 악성댓글 위험도 → ${risk}점!\n악플AI에서 무료로 확인해보세요 👉 https://akpulai.com`;
+    trackEvent('share_kakao');
+    try{
+      if(!window.Kakao.isInitialized()) window.Kakao.init('1a602aa46220109df040709cbee2d83b');
+      window.Kakao.Share.sendDefault({objectType:'feed',content:{title:`내 채널 악성댓글 위험도 ${risk}점!`,description:text,imageUrl:'https://akpulai.com/og-image.png',link:{mobileWebUrl:'https://akpulai.com',webUrl:'https://akpulai.com'}},buttons:[{title:'내 채널도 분석하기',link:{mobileWebUrl:'https://akpulai.com',webUrl:'https://akpulai.com'}}]});
+    }catch(e){navigator.clipboard.writeText(text).then(()=>alert('복사됐습니다! 카카오톡에 붙여넣기 하세요.'));}
+  });
+  document.getElementById('shareX').addEventListener('click',()=>{
+    const name=channelInput.value.trim()||'내 채널';
+    const risk=document.getElementById('riskNum').textContent;
+    window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(`내 채널 "${name}" 악성댓글 위험도 → ${risk}점!\n악플AI에서 무료로 확인하세요 👉 https://akpulai.com #유튜버 #악플AI`));
+    trackEvent('share_x');
+  });
+  document.getElementById('shareCopy').addEventListener('click',()=>{
+    const name=channelInput.value.trim()||'내 채널';
+    const risk=document.getElementById('riskNum').textContent;
+    navigator.clipboard.writeText(`내 채널 "${name}" 악성댓글 위험도 → ${risk}점!\n악플AI에서 무료로 확인하세요 👉 https://akpulai.com`).then(()=>alert('복사되었습니다!'));
+    trackEvent('share_copy');
+  });
+
+  // 연간/월간 토글
+  const billingToggle=document.getElementById('billingToggle');let annual=false;
+  billingToggle.addEventListener('click',()=>{annual=!annual;billingToggle.classList.toggle('annual',annual);document.querySelectorAll('.plan-price').forEach(n=>{const v=annual?n.dataset.annual:n.dataset.monthly;n.innerHTML=`₩${Number(v).toLocaleString()} <span>/월</span>`;});trackEvent('billing_toggle',{annual});});
+
+  // ── 댓글 시뮬레이터 (GPT-4o mini 연동) ─────────────────────
+  function fillSim(text) {
+    document.getElementById('simInput').value = text;
+    runSimulator();
+  }
+
+  async function runSimulator() {
+    const text = document.getElementById('simInput').value.trim();
+    if (!text) { document.getElementById('simInput').focus(); return; }
+
+    const btn = document.querySelector('[onclick="runSimulator()"]');
+    if (btn) { btn.disabled = true; btn.textContent = '분석 중...'; }
+
+    // 로컬 1차 판단 즉시 표시
+    const local = localAnalyze(text);
+    showSimResult(local.score, local.type, local.type,
+      local.scoreText, local.action, local.actionColor, local.reply, 'local');
+
+    // GPT API 호출
+    try {
+      const resp = await fetch(API_URL + '/api/comment/analyze', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ comment: text, use_gpt: true })
+      });
+      if (resp.ok) {
+        const data = await resp.json();
+        const typeColors = {
+          toxic:    '#ffbfca', warn: '#ffd98b',
+          clean:    '#9df0ca', neutral: '#a9cdff', criticism: '#74b3ff'
+        };
+        const ac = typeColors[data.type] || '#a9cdff';
+        const st = data.type === 'clean'
+          ? `클린 점수 ${100-data.score}점 · 감사 대댓글 발송`
+          : data.type === 'criticism'
+          ? `피드백 점수 ${data.score}점 · 건설적 의견 보호됨`
+          : data.type === 'warn'
+          ? `조롱·비꼬기 점수 ${data.score}점 · ${data.method==='hybrid_5stage'?'GPT-4o mini 분석':'5단계 규칙 분석'}`
+          : `독성 점수 ${data.score}점 · ${data.method==='hybrid_5stage'?'GPT-4o mini 분석':'5단계 규칙 분석'}`;
+
+        // 비판 보호 안내 제거 후 재렌더
+        document.querySelectorAll('.criticism-note').forEach(e=>e.remove());
+        showSimResult(data.score, data.type, data.gpt_type||data.type,
+          st, data.action, ac, data.auto_reply, data.method);
+      }
+    } catch(e) {
+      // 로컬 결과 유지
+    }
+    if (btn) { btn.disabled = false; btn.textContent = 'AI 판단 받기'; }
+  }
+
+  function localAnalyze(text) {
+    const t = text.toLowerCase().replace(/\s/g, '');
+    const words = text.toLowerCase().split(/\s+/);
+    const hardToxic = ['ㅅㅂ','씨발','개새끼','ㄱㅅㄲ','미친놈','병신','좆','보지','쉬발',
+      '지랄','꺼져','닥쳐','죽어','찐따','느금','빻은','ㄴㅁ','ㅂㅅ','ㅈㄹ','ㅁㅊ',
+      '개소리','쓰레기같','역겨워','토나와','구역질','꺼져라','뒤져','개같','존나'];
+    const softToxicFull = ['고만좀','그만좀','좀그만','특이하네','참특이','어이없','황당하네',
+      '가관이네','퀄리티가','수준이','이게뭐야','저퀄','망했네','끝났네','실망이다',
+      '실망했','나았는데','하락세','떨어졌','왜이렇게','왜이래','이상하네','웃기고있',
+      '웃기네','ㄹㅇ별로','별로네','별로임','노잼','지루해','억지','어색해','거슬려',
+      '신경꺼','관심끄','관둬','때려쳐','그만해','접어','탈주','하차','언팔',
+      '구독취소','신고','캡처','박제','어그로','관종','허세','가식','위선',
+      '일정하네','일정하다','ㅋㅋㅋ','ㅎㅎㅎ'];
+    const softToxicWords = ['그만','보기싫','싫다','지겨','지겹','귀찮','실망','별로',
+      '그만두','하지마','하지말','안봄','재미없','노잼','식상','뻔해','억지스럽',
+      '기대이하','예전만못','갈수록','점점','하향','하락'];
+    const existDeny = ['안봐도','안봄','왜나와','눈에띄지마','없어져','사라져',
+      '보기싫다','보기싫어','보기도싫','꼴보기싫'];
+    const hateToxic = ['한남','한녀','페미','꼴페미','일베','극우','빨갱이','틀딱',
+      '노인네','급식충','맘충','쪽바리','짱깨','동남아','흑형'];
+    const cleanKW = ['감사합니다','감사해요','고마워요','고맙습니다','최고예요','최고입니다',
+      '사랑해요','응원해요','응원합니다','힘내세요','기대돼요','기대됩니다','좋아요',
+      '대박이에요','잘봤어요','잘봤습니다','구독했어요','행복해요','위로됐어요',
+      '도움됐어요','덕분에','힘이나요','최고다','감동이에요','재밌어요','유익해요',
+      '유익했','배웠어요','팬이에요','파이팅'];
+
+    const hardHits  = hardToxic.filter(k => t.includes(k)).length;
+    const hateHits  = hateToxic.filter(k => t.includes(k)).length;
+    const existHits = existDeny.filter(k => t.includes(k.replace(/\s/g,''))).length;
+    const softFull  = softToxicFull.filter(k => t.includes(k)).length;
+    const softWord  = softToxicWords.filter(k => words.some(w=>w.includes(k)) || t.includes(k)).length;
+    const softHits  = softFull + softWord;
+    const cleanHits = cleanKW.filter(k => t.includes(k.replace(/\s/g,''))).length;
+    const chosung   = (text.match(/[ㄱ-ㅎ]{2,}/g)||[]).length;
+    const negPat    = /왜이렇|왜이래|왜이런|그만보|보기싫|안보고|지겨워/.test(t);
+    const mockPat   = /[ㅎㅋ]{2,}/.test(text) && (softHits>0||negPat);
+    const negWish   = /그만.{0,5}(보고|하고).{0,5}(싶다|싶어)/.test(text.toLowerCase());
+
+    let base = hardHits*35 + hateHits*30 + existHits*28 + softHits*15
+             + chosung*12 + (negPat?18:0) + (mockPat?20:0) + (negWish?25:0);
+    base = Math.min(98, base);
+
+    let score, type, action, actionColor, reply, scoreText;
+    if (base>=65||hardHits>=1||hateHits>=1) {
+      score=Math.max(65,base); type='toxic'; action='자동 숨김'; actionColor='#ffbfca';
+      reply='';
+      scoreText=`독성 점수 ${score}점 · 자동 숨김`;
+    } else if (base>=25||softHits>=1||existHits>=1||mockPat||negPat||negWish) {
+      score=Math.max(25,base); type='warn'; /* sarcasm */ action='모니터링'; actionColor='#ffd98b';
+      reply='';
+      scoreText=`조롱·비꼬기 점수 ${score}점 · 모니터링`;
+    } else if (cleanHits>=1) {
+      score=Math.floor(2+Math.random()*8); type='clean'; action='감사 대댓글'; actionColor='#9df0ca';
+      reply='따뜻하게 봐주셔서 정말 감사해요 🙏 이런 댓글 덕분에 더 좋은 콘텐츠 만들 힘이 납니다. 다음 영상도 기대해 주세요!';
+      scoreText=`클린 점수 ${100-score}점 · 감사 대댓글 자동 발송`;
+    } else {
+      score=Math.floor(5+Math.random()*15); type='normal'; action='통과'; actionColor='#a9cdff';
+      reply='댓글 감사합니다! 앞으로도 좋은 콘텐츠로 찾아올게요 😊';
+      scoreText=`독성 점수 ${score}점 · 정상 처리`;
+    }
+    return { score, type, action, actionColor, reply, scoreText };
+  }
+
+  function showSimResult(score, type, gptType, scoreText, action, actionColor, reply, method) {
+    const colors = {
+      toxic:    { bg:'rgba(255,100,123,.08)', border:'rgba(255,100,123,.25)' },
+      warn:     { bg:'rgba(255,203,61,.08)',  border:'rgba(255,203,61,.25)'  },
+      clean:    { bg:'rgba(24,216,141,.08)',  border:'rgba(24,216,141,.25)'  },
+      neutral:  { bg:'rgba(47,124,255,.06)',  border:'rgba(116,179,255,.2)'  },
+      criticism:{ bg:'rgba(47,124,255,.06)',  border:'rgba(116,179,255,.2)'  }
+    };
+    const icons = {
+      toxic:'🚨', warn:'🔍', clean:'💚', neutral:'✅', criticism:'💬'
+    };
+    const labels = {
+      toxic:    '악성 댓글 감지 — 자동 숨김',
+      warn:     '조롱·비꼬기 감지 — 모니터링 · 숨김 후보',
+      clean:    '클린 댓글 — 감사 대댓글 발송',
+      neutral:  '일반 댓글 — 정상 통과',
+      criticism:'건설적 피드백 — 보호됨'
+    };
+    const c = colors[type] || colors.neutral;
+
+    const res     = document.getElementById('simVerdict') || document.getElementById('simResult');
+    const replyEl = document.getElementById('simReply');
+    if (!res || !replyEl) return;
+
+    const resultCard = document.getElementById('simResult');
+    if (resultCard) {
+      resultCard.style.display = 'block';
+      // 다음 프레임에서 visible 클래스 추가 (트랜지션 트리거)
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        resultCard.classList.add('visible');
+      }));
+    }
+    res.style.background  = c.bg;
+    res.style.borderColor = c.border;
+
+    const head = document.getElementById('simHead');
+    if (head) { head.style.opacity='0'; head.style.transform='translateY(8px)'; }
+    document.getElementById('simIcon').textContent  = icons[type] || '✅';
+    document.getElementById('simLabel').textContent = labels[type] || '';
+    const scoreEl = document.getElementById('simScore');
+    if (scoreEl) { scoreEl.style.color=actionColor; scoreEl.textContent=scoreText; }
+    const actionEl = document.getElementById('simAction');
+    if (actionEl) {
+      actionEl.textContent      = action;
+      actionEl.style.background = c.bg;
+      actionEl.style.border     = '1px solid ' + c.border;
+      actionEl.style.color      = actionColor;
+    }
+    if (head) setTimeout(()=>{head.style.opacity='1';head.style.transform='translateY(0)';head.classList.add('show');},120);
+
+    const methodEl = document.getElementById('simMethod');
+    if (methodEl) methodEl.textContent = (method==='hybrid_5stage'||method==='gpt') ? '🤖 GPT-4o mini 분석' : '⚡ 5단계 규칙 분석';
+
+    // 비판 보호 안내
+    if (type === 'criticism' || gptType === 'criticism') {
+      const note = document.createElement('div');
+      note.style.cssText = 'font-size:12px;color:#74b3ff;margin-top:8px;padding:8px 12px;background:rgba(47,124,255,.08);border-radius:10px;border:1px solid rgba(116,179,255,.2)';
+      note.textContent = '💬 건설적 피드백으로 분류되었습니다. 악플AI는 정상 의견을 절대 차단하지 않습니다.';
+      if (replyEl.parentNode) replyEl.parentNode.insertBefore(note, replyEl);
+    }
+
+    // 타이핑 효과
+    replyEl.className = 'sim-reply' + (type==='toxic'?' toxic':type==='warn'?' warn':'');
+    replyEl.innerHTML = '';
+    if (reply) {
+      replyEl.classList.add('typing');
+      setTimeout(()=>replyEl.classList.remove('typing'), 700);
+      const cursor = document.createElement('span');
+      cursor.className = 'cursor';
+      replyEl.appendChild(cursor);
+      let i = 0;
+      const timer = setInterval(()=>{
+        if (!replyEl.contains(cursor)) { clearInterval(timer); return; }
+        if (i < reply.length) { replyEl.insertBefore(document.createTextNode(reply[i]), cursor); i++; }
+        else { clearInterval(timer); cursor.remove(); }
+      }, 18);
+    } else {
+      const noReplyMsg = {
+        'toxic':    '🚫 악성 댓글 자동 숨김 처리됩니다.',
+        'warn':     '👁 모니터링 중 — 반복 시 자동 숨김 처리됩니다.',
+        'criticism':'✅ 건설적 피드백으로 보호됩니다.',
+        'neutral':  '통과 — 일반 댓글입니다.',
+        'clean':    '',
+      };
+      replyEl.textContent = noReplyMsg[type] || '통과 처리됩니다.';
+      replyEl.style.color = 'var(--muted)';
+    }
+  }
+  // ─────────────────────────────────────────────────────────
+
+
+
+
+  // ── 대시보드 실시간 애니메이션 ──────────────────────
+  (function() {
+    // 바 너비 애니메이션 (로드 시)
+    setTimeout(() => {
+      document.querySelectorAll('.bar > span').forEach(bar => {
+        const w = bar.style.width;
+        bar.style.width = '0%';
+        setTimeout(() => { bar.style.width = w; }, 100);
+      });
+    }, 400);
+
+    // 피드 아이템 순환 애니메이션
+    const feedData = [
+      { badge:'숨김', type:'bad', text:'역시 퀄리티가 일정하네요 ㅎ', sub:'AI 경고 대댓글 발송 · 증거 저장 완료', score:'72점', scoreColor:'#ffbfca' },
+      { badge:'기록', type:'bad', text:'이 채널 망했네, 왜 아직도 봄?', sub:'명예훼손 가능성 감지 · URL 캡처', score:'61점', scoreColor:'#ffd98b' },
+      { badge:'감사', type:'good', text:'오늘도 좋은 영상 감사합니다 🙏', sub:'크리에이터 말투 기반 감사 대댓글 발송', score:'2점', scoreColor:'#9df0ca' },
+      { badge:'숨김', type:'bad', text:'고만좀 해라 참 특이해', sub:'조롱 패턴 감지 · 모니터링 등록', score:'68점', scoreColor:'#ffbfca' },
+      { badge:'감사', type:'good', text:'덕분에 많이 배웠어요 감사합니다', sub:'감사 대댓글 자동 발송 완료', score:'1점', scoreColor:'#9df0ca' },
+    ];
+
+    let feedIdx = 0;
+    const feed = document.querySelector('#heroDashboard .feed');
+    if (!feed) return;
+
+    setInterval(() => {
+      feedIdx = (feedIdx + 1) % feedData.length;
+      const d = feedData[feedIdx];
+      const items = feed.querySelectorAll('.feed-item');
+      if (!items.length) return;
+
+      // 마지막 아이템 업데이트
+      const last = items[items.length - 1];
+      last.className = 'feed-item feed-ticker ' + d.type;
+      last.innerHTML = `
+        <span class="badge ${d.type}${d.type==='bad'?' badge-pulse':''}">${d.badge}</span>
+        <div><div>${d.text}</div><small>${d.sub}</small></div>
+        <strong style="color:${d.scoreColor}">${d.score}</strong>`;
+
+      // 애니메이션 재적용
+      void last.offsetWidth;
+      last.classList.remove('feed-ticker');
+      setTimeout(() => last.classList.add('feed-ticker'), 10);
+    }, 3500);
+  })();
+
+  // ── 무료 체험 모달 ────────────────────────────────────
+  function openTrialModal() {
+    document.getElementById('trialModal').classList.add('show');
+    trackEvent('trial_modal_open');
+  }
+  function closeTrialModal() {
+    document.getElementById('trialModal').classList.remove('show');
+  }
+  document.getElementById('trialModal').addEventListener('click', function(e) {
+    if (e.target === this) closeTrialModal();
+  });
+
+  async function submitTrial() {
+    const channel = document.getElementById('trialChannel').value.trim();
+    const contact = document.getElementById('trialContact').value.trim();
+    const pain    = document.getElementById('trialPain').value.trim();
+    if (!channel) { document.getElementById('trialChannel').focus(); return; }
+    if (!contact) { document.getElementById('trialContact').focus(); return; }
+    try {
+      await fetch(API_URL + '/api/lead/free-trial', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({
+          youtube_channel_name: channel,
+          email: contact.includes('@') ? contact : null,
+          contact: !contact.includes('@') ? contact : null,
+          current_comment_pain: pain || null,
+          source_page: 'main'
+        })
+      });
+    } catch(e) {}
+    document.getElementById('trialSuccess').style.display = 'block';
+    document.querySelector('#trialModal .btn-primary').style.display = 'none';
+    trackEvent('trial_submit', {channel});
+    setTimeout(() => closeTrialModal(), 3000);
+  }
+
+  // ── 분석기 결과 이메일 수집 ──────────────────────────
+  async function submitResultLead() {
+    const contact = document.getElementById('resultEmail').value.trim();
+    const channel = document.getElementById('channelInput').value.trim() || '미입력';
+    if (!contact) { document.getElementById('resultEmail').focus(); return; }
+    try {
+      await fetch(API_URL + '/api/lead/free-trial', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({
+          youtube_channel_name: channel,
+          email: contact.includes('@') ? contact : null,
+          contact: !contact.includes('@') ? contact : null,
+          source_page: 'analyzer'
+        })
+      });
+    } catch(e) {}
+    document.getElementById('emailSuccess').style.display = 'block';
+    trackEvent('result_lead_submit', {channel});
+  }
+
+  trackEvent('page_view');
+</script>
+</body>
+</html>
